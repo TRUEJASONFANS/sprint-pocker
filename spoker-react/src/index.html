@@ -1,0 +1,435 @@
+<html>
+  <head>
+    <script src="jquery.min.js"></script>
+    <script src="semantic.min.js"></script>
+    <link rel="stylesheet" href="index.css" type="text/css" />
+    <link rel="stylesheet" href="semantic.min.css" type="text/css" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  </head>
+<body style="margin: 0px auto; width: 600px; padding-top: 30px;">
+<div>
+
+  <div class="ui basic modal" style="text-align: center;">
+    <div id="errorArea" class="header">
+      Oops, meet a glitch!
+    </div>
+    <div class="actions" style="text-align: center;">
+      <div class="ui positive right labeled icon button">
+        All Right
+        <i class="checkmark icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div id="login" style="width: 600px; text-align: center;">
+
+    <div style="width: 400px; margin: 0px auto;">
+      <div  class="ui input focus"><input id="userName" type="text" placeholder="Enter user name ..."></div>
+      <button id="loginBtn" class="ui primary button">Login</button><br/>
+      <div class="ui divider"></div>
+      <div class="ui centered large image">
+        <img src="images/poker.jpg">
+      </div>
+    </div>
+
+  </div>
+
+  <div id="create_room" style="width: 600px;">
+    <h1 id="welcomeTxt" class="ui header">Welcome to poker room, Alex</h1>
+    <div class="ui divider"></div>
+
+    <div style="height: 36px;">
+      <div style="float: left;"><button id="createRoomBtn" class="ui positive button">Create a new room</button></div>
+      <div class="ui input focus" style="float: right;">
+        <input id="joinTxt" type="text" placeholder="Enter room id ...">
+        <button id="joinBtn" class="ui primary button" type="button">Join</button>
+      </div>
+    </div>
+
+    <table id="availableRooms" class="ui celled padded table" style="text-align: center;">
+      <tr><th>Room ID</th><th>Creator</th><th>Action</th></tr>
+      <tr><td>Alex</td><td>12</td><td>Join</td></tr>
+    </table>
+  </div>
+
+  <div id="poker_room">
+    <div id="leftChat" style="width: 294px; float: left;">
+      <div id="chatPaneArea" class="ui comments" style="height: 600px; border:1px solid #99CCFF; padding: 8px; overflow-y: auto;">
+        <div class="comment">
+          <div class="content">
+            <a class="author">System</a>
+            <div class="text">We can chat.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui right labeled left icon input">
+        <i class="tags icon"></i>
+        <input id="chatMsg" type="text" placeholder="Enter message">
+        <a id="sendChatMsg" class="ui tag label">Send</a>
+      </div>
+    </div>
+
+    <div style="width: 5px; float: left;"></div>
+
+    <div id="rightPoker" style="float: right;">
+
+      <div style="height: 30px;">
+        <div style="float: left; margin-top: 6px;"><h2 id="showRoomId" class="ui header">Room ID: XXX</h2></div>
+        <div id="exitRoom" style="float:right;"><button class="ui positive button">Exit</button></div>
+      </div>
+
+      <div class="ui divider"></div>
+      <div class="ui buttons">
+        <button id="btn01" class="ui button">01</button>
+        <button id="btn02" class="ui button">02</button>
+        <button id="btn03" class="ui button">03</button>
+        <button id="btn05" class="ui button">05</button>
+        <button id="btn08" class="ui button">08</button>
+      </div>
+      <div><br/></div>
+      <div class="ui buttons">
+        <button id="btn13" class="ui button">13</button>
+        <button id="btn21" class="ui button">21</button>
+        <button id="btn34" class="ui button">34</button>
+        <button id="btn55" class="ui button">55</button>
+        <button id="btnUnknown" class="ui button">???</button>
+      </div>
+      <div class="ui divider"></div>
+
+      <table id="statisticsTable" class="ui single line table" style="text-align: center;">
+        <thead>
+          <tr><th>Story Point</th>
+          <th>Vote</th>
+        </tr></thead>
+        <tbody>
+          <td>3</td>
+          <td>4</td>
+        </tbody>
+      </table>
+
+      <div style="text-align: left;">
+        <div style="float: left;">
+          <h3 id="avgPoint" class="ui header" style="margin-top: 5px;">Story points:</h3>
+        </div>
+        <div id="clear" style="float:right;"><button class="ui primary button">Clear</button></div>
+        <br/><br/>
+        <div style="margin-top: 5px;">
+          <table id="resultTable" class="ui celled table" style="text-align: center;">
+            <tr><td>Alex</td><td>12</td></tr>
+            <tr><td>Alex</td><td>12</td></tr>
+            <tr><td>Alex</td><td>12</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <br/>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+// Login action.
+function doLogin() {
+  name = $("#userName").val();
+  sendMessage(LOGIN);
+}
+
+$("#loginBtn").click(doLogin);
+$("#userName").keyup(function(event) {
+ if (event.keyCode == 13) {
+  doLogin();
+ }
+});
+
+// Create room action.
+$("#createRoomBtn").click(function() {
+  isHost = true;
+  sendMessage(CREATE_ROOM);
+});
+
+function doJoinRoom() {
+  roomId = $("#joinTxt").val();
+  sendMessage(JOIN_ROOM);
+}
+
+function joinRoomByBtn(clickedRoomNum) {
+  roomId = clickedRoomNum;
+  sendMessage(JOIN_ROOM);
+}
+
+$("#joinBtn").click(doJoinRoom);
+$("#joinTxt").keyup(function(event) {
+ if (event.keyCode == 13) {
+  doJoinRoom();
+ }
+});
+
+function fibociButtonAction() {
+  let clickBtnId = $(this).attr("id");
+  let pokerValue = clickBtnId.substring(3);
+  fibonacciNum = pokerValue == "Unknown" ? UNKNOW_FIBONICA : pokerValue;
+  sendMessage(UPDATE_FIBONACI);
+  // Remove all click action once user clicked a button.
+  fibociButtons.unbind("click");
+}
+
+var fibociButtons = $("#btn01, #btn02, #btn03, #btn05, #btn08, #btn13, #btn21, #btn34, #btn55, #btnUnknown");
+fibociButtons.click(fibociButtonAction);
+
+function addFibociBtnActionBack() {
+  fibociButtons.click(fibociButtonAction);
+}
+
+$("#clear").click(function() {
+  sendMessage(CLEAR);
+});
+
+function showError(msg) {
+  $("#errorArea").empty().append(msg);
+  $('.ui.basic.modal').modal('show');
+}
+
+function sendChatAction() {
+  let theChatMsg = $("#chatMsg").val();
+  if (theChatMsg.length <= 0) {
+    showError("You haven't input any message.");
+  } else {
+    sendChatText(theChatMsg);
+    // Empty message input.
+    $("#chatMsg").val("");
+  }
+}
+
+$("#sendChatMsg").click(sendChatAction);
+$("#chatMsg").keyup(function(event) {
+ if (event.keyCode == 13) {
+  sendChatAction();
+ }
+});
+
+$("#exitRoom").click(function() {
+  isHost = false;
+  sendMessage(RETURN_ROOM_DASHBOARD);
+
+  let theMsg = "<div class='comment'>"
+              + "<div class='content'>"
+              + "  <a class='author'>System</a>"
+              + "  <div class='text'>We can chat.</div>"
+              + "</div>"
+              + "</div>";
+
+  $("#chatPaneArea").empty().append(theMsg);
+  fibonacciNum = -1;
+
+  showDashBoard();
+});
+
+// Data field.
+var name = "unknown";
+var roomId = "-1";
+var isHost = false;
+var fibonacciNum = -1;
+
+// 1. Initialize WebSocket.
+var GET_ALL_ROOMS = 0;
+var CREATE_ROOM = 1;
+var LOGIN = 2;
+var ERROR = 3;
+var SEND_MSG = 4;
+var CREATE_ROOM_DONE = 5;
+var JOIN_ROOM = 6;
+var JOIN_ROOM_DONE = 7
+var ALL_USER = 8;
+var UPDATE_FIBONACI = 9;
+var CLEAR = 10;
+var UPDATE_ROOMS = 11;
+var CHAT = 12;
+var RETURN_ROOM_DASHBOARD = 13;
+var SET_AS_HOST = 14;
+
+var UNKNOW_FIBONICA = -99;
+var SHOW_LOGIN = 100;
+
+var socket = new WebSocket("ws://127.0.0.1:8080/SprintPoker/poker");
+socket.onopen = function(event) {
+  console.log("Client WebSocekt is opened.");
+}
+
+socket.onclose = function(event) {
+  alert("Cannot establish connection with server.");
+  socket.close();
+  window.location.reload();
+}
+
+socket.onmessage = function(event) {
+  var returnMsg = JSON.parse(event.data);
+  if (returnMsg.actionType == SHOW_LOGIN) {
+    showDashBoard();
+  } else if (returnMsg.actionType == CREATE_ROOM_DONE) {
+    showRoom(returnMsg.roomId);
+  } else if (returnMsg.actionType == ERROR) {
+    showError(returnMsg.message);
+  } else if (returnMsg.actionType == JOIN_ROOM_DONE) {
+    showRoom(returnMsg.message);
+  } else if (returnMsg.actionType == ALL_USER) {
+    updatePokerData(returnMsg.players, returnMsg.averagePoint, returnMsg.statistics);
+  } else if (returnMsg.actionType == UPDATE_ROOMS) {
+    updateAvailableRooms(returnMsg.rooms);
+    // Don't update if it's in this page. It has problem. Closed room shall be updated here.
+    // if (!createRoomDiv.is(":hidden")) {
+    //   updateAvailableRooms(returnMsg.rooms);
+    // }
+  } else if (returnMsg.actionType == CLEAR) {
+    addFibociBtnActionBack();
+  } else if (returnMsg.actionType == CHAT) {
+    updateChatMsg(returnMsg.name, returnMsg.chatMessage);
+  } else if (returnMsg.actionType == SET_AS_HOST) {
+    isHost = true;
+    updateClearBtn();
+  }
+}
+
+function updateChatMsg(userName, chatMessage) {
+  var newMsg = "";
+  newMsg += "<div class='comment'>";
+  newMsg += "<div class='content'>";
+  newMsg += "<a class='author'>" + userName + "</a>";
+  newMsg += "<div class='text'>" + chatMessage + "</div>";
+  newMsg += "</div>";
+  newMsg += "</div>";
+
+  $("#chatPaneArea").append(newMsg);
+  // Make scroll bar scroll to the end. The name can only be 'div'.
+  var div = document.getElementById("chatPaneArea");
+  div.scrollTop = div.scrollHeight;
+}
+
+function sendChatText(msg) {
+  let user = {name, isHost, fibonacciNum};
+  let command = {type: CHAT, player: user, chatMsg: msg};
+  socket.send(JSON.stringify(command));
+}
+
+// Send message to server.
+function sendMessage(cmdType) {
+  let user = {name, isHost, fibonacciNum};
+  let command = {type: cmdType, roomNum: roomId, player: user};
+  console.log(command);
+
+  var msg = JSON.stringify(command);
+  socket.send(msg);
+}
+
+function showDashBoard() {
+  var showUserDiv = $("#showUser");
+  $("#welcomeTxt").empty().append("Welcome to poker room, " + name + "!");
+  loginDiv.hide();
+  createRoomDiv.show();
+  pokerRoom.hide();
+}
+
+function updateClearBtn() {
+  let clearBtn = $("#clear");
+  if (isHost) {
+    clearBtn.show();
+  } else {
+    clearBtn.hide();
+  }
+}
+
+function showRoom(returnRoomId) {
+  roomId = returnRoomId;
+  $("#showRoomId").empty().append("Room ID: " + returnRoomId);
+
+  // If user already clicked and exit. The button cannot be clicked.
+  addFibociBtnActionBack();
+  updateClearBtn()
+
+  loginDiv.hide();
+  createRoomDiv.hide();
+  pokerRoom.show();
+}
+
+function updatePokerData(players, averagePoint, statistics) {
+  var newTable = "";
+  let isAllDone = true;
+  for (var i in players) {
+    if (players[i].fibonacciNum == -1) {
+      isAllDone = false;
+      break;
+    }
+  }
+
+  if (isAllDone) {
+    statisticsTable.show();
+    showStatistics(statistics);
+  } else {
+    statisticsTable.hide();
+  }
+
+  let elementVal;
+  for (var i in players) {
+    if (players[i].fibonacciNum == -1) {
+      elementVal = "XXX";
+    } else if (isAllDone && players[i].fibonacciNum != UNKNOW_FIBONICA) {
+      elementVal = players[i].fibonacciNum;
+    } else if (players[i].fibonacciNum == UNKNOW_FIBONICA) {
+      elementVal = "No idea";
+    } else {
+      elementVal = "<img src='images/done.jpg' width='60'/>";
+    }
+    newTable += "<tr><td width='150'>" + players[i].name + "</td><td>" + elementVal +"</td></tr>"
+  }
+
+  $("#resultTable").empty().append(newTable);
+  $("#avgPoint").empty().append("Average points:  " + averagePoint);
+}
+
+function showStatistics(statistics) {
+  var newTableStr = "<thead><tr><th <td width='150'>Story Point</th><th>Vote</th></tr></thead><tbody>";
+  let elementVal;
+  newTableStr += "<tbody>";
+  for (var i in statistics) {
+    elementVal = statistics[i];
+    newTableStr += "<tr>"
+    newTableStr += "<td>" + (elementVal.fibonacciNum == UNKNOW_FIBONICA ? "No idea" : elementVal.fibonacciNum) + "</td>";
+    newTableStr += "<td>" + elementVal.count + "</td>";
+    newTableStr += "</tr>";
+  }
+  newTableStr += "</tbody>";
+  $("#statisticsTable").empty().append(newTableStr);
+}
+
+function updateAvailableRooms(rooms) {
+  var newRoomStr = "";
+  let roomm;
+  if (rooms.length <= 0) {
+    newRoomStr = "<tr><th>There's no available room.</th></tr>";
+  } else {
+    newRoomStr += "<tr><th width='150'>Room ID</th><th width='150'>Creator</th><th>Action</th></tr>";
+    for (var i in rooms) {
+      room = rooms[i];
+      newRoomStr += "<tr><td>" + room.roomNum +"</td><td>" + room.creator + "</td><td><button class='ui button' onclick='joinRoomByBtn(" + room.roomNum + ")'>Join</button></td></tr>";
+    }
+  }
+  $("#availableRooms").empty().append(newRoomStr);
+}
+
+// 2. Initialize UI.
+var loginDiv = $("#login");
+loginDiv.show();
+
+var createRoomDiv = $("#create_room");
+createRoomDiv.hide();
+
+var pokerRoom = $("#poker_room").hide();
+
+var statisticsTable = $("#statisticsTable");
+
+</script>
+</body>
+</html>

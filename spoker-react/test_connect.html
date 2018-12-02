@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+<script type="application/javascript" src="http://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+  var ws = new SockJS("ws://localhost:8080/pocker-websocket");
+  var stompClient = Stomp.over(ws);
+  var headers = {
+    mode: 'cors',
+    passcode: 'mypasscode',
+    // additional header
+    'client-id': 'my-client-id'
+  };
+  stompClient.connect(
+    headers,
+    function connectCallback(frame) {
+      // 连接成功时（服务器响应 CONNECTED 帧）的回调方法
+      document.getElementById("state-info").innerHTML = "连接成功";
+      console.log('已连接【' + frame + '】');
+      stompClient.subscribe('/topic/getResponse', function (response) {
+        showResponse(response.body);
+      });
+    },
+    function errorCallBack(error) {
+      // 连接失败时（服务器响应 ERROR 帧）的回调方法
+      document.getElementById("state-info").innerHTML = "连接失败";
+      console.log('连接失败【' + error + '】');
+    }
+  );
+
+</script>
+
+<body>
+
+</body>
+
+</html>
