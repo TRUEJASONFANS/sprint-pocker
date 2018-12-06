@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router';
-import * as loginService from '../services/login_service';
+import * as loginService from '../services/websocket_service';
 import pathToRegexp from 'path-to-regexp';
 export default {
   namespace: 'global',

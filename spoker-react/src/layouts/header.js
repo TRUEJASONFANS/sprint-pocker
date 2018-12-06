@@ -10,7 +10,7 @@ function Header({ location }) {
         </Link>
     </Menu.Item>
     <Menu.Item key="/showRoom">
-      <Link to="/room">
+      <Link to="/rooms">
         <Icon type="bank" />
         房间
         </Link>

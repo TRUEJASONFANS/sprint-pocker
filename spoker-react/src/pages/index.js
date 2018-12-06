@@ -3,7 +3,7 @@ import Redirect from 'umi/redirect';
 
 function IndexPage({ login }) {
   if (login) {
-    return <Redirect to="/room"/>;
+    return <Redirect to="/rooms"/>;
   } else {
     return <Redirect to="/login" />;
   }
