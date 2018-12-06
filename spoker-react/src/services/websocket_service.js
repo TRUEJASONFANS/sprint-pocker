@@ -8,7 +8,8 @@ export function onLoginServer(userName) {
 }
 
 export function openSocket(action) {
-    // 连接 Websocket 服务端
+    // 连接 Websocket 服务端 
+    // 生成cookie
     var socket = new SockJS("http://localhost:8080/pocker-websocket");
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
