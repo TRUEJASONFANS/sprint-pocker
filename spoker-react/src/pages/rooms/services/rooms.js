@@ -1,9 +1,11 @@
 import { PAGE_SIZE } from '../constants';
-import request from '../../../utils/request';
+import {subscribe, request} from '../../../services/websocket_service';
 
-export function fetch({ page = 1 }) {
-  return request(`/api/users?_page=${page}&_limit=${PAGE_SIZE}`);
+export function fetch(action) {
+  subscribe('/pocker/rooms', action)
+  request('/app/rooms');
 }
+
 
 export function remove(id) {
   return request(`/api/users/${id}`, {

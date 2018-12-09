@@ -18,15 +18,14 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default async function request(url, options) {
-  let myHeaders = new Headers({
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'text/plain'
-  });
-  const response = await fetch(url, {
-    headers: myHeaders,
-    mode: 'cors'
-  });
+ 
+  console.log('url', url);
+  console.log('options', options);
 
+  const response = await fetch(url, options);
+
+  console.log('response', response);
+  
   checkStatus(response);
 
   const data = await response.json();

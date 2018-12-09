@@ -9,20 +9,16 @@ export default {
   },
   reducers: {
     save(state, { payload: { data: list, total, page } }) {
+      console.log('tag', list);
       return { ...state, list, total, page };
     },
   },
   effects: {
     *fetch({ payload: { page = 1 } }, { call, put }) {
-      const { data, headers } = yield call(roomService.fetch, { page });
-      yield put({
-        type: 'save',
-        payload: {
-          data,
-          total: parseInt(headers['x-total-count'], 10),
-          page: parseInt(page, 10),
-        },
-      });
+      const action = (data) => {
+       
+      };
+      yield call(roomService.fetch, action);
     },
     *remove({ payload: id }, { call, put, select }) {
       yield call(roomService.remove, id);
@@ -44,7 +40,18 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, query }) => {
         if (pathname === '/rooms') {
-          dispatch({ type: 'fetch', payload: query });
+          roomService.fetch((data) => {
+            var body = JSON.parse(data.body);
+            console.log("body", JSON.parse(data.body));
+             dispatch({
+              type: 'save',
+              payload: {
+                data: body,
+                total: 1,
+                page: 1
+              },
+            });
+          });
         }
       });
     },
