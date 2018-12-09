@@ -37,7 +37,7 @@ export default {
   },
   subscriptions: { //订阅
     openSocket({ dispatch, history }) {
-      return loginService.openSocket((data) => {
+      loginService.openSocket((data) => {
         console.log('Set login state:' + data.hasLogin);
         dispatch({ type: 'signin', payload: data.hasLogin });
         dispatch(routerRedux.push('/'));

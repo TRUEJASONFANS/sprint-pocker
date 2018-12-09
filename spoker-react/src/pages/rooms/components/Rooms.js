@@ -5,7 +5,7 @@ import { routerRedux } from 'dva/router';
 
 import { Table, Pagination, Popconfirm, Button } from 'antd';
 
-function Rooms({ dispatch, roomList: dataSource, loading, total, page: current }) {
+function Rooms({ dispatch, list: dataSource, loading, total, page: current }) {
   function createHandler(values) {
     dispatch({
       type: 'rooms/create',
