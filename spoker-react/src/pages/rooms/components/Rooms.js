@@ -46,7 +46,7 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current }) {
         loading={loading}
         columns={columns}
         dataSource={dataSource}
-        rowKey={record => record.id}
+        rowKey={record => record.roomNum}
         pagination={false}
       />
       <Pagination

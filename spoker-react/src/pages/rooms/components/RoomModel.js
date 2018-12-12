@@ -4,7 +4,6 @@ import { Modal, Form, Input } from 'antd';
 const FormItem = Form.Item;
 
 class RoomEditModel extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -12,10 +11,26 @@ class RoomEditModel extends Component {
     };
   }
 
-  showModelHandler = (e) => {
+  showModelHandler = e => {
     if (e) e.stopPropagation();
     this.setState({
       visible: true,
+    });
+  };
+
+  hideModelHandler = e => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  okHandler = e => {
+    const { onOk } = this.props;
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        onOk(values);
+        this.hideModelHandler();
+      }
     });
   };
 
@@ -29,35 +44,26 @@ class RoomEditModel extends Component {
     const { children } = this.props;
     return (
       <span>
-        <span onClick={this.showModelHandler}>
-          {children}
-        </span>
+        <span onClick={this.showModelHandler}>{children}</span>
         <Modal
           title="创建房间"
           visible={this.state.visible}
           onOk={this.okHandler}
+          okText = "确认"
+          cancelText = "取消"
           onCancel={this.hideModelHandler}
         >
-          <Form horizontal onSubmit={this.okHandler}>
-            <FormItem
-              {...formItemLayout}
-              label="Name"
-            >
-              {
-                getFieldDecorator('name', {
-                  initialValue: name,
-                })(<Input />)
-              }
+          <Form layout={"horizontal"} onSubmit={this.okHandler}>
+            <FormItem {...formItemLayout} label="房间名">
+              {getFieldDecorator('name', {
+                initialValue: name,
+                rules: [{ required: true, message: '请输入房间名称' }],
+              })(<Input />)}
             </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="Description"
-            >
-              {
-                getFieldDecorator('desc', {
-                  initialValue: desc,
-                })(<Input />)
-              }
+            <FormItem {...formItemLayout} label="描述">
+              {getFieldDecorator('desc', {
+                initialValue: desc,
+              })(<Input />)}
             </FormItem>
           </Form>
         </Modal>
