@@ -3,7 +3,7 @@ import {subscribe, request} from '../../../services/websocket_service';
 
 export function fetch(action) {
   subscribe('/pocker/rooms', action)
-  request('/app/rooms');
+  request('/app/rooms', {}, {});
 }
 
 
@@ -21,8 +21,7 @@ export function patch(id, values) {
 }
 
 export function create(values) {
-  return request('/api/users', {
-    method: 'POST',
-    body: JSON.stringify(values),
-  });
+  request('/app/addRoom', {},
+    JSON.stringify(values),
+  );
 }
