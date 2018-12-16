@@ -8,11 +8,12 @@ export default {
     userName: "",
   },
   reducers: { //同步action
-    signin(state, { payload: loginState }) {
-      console.log("signing:" + loginState);
+    signin(state, { payload: data }) {
+      console.log("signing:" + data);
       return {
         ...state,
-        hasLogin: loginState
+        hasLogin: data.hasLogin,
+        userName: data.userName
       };
     },
   },
@@ -20,8 +21,18 @@ export default {
     *onLogin({ payload: userName }, { call, put, select }) {
       console.log('username', userName);
       const hasLogin = yield select(state => state.global.hasLogin);
-      if (!hasLogin && userName !== undefined) {
-        yield call(loginService.onLoginServer, userName);
+      const hasLoginName = yield select(state => state.global.userName)
+      if (!hasLogin) {
+        if (userName !== undefined) {
+          yield call(loginService.onLoginServer, userName);
+        }
+      }
+      if (hasLogin) {
+        if (userName === hasLoginName) {
+          yield put(routerRedux.push('/rooms'));
+        } else {
+          yield call(loginService.onLoginServer, userName);
+        }
       }
     },
     *onAuth({ payload: location }, { call, put, select }) {
@@ -38,8 +49,8 @@ export default {
   subscriptions: { //订阅
     openSocket({ dispatch, history }) {
       loginService.openSocket((data) => {
-        console.log('Set login state:' + data.hasLogin);
-        dispatch({ type: 'signin', payload: data.hasLogin });
+        console.log('login data' + data);
+        dispatch({ type: 'signin', payload: data });
         dispatch(routerRedux.push('/'));
       })
     },
@@ -48,7 +59,7 @@ export default {
       history.listen((location) => {
         const match = pathToRegexp('/login').exec(location.pathname)
         if (!match) {
-          dispatch({ type: 'onAuth', payload: location.pathname });
+          // dispatch({ type: 'onAuth', payload: location.pathname });
         }
       })
     }

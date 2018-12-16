@@ -4,8 +4,11 @@ import styles from './Rooms.css';
 import { routerRedux } from 'dva/router';
 
 import { Table, Pagination, Popconfirm, Button } from 'antd';
+import { stat } from 'fs';
+import { Link } from 'dva/router';
+import PockerRoom from '../../pockerRoom/$id$';
 
-function Rooms({ dispatch, list: dataSource, loading, total, page: current }) {
+function Rooms({ dispatch, list: dataSource, loading, total, page: current, userName }) {
   function createHandler(values) {
     dispatch({
       type: 'rooms/create',
@@ -25,7 +28,8 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current }) {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: text => <a href="">{text}</a>,
+      // render: text => text
+      render: text =>  <a href={`/pockerRoom/${text}`}>{text}</a>,
     }, 
     {
       title: 'Description',
@@ -38,7 +42,7 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current }) {
   return (
     <div>
       <div className={styles.create}>
-        <RoomModel record={{}} onOk={createHandler}>
+        <RoomModel owner={userName} record={{}} onOk={createHandler}>
           <Button type="primary">Create Rooms</Button>
         </RoomModel>
       </div>
@@ -62,11 +66,13 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current }) {
 
 function mapStateToProps(state) {
   const { list, total, page } = state.rooms;
+  const {userName} = state.global;
   return {
     list,
     total,
     page,
     loading: state.loading.models.users,
+    userName
   };
 }
 export default connect(mapStateToProps)(Rooms);

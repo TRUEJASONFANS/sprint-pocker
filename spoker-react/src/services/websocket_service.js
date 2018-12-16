@@ -32,6 +32,7 @@ export function subscribe(subscribeUrl, action) {
 }
 
 export function request(sendUrl, header, body) {
-  console.log('request url', sendUrl);
+  console.log('request url:', sendUrl);
+  console.log('body:', body);
   stompClient.send(sendUrl, header, body);
 }

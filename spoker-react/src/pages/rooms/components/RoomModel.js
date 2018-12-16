@@ -25,10 +25,11 @@ class RoomEditModel extends Component {
   };
 
   okHandler = e => {
-    const { onOk } = this.props;
+    const { onOk, owner } = this.props;
+    console.log(owner);
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        onOk(values);
+        onOk({creator: owner, ...values});
         this.hideModelHandler();
       }
     });
