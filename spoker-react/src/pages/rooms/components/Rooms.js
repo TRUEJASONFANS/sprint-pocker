@@ -2,11 +2,8 @@ import RoomModel from './RoomModel';
 import { connect } from 'dva';
 import styles from './Rooms.css';
 import { routerRedux } from 'dva/router';
+import { Table, Pagination, Button } from 'antd';
 
-import { Table, Pagination, Popconfirm, Button } from 'antd';
-import { stat } from 'fs';
-import { Link } from 'dva/router';
-import PockerRoom from '../../pockerRoom/$id$';
 
 function Rooms({ dispatch, list: dataSource, loading, total, page: current, userName }) {
   function createHandler(values) {

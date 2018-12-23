@@ -3,19 +3,18 @@ import * as pockerService from '../services/pockerService';
 export default {
   namespace: 'pocketBoard',
   state: {
-    userStoryPointLists: [],
+    scoreList: [],
     roomName: '',
     average: ''
   },
   reducers: {
-    syncStoryPoint(state, { payload: { userStoryPointLists, roomName, average } }) {
-      return { ...state, userStoryPointLists, roomName, average}
+    syncStoryPoint(state, { payload: { scoreList } }) {
+      return { ...state, scoreList }
     },
   },
   effect: {
-    *queryStoryPoints({ payload: roomName }, { call, put }) {
+    *queryStoryPoints({ payload: roomName }, { call }) {
       yield call(pockerService, roomName);
-
     },
     *submitStoryPoints({ payload: data }, { call, put }) {
 
@@ -37,8 +36,9 @@ export default {
             console.log('pocker room', data);
             dispatch({
               type: 'syncStoryPoint',
-              payload: 
-                JSON.parse(data.body),
+              payload: {
+                scoreList: JSON.parse(data.body),
+              }
             })
           }, roomId);
         }
