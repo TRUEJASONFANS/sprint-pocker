@@ -23,14 +23,17 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current, user
     }));
   }
 
+  function joinRoom(roomNum) {
+    return () => dispatch(routerRedux.push(`/pockerRoom/${roomNum}`));
+  }
+
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
-      key: 'name',
-      // render: text => text
-      render: text =>  <a href={`/pockerRoom/${text}`}>{text}</a>,
-    }, 
+      key: 'name',   
+      render: text => { return <a onClick={joinRoom(text)}>{text}</a>},
+    },
     {
       title: 'Description',
       dataIndex: 'desc',
@@ -66,7 +69,7 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current, user
 
 function mapStateToProps(state) {
   const { list, total, page } = state.rooms;
-  const {userName} = state.global;
+  const { userName } = state.global;
   return {
     list,
     total,

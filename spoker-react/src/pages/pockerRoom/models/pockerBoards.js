@@ -1,5 +1,5 @@
 import pathToRegexp from 'path-to-regexp';
-import * as pockerService from '../service/pockerService';
+import * as pockerService from '../services/pockerService';
 export default {
   namespace: 'pocketBoard',
   state: {
@@ -26,18 +26,21 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
+    init({ dispatch, history }) {
       return history.listen(location => {
-        console.log(location.pathname);
-        const match = pathToRegexp('/pocketRoom/:id').exec(location.pathname);
+        const match = pathToRegexp('/pockerRoom/:id').exec(location.pathname);
         if (match) {
+          var roomId = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+          // join room
+          console.log(roomId);
           pockerService.fetch((data) => {
+            console.log('pocker room', data);
             dispatch({
               type: 'syncStoryPoint',
               payload: 
                 JSON.parse(data.body),
             })
-          });
+          }, roomId);
         }
       });
     },
