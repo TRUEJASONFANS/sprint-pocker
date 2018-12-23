@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import styles from './PockerBoard.css';
 import { connect } from 'dva';
 import {Table} from 'antd';
-function PockerBoard({roomName, userStoryPointLists}) {
+function PockerBoard({roomName, scoreList}) {
 
   const columns = [
     {
@@ -13,8 +13,8 @@ function PockerBoard({roomName, userStoryPointLists}) {
     },
     {
       title: 'StoryPoint',
-      dataIndex: 'storyPoint',
-      key: 'storyPoint',
+      dataIndex: 'fibonacciNum',
+      key: 'fibonacciNum',
       render: text => text
     }
   ];
@@ -37,7 +37,7 @@ function PockerBoard({roomName, userStoryPointLists}) {
       <div>
           <Table
             columns= {columns}
-            dataSource = {userStoryPointLists}
+            dataSource = {scoreList}
             rowKey = {record => record.id}
             pagination = {false}
           />
