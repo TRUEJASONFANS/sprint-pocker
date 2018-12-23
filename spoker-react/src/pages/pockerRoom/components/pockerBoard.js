@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import styles from './PockerBoard.css';
 import { connect } from 'dva';
 import {Table} from 'antd';
-function PockerBoard({roomName, scoreList}) {
+function PockerBoard({ dispatch, roomName, scoreList, userName }) {
 
   const columns = [
     {
@@ -18,6 +18,19 @@ function PockerBoard({roomName, scoreList}) {
       render: text => text
     }
   ];
+
+  function onClickPockerNumber(num) {
+    var values = {
+      fibonacciNum: num,
+      name: userName,
+      roomName: roomName
+    }
+    dispatch({
+      type: 'pockerBoard/onClickPocker',
+      payload: values
+    });
+  }
+
   return (
     <div>
 
@@ -26,11 +39,11 @@ function PockerBoard({roomName, scoreList}) {
         <div id="exitRoom"><Button className="ui positive button">Exit</Button></div>
       </div>
       <div>
-        <Button shape="circle" className={styles.one}>1</Button>
-        <Button shape="circle">3</Button>
-        <Button shape="circle">5</Button>
-        <Button shape="circle">8</Button>
-        <Button shape="circle">???</Button>
+        <Button shape="circle" className={styles.one} onClick={()=>onClickPockerNumber(1)}>1</Button>
+        <Button shape="circle" onClick={()=>onClickPockerNumber("3")}>3</Button>
+        <Button shape="circle" onClick={()=>onClickPockerNumber("5")}>5</Button>
+        <Button shape="circle" onClick={()=>onClickPockerNumber("8")}>8</Button>
+        <Button shape="circle" onClick={()=>onClickPockerNumber("??")}>??</Button>
         <Button>提交</Button>
       </div>
       {/* 统计表格       */}
@@ -38,7 +51,7 @@ function PockerBoard({roomName, scoreList}) {
           <Table
             columns= {columns}
             dataSource = {scoreList}
-            rowKey = {record => record.id}
+            rowKey = {record => record.name}
             pagination = {false}
           />
       </div>
@@ -46,10 +59,12 @@ function PockerBoard({roomName, scoreList}) {
   );
 }
 function mapStateToProps(state) {
-  const { roomName, scoreList } = state.pocketBoard;
+  const { roomName, scoreList} = state.pockerBoard;
+  const { userName } = state.global;
   return {
     roomName,
-    scoreList
+    scoreList,
+    userName
   }
 }
 export default connect(mapStateToProps)(PockerBoard);
