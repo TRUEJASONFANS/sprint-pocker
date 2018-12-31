@@ -1,4 +1,4 @@
-import styles from './poker_dashboard.css';
+import styles from './pokerDashboard.css';
 
 export default function() {
   return (

@@ -31,6 +31,12 @@ function PockerBoard({ dispatch, roomName, scoreList, userName }) {
     });
   }
 
+  function onSumbitPockerNumber() {
+    dispatch({
+      type: 'pockerBoard/onSumbitPockerNumber',
+    });
+  }
+
   return (
     <div>
 
@@ -44,7 +50,7 @@ function PockerBoard({ dispatch, roomName, scoreList, userName }) {
         <Button shape="circle" onClick={()=>onClickPockerNumber("5")}>5</Button>
         <Button shape="circle" onClick={()=>onClickPockerNumber("8")}>8</Button>
         <Button shape="circle" onClick={()=>onClickPockerNumber("??")}>??</Button>
-        <Button>提交</Button>
+        <Button onClick={onSumbitPockerNumber}>提交</Button>
       </div>
       {/* 统计表格       */}
       <div>
