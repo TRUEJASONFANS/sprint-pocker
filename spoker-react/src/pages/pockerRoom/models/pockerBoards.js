@@ -20,8 +20,10 @@ export default {
       yield call(pockerService, roomName);
     },
     *onClickPocker({ payload: values }, { call, put }) {
-      console.log('tag2', 'www');
       yield call(pockerService.onClickPocker, values)
+    },
+    *onSumbitPockerNumber() {
+      //TODO 
     },
     *resetStoryPoints({ payload: data }, { call, put }) {
 
