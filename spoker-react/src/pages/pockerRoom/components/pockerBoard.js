@@ -2,7 +2,8 @@ import { Button } from 'antd';
 import styles from './PockerBoard.css';
 import { connect } from 'dva';
 import {Table} from 'antd';
-function PockerBoard({ dispatch, roomName, scoreList, userName }) {
+import RecordCreatorDlg from './recordCreatorDlg';
+function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
 
   const columns = [
     {
@@ -22,7 +23,7 @@ function PockerBoard({ dispatch, roomName, scoreList, userName }) {
   function onClickPockerNumber(num) {
     var values = {
       fibonacciNum: num,
-      name: userName,
+      name: curUser,
       roomName: roomName
     }
     dispatch({
@@ -31,15 +32,15 @@ function PockerBoard({ dispatch, roomName, scoreList, userName }) {
     });
   }
 
-  function onSumbitPockerNumber() {
+  function createRecordHandler(tickerRecord) {
     dispatch({
-      type: 'pockerBoard/onSumbitPockerNumber',
+      type: 'pockerBoard/addTicketRecord',
+      payload: tickerRecord,
     });
   }
 
   return (
     <div>
-
       <div>
         <div>{roomName}</div>
         <div id="exitRoom"><Button className="ui positive button">Exit</Button></div>
@@ -50,7 +51,9 @@ function PockerBoard({ dispatch, roomName, scoreList, userName }) {
         <Button shape="circle" onClick={()=>onClickPockerNumber("5")}>5</Button>
         <Button shape="circle" onClick={()=>onClickPockerNumber("8")}>8</Button>
         <Button shape="circle" onClick={()=>onClickPockerNumber("??")}>??</Button>
-        <Button onClick={onSumbitPockerNumber}>提交</Button>
+        <RecordCreatorDlg record = {scoreList} onOk={createRecordHandler} creator={curUser}>
+          <Button>提交</Button>
+        </RecordCreatorDlg>
       </div>
       {/* 统计表格       */}
       <div>
@@ -67,10 +70,11 @@ function PockerBoard({ dispatch, roomName, scoreList, userName }) {
 function mapStateToProps(state) {
   const { roomName, scoreList} = state.pockerBoard;
   const { userName } = state.global;
+  const curUser = userName
   return {
     roomName,
     scoreList,
-    userName
+    curUser
   }
 }
 export default connect(mapStateToProps)(PockerBoard);

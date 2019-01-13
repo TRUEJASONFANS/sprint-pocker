@@ -17,7 +17,7 @@ function checkStatus(response) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default async function request(url, options) {
+export async function request(url, options) {
  
   console.log('url', url);
   console.log('options', options);

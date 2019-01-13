@@ -22,12 +22,9 @@ export default {
     *onClickPocker({ payload: values }, { call, put }) {
       yield call(pockerService.onClickPocker, values)
     },
-    *onSumbitPockerNumber() {
-      //TODO 
+    *addTicketRecord({payload:values}, {call}){
+      yield call(pockerService.addTikcetRecord(values));
     },
-    *resetStoryPoints({ payload: data }, { call, put }) {
-
-    }
   },
 
   subscriptions: {
@@ -37,7 +34,6 @@ export default {
         if (match) {
           var roomId = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
           // join room
-          console.log(roomId);
           dispatch({
             type: 'syncRoomName',
             payload: {
