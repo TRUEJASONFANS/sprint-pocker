@@ -7,9 +7,6 @@ const { TextArea } = Input;
 class RecordCreatorDlg extends Component {
   constructor(props) {
     super(props);
-    const estimateVals = this.props.record.map(score => score.fibonacciNum).filter(a => a !== "??");
-    this.estimateAvgVals = estimateVals.reduce((prev, curv) => prev + curv, 0) / estimateVals.length;
-    console.log("xxx", this.estimateAvgVals);
     this.state = {
       visible: false,
     };
@@ -42,7 +39,11 @@ class RecordCreatorDlg extends Component {
   };
 
   render() {
-
+    let estimateAvgVals = 0;
+    const estimateVals = this.props.record.map(score => score.fibonacciNum).filter(a => a !== "??");
+    if (estimateVals.length > 0) {
+    estimateAvgVals = estimateVals.reduce((prev, curv) => prev + curv, 0) / estimateVals.length;
+    }
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -65,7 +66,7 @@ class RecordCreatorDlg extends Component {
             </FormItem>
             <FormItem {...formItemLayout} label="Ticket估值">
               {getFieldDecorator('storyPoint', {
-                initialValue: this.estimateAvgVals,
+                initialValue: estimateAvgVals,
                 rules: [{ required: true, message: '请输入ticket 估值' }]
               })(<Input />)}
             </FormItem>
@@ -81,5 +82,4 @@ class RecordCreatorDlg extends Component {
     );
   }
 }
-
 export default Form.create()(RecordCreatorDlg);
