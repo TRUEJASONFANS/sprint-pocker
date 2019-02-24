@@ -15,7 +15,6 @@ export default {
       hardSource: true,
     }],
   ],
-  "publicPath": "/static/",
   "proxy": {
     "/poker": {
       "target": "http://localhost:8080/",
