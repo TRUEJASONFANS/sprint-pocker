@@ -1,6 +1,5 @@
 import { routerRedux } from 'dva/router';
 import * as loginService from '../services/websocket_service';
-import pathToRegexp from 'path-to-regexp';
 export default {
   namespace: 'global',
   state: {
@@ -47,22 +46,22 @@ export default {
     },
   },
   subscriptions: { //订阅
-    openSocket({ dispatch, history }) {
-      loginService.openSocket((data) => {
-        console.log('login data' + data);
-        dispatch({ type: 'signin', payload: data });
-        dispatch(routerRedux.push('/'));
-      })
-    },
+    // openSocket({ dispatch, history }) {
+    //   loginService.openSocket((data) => {
+    //     console.log('login data' + data);
+    //     dispatch({ type: 'signin', payload: data });
+    //     dispatch(routerRedux.push('/'));
+    //   })
+    // },
 
-    openAuth({ dispatch, history }) {
-      history.listen((location) => {
-        const match = pathToRegexp('/login').exec(location.pathname)
-        if (!match) {
-          // dispatch({ type: 'onAuth', payload: location.pathname });
-        }
-      })
-    }
+    // openAuth({ dispatch, history }) {
+    //   history.listen((location) => {
+    //     const match = pathToRegexp('/login').exec(location.pathname)
+    //     if (!match) {
+    //       // dispatch({ type: 'onAuth', payload: location.pathname });
+    //     }
+    //   })
+    // }
   }
 
 }
