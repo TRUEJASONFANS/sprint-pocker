@@ -18,26 +18,34 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export async function request(url, options) {
- 
+
   console.log('url', url);
   console.log('options', options);
 
-  const response = await fetch(url, options);
+  try {
+    const response = await fetch(url, options);
 
-  console.log('response', response);
-  
-  checkStatus(response);
+    console.log('response', response);
 
-  const data = await response.json();
+    checkStatus(response);
 
-  const ret = {
-    data,
-    headers: {},
-  };
+    //await 异步回调方法。 以写同步的方式写异步回调
+    const data = await response.json();
+    
+    console.log("in the call", data);
 
-  if (response.headers.get('x-total-count')) {
-    ret.headers['x-total-count'] = response.headers.get('x-total-count');
+    const ret = {
+      data,
+      headers: {},
+    };
+
+    if (response.headers.get('x-total-count')) {
+      ret.headers['x-total-count'] = response.headers.get('x-total-count');
+    }
+
+    return ret;
+  } catch (error) {
+    console.error(error);
+    return {}
   }
-
-  return ret;
 }

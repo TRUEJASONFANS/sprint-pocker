@@ -24,6 +24,7 @@ class RecordCreatorDlg extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.hideModelHandler();
+        console.log("values", values);
         onOk({
           users: creator,
           ...values
