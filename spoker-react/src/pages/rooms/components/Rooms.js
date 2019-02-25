@@ -67,6 +67,7 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current, user
 function mapStateToProps(state) {
   const { list, total, page } = state.rooms;
   const { userName } = state.global;
+  console.log("table:",state.rooms);
   return {
     list,
     total,
