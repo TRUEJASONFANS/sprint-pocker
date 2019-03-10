@@ -4,24 +4,20 @@ import Stomp from 'stompjs';
 let stompClient;
 let socket;
 
-export function onLoginServer(userName) {
-  console.log('onLoginServer', userName);
-  stompClient.send("/app/login", {}, userName);
+// export function onLoginServer(userName) {
+//   console.log('onLoginServer', userName);
+//   stompClient.send("/app/login", {}, userName);
   
-}
+// }
 
-export function openSocket(action) {
+export function openSocket(subscribeUrl, subs_ction, instant_call) {
   // 连接 Websocket 服务端 
   // 生成cookie
   socket = new SockJS("http://localhost:8080/pocker-websocket");
   stompClient = Stomp.over(socket);
   stompClient.connect({}, function (frame) {
-    stompClient.subscribe('/pocker/login', function (data) {
-      console.log('login sucessful!' + JSON.parse(data.body));
-      if (data.body) {
-        action(JSON.parse(data.body))
-      }
-    });
+    subscribe(subscribeUrl, subs_ction);
+    instant_call();
   });
 
 }
