@@ -3,8 +3,8 @@ import Link from 'umi/link';
 
 function Header({ location }) {
   return <Menu selectedKeys={[location.pathname]} mode="horizontal" theme="dark">
-    <Menu.Item key="poker_dashboard">
-      <Link to="/poker_dashboard">
+    <Menu.Item key="dashboard">
+      <Link to="/dashboard">
         <Icon type="home" />
         Ticket面板
         </Link>
