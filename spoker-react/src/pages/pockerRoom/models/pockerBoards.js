@@ -33,6 +33,9 @@ export default {
         const match = pathToRegexp('/pockerRoom/:id').exec(location.pathname);
         if (match) {
           var roomId = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+
+          //TODO: verify the backend whether the room is created or not
+          
           // join room
           dispatch({
             type: 'syncRoomName',
