@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import styles from './Rooms.css';
 import { routerRedux } from 'dva/router';
 import { Table, Pagination, Button } from 'antd';
-
+import { ROOM_PAGE_SIZE } from '../../constants';
 
 function Rooms({ dispatch, list: dataSource, loading, total, page: current, userName }) {
   function createHandler(values) {
@@ -57,7 +57,7 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current, user
         className="ant-table-pagination"
         total={total}
         current={current}
-        pageSize={3}
+        pageSize={ROOM_PAGE_SIZE}
         onChange={pageChangeHandler}
       />
     </div>

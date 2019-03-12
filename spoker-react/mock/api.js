@@ -4,4 +4,8 @@ export default {
     [{ name: "room1", desc: "created by j1", roomNum: 1 },
     { name: "room2", desc: "created by j2", roomNum: 2 }]
   ,
+  'GET /api/dashboard?page=1&_limit=20':[
+    { ticketNum: "001", title: "process definition", desc: "pxxxxxxx", storyPoint: 3 },
+    { ticketNum: "002", title: "create auto selection", desc: "caaaaaaa", storyPoint: 5 },
+  ]
 };
