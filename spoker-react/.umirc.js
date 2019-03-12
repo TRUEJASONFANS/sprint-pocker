@@ -12,7 +12,7 @@ export default {
       routes: {
         exclude: [],
       },
-      hardSource: true,
+      hardSource: false,
     }],
   ],
   "proxy": {// 配置fetch 路由转发至后台API服务地址.

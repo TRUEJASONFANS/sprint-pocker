@@ -1,4 +1,3 @@
-import { PAGE_SIZE } from '../constants';
 // import {request} from '../../../utils/request';
 import {openSocket, request} from '../../../services/websocket_service';
 
