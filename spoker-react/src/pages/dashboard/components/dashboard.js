@@ -13,8 +13,8 @@ function Dashboard({ dispatch, itemList, curPage }) {
         },
         {
             title: 'Title',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'title',
+            key: 'title',
             render: text => text,
         },
         {
