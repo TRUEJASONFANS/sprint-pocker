@@ -32,7 +32,7 @@ export async function request(url, options) {
     //await 异步回调方法。 以写同步的方式写异步回调
     const data = await response.json();
     
-    console.log("in the call", data);
+    console.log("in the request", data);
 
     const ret = {
       data,

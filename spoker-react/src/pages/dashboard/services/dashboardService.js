@@ -1,10 +1,8 @@
-import * as request from '../../../utils/request';
+import {request} from '../../../utils/request';// Note: use the {} if the export file don't use the default
 import { DASHBOARD_PAGE_SIZE } from '../../constants';
 
-export function fetch(page) {
-  return request(`/api/dashboard?page=${page}&_limit=${DASHBOARD_PAGE_SIZE}`, {
-    method:'get'
-  });
+export function fetch({page=1}) {
+  return request(`/api/dashboard?page=${page}&limit=${DASHBOARD_PAGE_SIZE}`);
 }
 
 

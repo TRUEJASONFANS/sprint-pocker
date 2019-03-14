@@ -1,4 +1,4 @@
-import * as dashboardService from '../service/dashboardService';
+import * as dashboardService from '../services/dashboardService';
 
 export default {
   namespace: 'dashboard',
@@ -8,14 +8,15 @@ export default {
 
   },
   reducers: {
-    save(state, { payload: { data: list, page } }) {
-      return { ...state, list, page };
+    save(state, { payload: { data: itemList, page } }) {
+      console.log("dash fetch:" , page);
+      return { ...state, itemList, page };
     },
   },
   effects: {
     *fetch({ payload: page }, { call, put }) {
-      let itemList = yield call(dashboardService.fetch, page);
-      yield put({ type: 'save', payload: { data: itemList, page }});
+      let {data, header} = yield call(dashboardService.fetch, page);
+      yield put({ type: 'save', payload: { data, page }});
     },
     *create({ payload: newItem }, { call, select ,put}) {
       yield call(dashboardService.create, newItem);
@@ -35,7 +36,7 @@ export default {
           dispatch({
             type: 'fetch',
             payload: {
-              page: 1
+              page: query.page
             }
           });
         }
