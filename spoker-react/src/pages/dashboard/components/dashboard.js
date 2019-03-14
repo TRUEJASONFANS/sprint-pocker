@@ -1,12 +1,13 @@
 import { DASHBOARD_PAGE_SIZE } from '../../constants';
 import { connect } from 'dva';
-import { Table, Pagination } from 'antd';
+import { Table, Pagination, Button} from 'antd';
 import { routerRedux } from 'dva/router';
+import DashboardItemCreator from './dashboardItemCreator';
 function Dashboard({ dispatch, itemList, curPage }) {
 
     const columns = [
         {
-            title: 'Ticket number',
+            title: 'Ticket Number',
             dataIndex: 'ticketNum',
             key: 'ticketNum',
             render: text => text,
@@ -33,14 +34,25 @@ function Dashboard({ dispatch, itemList, curPage }) {
 
     function pageChangeHandler(page) {
         dispatch(routerRedux.push({
-          pathname: '/dashboard',
-          query: { page },
+            pathname: '/dashboard',
+            query: { page },
         }));
     }
 
-      
+    function createHandler(newItem) {
+        dispatch({
+          type: 'dashboard/create',
+          payload: newItem,
+        });
+      }
+
     return (
         <div>
+            <div>
+                <DashboardItemCreator onOk={createHandler}>
+                    <Button type="primary">Create tickets</Button>
+                </DashboardItemCreator>
+            </div>
             <Table
                 columns={columns}
                 dataSource={itemList}
