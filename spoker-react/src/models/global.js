@@ -1,67 +1,33 @@
-import { routerRedux } from 'dva/router';
-import * as loginService from '../services/websocket_service';
+import * as userService from '../services/userService';
 export default {
-  namespace: 'global',
+  namespace: 'global', // 全局
   state: {
-    hasLogin: false,
+    hasLogin: true,
     userName: "",
   },
   reducers: { //同步action
-    signin(state, { payload: data }) {
-      console.log("signing:" + data);
+    login(state, { data: user, hasLogin }) {
       return {
         ...state,
-        hasLogin: data.hasLogin,
-        userName: data.userName
+        hasLogin: hasLogin,
+        userName: user
       };
     },
   },
   effects: { //异步action
-    *onLogin({ payload: userName }, { call, put, select }) {
-      console.log('username', userName);
-      const hasLogin = yield select(state => state.global.hasLogin);
-      const hasLoginName = yield select(state => state.global.userName)
-      if (!hasLogin) {
-        if (userName !== undefined) {
-          yield call(loginService.onLoginServer, userName);
-        }
-      }
-      if (hasLogin) {
-        if (userName === hasLoginName) {
-          yield put(routerRedux.push('/rooms'));
-        } else {
-          yield call(loginService.onLoginServer, userName);
-        }
-      }
-    },
-    *onAuth({ payload: location }, { call, put, select }) {
-      const hasLogin = yield select(state => state.global.hasLogin);
-      console.log('Auth:', hasLogin);
-      if (!hasLogin) {
-        yield put(routerRedux.push('/login'));
-      }
+    *queryUserStatus({ call, put, select }) {
+      let user = yield call(userService.fetch);
+      console.log('username', user);
+      yield put({ type: "login", payload: { data: user, hasLogin: true } })
     },
     *throwError() {
       throw new Error('hi error');
     },
   },
   subscriptions: { //订阅
-    // openSocket({ dispatch, history }) {
-    //   loginService.openSocket((data) => {
-    //     console.log('login data' + data);
-    //     dispatch({ type: 'signin', payload: data });
-    //     dispatch(routerRedux.push('/'));
-    //   })
-    // },
-
-    // openAuth({ dispatch, history }) {
-    //   history.listen((location) => {
-    //     const match = pathToRegexp('/login').exec(location.pathname)
-    //     if (!match) {
-    //       // dispatch({ type: 'onAuth', payload: location.pathname });
-    //     }
-    //   })
-    // }
+    connecting({ dispatch, history }) {
+      dispatch({ type: 'queryUserStatus' });
+    },
   }
 
 }
