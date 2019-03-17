@@ -2,7 +2,7 @@ import { request } from '../../../utils/request';// Note: use the {} if the expo
 import { DASHBOARD_PAGE_SIZE } from '../../constants';
 
 export function fetch({ page = 1 }) {
-  return request(`/api/dashboard`, { page:`${page}`, limit:`${DASHBOARD_PAGE_SIZE}` });
+  return request(`/api/dashboard?pageOffset=${page}&limit=${DASHBOARD_PAGE_SIZE}`);
 }
 
 
