@@ -14,8 +14,11 @@ export function onClickPocker(values) {
 
 export function addTikcetRecord(ticketRecord) {
   console.log('tag', JSON.stringify(ticketRecord));
-  restAPI.request('/poker/ticketRecord', {
+  restAPI.request('/api/dashboard', {
     method: 'POST',
-    body:JSON.stringify(ticketRecord)
+    body:JSON.stringify(ticketRecord),
+    headers: {
+      'Content-Type': 'application/json'
+    },
   });
 }

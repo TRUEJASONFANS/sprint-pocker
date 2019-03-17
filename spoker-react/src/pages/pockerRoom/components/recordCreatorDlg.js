@@ -26,7 +26,7 @@ class RecordCreatorDlg extends Component {
         this.hideModelHandler();
         console.log("values", values);
         onOk({
-          users: creator,
+          creator: creator,
           ...values
         });
       }

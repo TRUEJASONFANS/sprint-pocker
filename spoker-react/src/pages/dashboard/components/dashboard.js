@@ -40,7 +40,6 @@ function Dashboard({ dispatch, itemList, curPage }) {
     }
 
     function createHandler(newItem) {
-        console.log("create Item:", newItem);
         dispatch({
           type: 'dashboard/create',
           payload: newItem,

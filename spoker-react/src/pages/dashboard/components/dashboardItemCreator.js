@@ -26,10 +26,9 @@ class DashboardItemCreator extends Component {
 
     okHandler = e => {
         const { onOk, owner } = this.props;
-        console.log(owner);
         this.props.form.validateFields((err, values) => {
           if (!err) {
-            onOk({creator: owner, ...values});
+            onOk({creator: "", ...values,  createTime:"", updateTime:"", id:""});
             this.hideModelHandler();
           }
         });
@@ -65,7 +64,7 @@ class DashboardItemCreator extends Component {
                             {getFieldDecorator('title', {})(<Input />)}
                         </FormItem>
                         <FormItem {...formItemLayout} label="Description">
-                            {getFieldDecorator('desc', {})(<Input />)}
+                            {getFieldDecorator('description', {})(<Input />)}
                         </FormItem>
                         <FormItem {...formItemLayout} label="Story Point">
                             {getFieldDecorator('storyPoint', {})(<Input />)}
