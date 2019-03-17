@@ -19,8 +19,8 @@ function checkStatus(response) {
  */
 export async function request(url, options) {
 
-  console.log('url', url);
-  console.log('options', options);
+  console.log('url:', url);
+  console.log('options:', options);
 
   try {
     const response = await fetch(url, options);

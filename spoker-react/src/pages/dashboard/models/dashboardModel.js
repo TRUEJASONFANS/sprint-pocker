@@ -9,7 +9,6 @@ export default {
   },
   reducers: {
     save(state, { payload: { data: itemList, page } }) {
-      console.log("dash fetch:" , page);
       return { ...state, itemList, page };
     },
   },
