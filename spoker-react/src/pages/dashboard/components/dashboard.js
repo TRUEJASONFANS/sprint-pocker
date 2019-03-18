@@ -20,8 +20,8 @@ function Dashboard({ dispatch, itemList, curPage }) {
         },
         {
             title: 'Description',
-            dataIndex: 'desc',
-            key: 'desc',
+            dataIndex: 'description',
+            key: 'description',
             render: text => text
         },
         {
