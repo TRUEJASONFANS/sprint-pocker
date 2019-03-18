@@ -74,10 +74,12 @@ class RecordCreatorDlg extends Component {
                 rules: [{ required: true, message: '请输入ticket 估值' }]
               })(<Input />)}
             </FormItem>
-            <div>
-              {this.props.creator}
-            </div>
-            <FormItem {...formItemLayout} label="描述">
+            <FormItem {...formItemLayout} label="Title">
+              {getFieldDecorator('title', {
+                 rules: [{ required: true, message: '请输入Title' }]
+              })(<TextArea />)}
+            </FormItem>
+            <FormItem {...formItemLayout} label="Description">
               {getFieldDecorator('description', {})(<TextArea />)}
             </FormItem>
           </Form>
