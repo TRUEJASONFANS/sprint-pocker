@@ -2,9 +2,9 @@ import { subscribe, request, openSocket} from '../../../services/websocket_servi
 import * as restAPI from '../../../utils/request';
 
 export function fetch(action, roomId) {
-  subscribe('/pocker/pockerBoard/' + roomId, action);
-  request('/app/joinPockerBoard/' + roomId, {}, {});
-  // openSocket('/pocker/pockerBoard/' + roomId, action, () => request('/app/joinPockerBoard/' + roomId, {}, {}));
+  // subscribe('/pocker/pockerBoard/' + roomId, action);
+  // request('/app/joinPockerBoard/' + roomId, {}, {});
+  openSocket('/pocker/pockerBoard/' + roomId, action, () => request('/app/joinPockerBoard/' + roomId, {}, {}));
 }
 
 export function onClickPocker(values) {
