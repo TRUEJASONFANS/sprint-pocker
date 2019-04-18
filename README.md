@@ -2,6 +2,6 @@
 the front repo of sprint pocker
 ## How to buid
 yum install
-npm build
+npm run build
 ## How to run
 npm start
