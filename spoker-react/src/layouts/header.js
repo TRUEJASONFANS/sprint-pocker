@@ -1,6 +1,7 @@
 import { Menu, Icon } from 'antd';
 import Link from 'umi/link';
 
+
 function Header({ location }) {
   return <Menu selectedKeys={[location.pathname]} mode="horizontal" theme="dark">
     <Menu.Item key="dashboard">
@@ -14,6 +15,10 @@ function Header({ location }) {
         <Icon type="bank" />
         房间
         </Link>
+    </Menu.Item>
+    <Menu.Item key="logout">
+      <a href="http://localhost:8080/logout" target="_blank" rel="noopener noreferrer">
+        <Icon type="logout" />登出</a>
     </Menu.Item>
   </Menu>;
 }
