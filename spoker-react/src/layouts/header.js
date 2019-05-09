@@ -17,7 +17,7 @@ function Header({ location }) {
         </Link>
     </Menu.Item>
     <Menu.Item key="logout">
-      <a href="http://localhost:8080/logout" target="_blank" rel="noopener noreferrer">
+      <a href="http://localhost:8080/logout" rel="noopener noreferrer">
         <Icon type="logout" />登出</a>
     </Menu.Item>
   </Menu>;
