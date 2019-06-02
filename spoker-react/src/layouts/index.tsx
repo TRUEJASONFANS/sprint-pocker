@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.css';
-import Header from './Header';
+import Header from '@/layouts/Header';
 import withRouter from 'umi/withRouter';
 
 function Layout({ children, location }) {
