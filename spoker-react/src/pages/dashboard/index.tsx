@@ -1,4 +1,4 @@
-import Dashoboard from './components/dashboard.js';
+import Dashoboard from './components/dashboard';
 
 export default function() {
   return (
