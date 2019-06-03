@@ -64,7 +64,7 @@ class RoomEditModel extends Component {
             <FormItem {...formItemLayout} label="描述">
               {getFieldDecorator('desc', {
                 initialValue: desc,
-              })(<Input />)}
+              })(<Input  placeholder="标注你的房间"/>)}
             </FormItem>
           </Form>
         </Modal>
