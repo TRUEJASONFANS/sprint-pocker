@@ -12,28 +12,31 @@
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
     "@types/react-test-renderer": "^16.0.3",
-
     "babel-eslint": "^9.0.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^5.4.0",
     "eslint-config-umi": "^0.1.5",
     "eslint-plugin-flowtype": "^2.50.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.11.1",
-     
-    "tslint": "^5.12.0",
-    "tslint-eslint-rules": "^5.4.0",
-    "tslint-react": "^3.6.0",
-
     "husky": "^0.14.3",
     "lint-staged": "^7.2.2",
     "sockjs-client": "^1.3.0",
     "stompjs": "^2.3.3",
+    "ts-jest": "^23.0.0",
+    "tslint": "^5.12.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^3.6.0",
     "umi": "^2.1.2",
     "umi-plugin-react": "^1.1.1"
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["tslint --fix", "git add"],
+    "*.{ts,tsx}": [
+      "tslint --fix",
+      "git add"
+    ],
     "*.{js,jsx}": [
       "eslint --fix",
       "git add"
