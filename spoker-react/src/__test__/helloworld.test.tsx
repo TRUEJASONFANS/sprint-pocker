@@ -1,3 +1,4 @@
+import 'jest';
 import { mount } from 'enzyme';
 import TestDemo from '../component/TestDemo'
 
