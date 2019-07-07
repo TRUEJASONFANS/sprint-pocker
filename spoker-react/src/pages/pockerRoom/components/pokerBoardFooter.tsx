@@ -1,10 +1,15 @@
 import * as React from 'react';
+<<<<<<< HEAD
 import styles from './card.css';
+=======
+import styles from './pokerBoardFooter.css';
+>>>>>>> a9b666a3f2e115a40bcad630e7f8b09cf302590d
 
 export interface Props {
   cards: [];
 }
 
+<<<<<<< HEAD
 export interface State {
   flag: true;
 }
@@ -54,6 +59,17 @@ class PokerBoardFooter extends React.Component<Props, State> {
                   <span>{card}</span>
                 </div>
               </div>
+=======
+export default function PokerBoardFooter({cards}: Props) {
+ 
+
+  return (
+    <div>
+        {
+          cards.map(card => (
+            <div className="hand hhand-compact active-hand">
+              <img className='card' src='cards/AS.svg'/>
+>>>>>>> a9b666a3f2e115a40bcad630e7f8b09cf302590d
             </div>
           </div>
         </div>
@@ -61,6 +77,5 @@ class PokerBoardFooter extends React.Component<Props, State> {
   }
 }
 
-export default PokerBoardFooter;
 
 // helpers
