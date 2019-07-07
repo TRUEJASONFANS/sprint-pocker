@@ -1,5 +1,5 @@
-import { request } from '../../../utils/request';// Note: use the {} if the export file don't use the default
-import { DASHBOARD_PAGE_SIZE } from '../../constants';
+import { request } from '@/utils/request';// Note: use the {} if the export file don't use the default
+import { DASHBOARD_PAGE_SIZE } from '@/pages/constants';
 import Item from 'antd-mobile/lib/popover/Item';
 
 export function fetch({ page = 1 }) {

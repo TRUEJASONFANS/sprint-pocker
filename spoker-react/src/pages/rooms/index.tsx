@@ -1,4 +1,4 @@
-import Rooms from './components/Rooms';
+import Rooms from '@/pages/rooms/components/Rooms';
 
 export default () => {
   return (

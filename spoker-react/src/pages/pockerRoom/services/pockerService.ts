@@ -1,5 +1,5 @@
-import { subscribe, request, openSocket} from '../../../services/websocket_service';
-import * as restAPI from '../../../utils/request';
+import { subscribe, request, openSocket} from '@/services/websocket_service';
+import * as restAPI from '@/utils/request';
 
 export function fetch(action, roomId) {
   // subscribe('/pocker/pockerBoard/' + roomId, action);

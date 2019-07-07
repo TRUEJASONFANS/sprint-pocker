@@ -1,8 +1,8 @@
-import { DASHBOARD_PAGE_SIZE } from '../../constants';
+import { DASHBOARD_PAGE_SIZE } from '@/pages/constants';
 import { connect } from 'dva';
 import { Table, Pagination, Button} from 'antd';
 import { routerRedux } from 'dva/router';
-import DashboardItemCreator from './dashboardItemCreator';
+import DashboardItemCreator from '@/pages/dashboard/components/dashboardItemCreator';
 function Dashboard({ dispatch, itemList, curPage }) {
 
     const columns = [

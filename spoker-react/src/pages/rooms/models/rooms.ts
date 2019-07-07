@@ -1,4 +1,4 @@
-import * as roomService from '../services/rooms';
+import * as roomService from '@/pages/rooms/services/rooms';
 
 export default {
   namespace: 'rooms',

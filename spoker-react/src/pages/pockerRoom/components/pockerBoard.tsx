@@ -2,7 +2,8 @@ import { Button } from 'antd';
 import styles from './PockerBoard.css';
 import { connect } from 'dva';
 import {Table} from 'antd';
-import RecordCreatorDlg from './recordCreatorDlg';
+import RecordCreatorDlg from '@/pages/pockerRoom/components/recordCreatorDlg';
+import PokerBoardFooter from './pokerBoardFooter';
 function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
 
   const columns = [
@@ -19,6 +20,9 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
       render: text => text
     }
   ];
+
+  // const cards = ['1'];
+  const cards = ['1','2','3','5','8','13','21'];
 
   function onClickPockerNumber(num) {
     var values = {
@@ -51,19 +55,20 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
         <Button shape="circle" onClick={()=>onClickPockerNumber("5")}>5</Button>
         <Button shape="circle" onClick={()=>onClickPockerNumber("8")}>8</Button>
         <Button shape="circle" onClick={()=>onClickPockerNumber("??")}>??</Button>
-        <RecordCreatorDlg record = {scoreList} onOk={createRecordHandler} creator={curUser}>
+        <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={curUser}>
           <Button>提交</Button>
         </RecordCreatorDlg>
       </div>
       {/* 统计表格       */}
       <div>
           <Table
-            columns= {columns}
-            dataSource = {scoreList}
-            rowKey = {record => record.name}
-            pagination = {false}
+            columns={columns}
+            dataSource={scoreList}
+            rowKey={record => record.name}
+            pagination={false}
           />
       </div>
+      <PokerBoardFooter cards={cards}/>
     </div>
   );
 }

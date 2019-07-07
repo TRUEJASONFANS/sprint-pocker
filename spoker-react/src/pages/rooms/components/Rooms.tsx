@@ -1,9 +1,9 @@
-import RoomModel from './RoomModel';
+import RoomModel from '@/pages/rooms/components/RoomModel';
 import { connect } from 'dva';
 import styles from './Rooms.css';
 import { routerRedux } from 'dva/router';
 import { Table, Pagination, Button } from 'antd';
-import { ROOM_PAGE_SIZE } from '../../constants';
+import { ROOM_PAGE_SIZE } from '@/pages/constants';
 
 function Rooms({ dispatch, list: dataSource, loading, total, page: current, userName }) {
   function createHandler(values) {

@@ -1,4 +1,4 @@
-import * as dashboardService from '../services/dashboardService';
+import * as dashboardService from '@/pages/dashboard/services/dashboardService';
 
 export default {
   namespace: 'dashboard',
