@@ -1,5 +1,5 @@
 import pathToRegexp from 'path-to-regexp';
-import * as pockerService from '../services/pockerService';
+import * as pockerService from '@/pages/pockerRoom/services/pockerService';
 export default {
   namespace: 'pockerBoard',
   state: {

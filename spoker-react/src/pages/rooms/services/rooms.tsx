@@ -1,5 +1,5 @@
 // import {request} from '../../../utils/request';
-import {openSocket, request} from '../../../services/websocket_service';
+import {openSocket, request} from '@/services/websocket_service';
 
 // export function fetch({ page = 1 }) {
 //   // ` `字符串模版

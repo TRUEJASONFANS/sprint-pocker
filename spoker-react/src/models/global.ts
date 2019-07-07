@@ -1,4 +1,4 @@
-import * as userService from '../services/userService';
+import * as userService from '@/services/userService';
 export default {
   namespace: 'global', // 全局
   state: {

@@ -1,4 +1,4 @@
-import PockerBoard from './components/pockerBoard';
+import PockerBoard from '@/pages/pockerRoom/components/pockerBoard';
 
 export default () => {
   return (

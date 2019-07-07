@@ -14,6 +14,7 @@
     "@types/react-dom": "^16.0.11",
     "@types/react-test-renderer": "^16.0.3",
     "babel-eslint": "^9.0.0",
+    "cardsJS": "^1.1.1",
     "eslint": "^5.4.0",
     "eslint-config-umi": "^0.1.5",
     "eslint-plugin-flowtype": "^2.50.0",
@@ -45,7 +46,6 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "cardsJS": "^1.1.1",
     "path-to-regexp": "^2.4.0"
   }
 }
