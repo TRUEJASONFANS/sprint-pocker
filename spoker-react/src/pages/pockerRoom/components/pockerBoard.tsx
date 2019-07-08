@@ -22,7 +22,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
   ];
 
   // const cards = ['1'];
-  const cards = ['1','2','3','5','8','13','21'];
+  const cards = ['?','0', '1','2','3','5','8','13','21'];
 
   function onClickPockerNumber(num) {
     var values = {
