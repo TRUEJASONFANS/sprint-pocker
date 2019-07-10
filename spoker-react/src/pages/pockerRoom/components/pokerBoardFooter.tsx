@@ -2,7 +2,8 @@ import * as React from 'react';
 import styles from './card.css';
 
 export interface Props {
-  cards: string[];
+  cards: string[],
+  onOk: Function
 }
 
 export interface State {
@@ -12,6 +13,7 @@ export interface State {
 interface Props2 {
   index: number;
   card: string;
+  onOK: Function
 }
 
 class PokerBoardFooter extends React.Component<Props, State> {
@@ -21,7 +23,7 @@ class PokerBoardFooter extends React.Component<Props, State> {
   render() {
     return (
       <div className={styles.playerCardsContainer}>
-        {this.props.cards.map((card, index) => (<Card card={card} index={index} key={index} />))}
+        {this.props.cards.map((card, index) => (<Card card={card} index={index} key={index} onOK={this.props.onOk}/>))}
       </div>
     );
   }
@@ -43,6 +45,7 @@ class Card extends React.Component<Props2, State> {
     this.setState({
       flag: !curFlag
     });
+    this.props.onOK(this.props.card);
   }
   render() {
     let leftStyle = { left: `${20 + this.props.index * 70}px` };
