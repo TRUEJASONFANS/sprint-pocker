@@ -30,6 +30,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
       name: curUser,
       roomName: roomName
     }
+    console.log("click values:" + values);
     dispatch({
       type: 'pockerBoard/onClickPocker',
       payload: values
@@ -45,6 +46,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
 
   return (
     <div>
+      <div className={styles.content}>
       <div>
         <div>{roomName}</div>
         <div id="exitRoom"><Button className="ui positive button">Exit</Button></div>
@@ -68,7 +70,10 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
             pagination={false}
           />
       </div>
-      <PokerBoardFooter cards={cards}/>
+      </div>
+      <div className={styles.footer}>
+        <PokerBoardFooter cards={cards} onOk={onClickPockerNumber}/>
+      </div>
     </div>
   );
 }
