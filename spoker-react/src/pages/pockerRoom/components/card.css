@@ -91,3 +91,12 @@
   font-size: 45px;
   color: white;
 }
+
+.selctedCardBack {
+  background-image: url(../../../assets/card-back.svg);
+  background-color: rgb(101, 101, 101);
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(73, 73, 73);
+  border-image: initial;
+}

@@ -4,10 +4,10 @@ import { connect } from 'dva';
 import { Table } from 'antd';
 import RecordCreatorDlg from '@/pages/pockerRoom/components/recordCreatorDlg';
 import PokerBoardFooter from './pokerBoardFooter';
-import PlayerArea from '@/pages/pockerRoom/components/playerArea';
+import PlayerAreaView from '@/pages/pockerRoom/components/playerAreaView';
 const { Header, Footer, Sider, Content } = Layout;
 
-function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
+function PockerBoard({ dispatch, roomName, scoreList, curUser, usrList }) {
 
   const columns = [
     {
@@ -30,7 +30,8 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
   function onClickPockerNumber(num) {
     var values = {
       fibonacciNum: num,
-      name: curUser,
+      palyerName: curUser,
+      clicked: true,
       roomName: roomName
     }
     dispatch({
@@ -57,7 +58,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
       {/* 统计表格       */}
       <Layout>
         <Content className="playerArea" style={{ padding: '0 24px', minHeight: 420 }}>
-          <PlayerArea/>
+          <PlayerAreaView usersList={[]}/>
         </Content>
         <Sider width={200} style={{ background: '#fff'}}>
           <Button shape="circle" className={styles.one} onClick={() => onClickPockerNumber(1)}>
@@ -93,7 +94,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
   );
 }
 function mapStateToProps(state) {
-  const { roomName, scoreList } = state.pockerBoard;
+  const { roomName, scoreList, usrList } = state.pockerBoard;
   const { userName } = state.global;
   const curUser = userName
   return {
