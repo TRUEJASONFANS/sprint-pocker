@@ -4,6 +4,7 @@ import { connect } from 'dva';
 import { Table } from 'antd';
 import RecordCreatorDlg from '@/pages/pockerRoom/components/recordCreatorDlg';
 import PokerBoardFooter from './pokerBoardFooter';
+import PlayerArea from '@/pages/pockerRoom/components/playerArea';
 const { Header, Footer, Sider, Content } = Layout;
 
 function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
@@ -55,8 +56,8 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
       </Header>
       {/* 统计表格       */}
       <Layout>
-        <Content style={{ padding: '0 24px', minHeight: 420 }}>
-          <div>w</div>
+        <Content className="playerArea" style={{ padding: '0 24px', minHeight: 420 }}>
+          <PlayerArea/>
         </Content>
         <Sider width={200} style={{ background: '#fff'}}>
           <Button shape="circle" className={styles.one} onClick={() => onClickPockerNumber(1)}>
@@ -86,7 +87,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
         </Sider>
       </Layout>
       <Footer style={{ textAlign: 'center', minHeight: 100 }}>
-        <PokerBoardFooter cards={cards} />
+        <PokerBoardFooter cards={cards} okHanlder={onClickPockerNumber}/>
       </Footer>
     </Layout>
   );
