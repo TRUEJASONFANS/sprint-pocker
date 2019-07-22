@@ -8,7 +8,6 @@ export function fetch(action, roomId) {
 }
 
 export function onClickPocker(values) {
-  console.log('xxxx', values.roomName)
   request('/app/onClickPocker/'+ values.roomName, {}, JSON.stringify(values));
 }
 

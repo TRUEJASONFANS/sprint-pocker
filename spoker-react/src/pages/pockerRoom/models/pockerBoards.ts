@@ -5,7 +5,7 @@ export default {
   state: {
     scoreList: [],
     roomName: '',
-    average: ''
+    average: '',
   },
   reducers: {
     syncStoryPoint(state, { payload: { scoreList } }) {
@@ -44,11 +44,11 @@ export default {
             }
           });
           pockerService.fetch((data) => {
-            console.log('pocker room', data);
+            console.log('pocker room:', data);
             dispatch({
               type: 'syncStoryPoint',
               payload: {
-                scoreList: JSON.parse(data.body),
+                scoreList: JSON.parse(data.body.player2Score),
               }
             })
           }, roomId);
