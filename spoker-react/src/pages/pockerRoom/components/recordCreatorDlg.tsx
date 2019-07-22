@@ -42,9 +42,6 @@ class RecordCreatorDlg extends Component {
   render() {
     let estimateAvgVals = 0;
     const estimateVals = this.props.record.map(score => score.fibonacciNum).filter(a => a !== "??");
-    console.log("es："+ estimateVals);
-    console.log("es_length：" + estimateVals.length);
-    console.log("xx:" + estimateVals.map(item => +item).reduce((prev, curv) => prev + curv, 0));
     if (estimateVals.length > 0) {
       estimateAvgVals = estimateVals.map(item => +item).reduce((prev, curv) => prev + curv, 0) / estimateVals.length;
     }

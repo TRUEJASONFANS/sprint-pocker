@@ -44,11 +44,11 @@ export default {
             }
           });
           pockerService.fetch((data) => {
-            console.log('pocker room:', data);
+            console.log('pocker room:', data.body);
             dispatch({
               type: 'syncStoryPoint',
               payload: {
-                scoreList: JSON.parse(data.body.player2Score),
+                scoreList: JSON.parse(data.body).playerScoreList,
               }
             })
           }, roomId);
