@@ -15,10 +15,10 @@ export default {
     },
   },
   effects: { //异步action
-    *queryUserStatus({ call, put, select }) {
-      let user = yield call(userService.fetch);
-      console.log('username', user);
-      yield put({ type: "login", payload: { data: user, hasLogin: true } })
+    *queryUserStatus({},{ call, put, select }) {
+      // let user = yield call(userService.fetch);
+      // console.log('username', user);
+      // yield put({ type: "login", payload: { data: user, hasLogin: true } })
     },
     *throwError() {
       throw new Error('hi error');

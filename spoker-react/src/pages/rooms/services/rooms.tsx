@@ -13,10 +13,10 @@ import {openSocket, request} from '@/services/websocket_service';
 //   );
 // }
 
-export function create(values) {	
+export function create(values) {
+  console.log("Room create ", values);
   request('/app/addRoom', {},	 
-    JSON.stringify(values),	 
-    {}
+    JSON.stringify(values)
   );
 }
 

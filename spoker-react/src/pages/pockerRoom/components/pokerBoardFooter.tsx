@@ -2,8 +2,8 @@ import * as React from 'react';
 import styles from './card.css';
 
 export interface Props {
-  cards: string[],
-  onOk: Function
+  cards: string[];
+  okHanlder: Function;
 }
 
 export interface State {
@@ -13,7 +13,7 @@ export interface State {
 interface Props2 {
   index: number;
   card: string;
-  onOK: Function
+  okHanlder: Function;
 }
 
 class PokerBoardFooter extends React.Component<Props, State> {
@@ -23,14 +23,14 @@ class PokerBoardFooter extends React.Component<Props, State> {
   render() {
     return (
       <div className={styles.playerCardsContainer}>
-        {this.props.cards.map((card, index) => (<Card card={card} index={index} key={index} onOK={this.props.onOk}/>))}
+        {this.props.cards.map((card, index) => (<PalyerScoreCard card={card} index={index} key={index} okHanlder={this.props.okHanlder} />))}
       </div>
     );
   }
 
 }
 
-class Card extends React.Component<Props2, State> {
+class PalyerScoreCard extends React.Component<Props2, State> {
   constructor(props) {
     super(props);
 
@@ -45,7 +45,7 @@ class Card extends React.Component<Props2, State> {
     this.setState({
       flag: !curFlag
     });
-    this.props.onOK(this.props.card);
+    this.props.okHanlder(this.props.card);
   }
   render() {
     let leftStyle = { left: `${20 + this.props.index * 70}px` };
@@ -56,14 +56,14 @@ class Card extends React.Component<Props2, State> {
         "matrix3d(0.968846, -0.247665, 0, 0, 0.246399, 0.963893, 0.100983, 0, -0.0250101, -0.0978374, 0.994888, 0, 0, -126.512, 0, 1)"
     };
     let cardStyle = {
-      background: this.props.index < 5 ? "#0466d2":"#149c37",
+      background: this.props.index < 5 ? "#0466d2" : "#149c37",
     }
     return (
       <div className={`${styles.cardRig} ${styles.cardInHand}`} style={leftStyle}>
         <div className={`${styles.cardWrapper} ${styles.perspectiveWrapper}`}>
           <div className={styles.animationWrapper}>
             <div className={`${styles.cardContainer}`} onClick={this.onClickHandler} style={containStyle}>
-              <div className={`${styles.card} ${styles.cardBack}`} style={cardStyle}/>
+              <div className={`${styles.card} ${styles.cardBack}`} style={cardStyle} />
               <div className={` ${styles.cardFace}`}>
                 <div className={styles.smallCardId}>
                   <span>{this.props.card}</span>
