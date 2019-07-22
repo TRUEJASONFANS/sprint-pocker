@@ -4,16 +4,22 @@ interface Props {
   usersList: []
 }
 interface Props2 {
-  card: []
+  card: {}
 }
 class PlayerSelectedCard extends React.Component<Props2, any> {
   constructor(props) {
     super(props);
   }
   render() {
+    const card = this.props.card;
+    let pokerCard;
+    if (card.clicked) {
+      pokerCard = <div>{this.props.card.fibonacciNum} </div>
+    } else {
+      pokerCard = <div><div className={`${styles.selctedCard} ${styles.selctedCardBack}`} /><div>{this.props.card.playerName}</div></div>;
+    }
     return <div>
-      <div className={`${styles.selctedCard} ${styles.selctedCardBack}`}/>
-      <div>{this.props.card.playerName}</div>
+      {pokerCard}
     </div>
   }
 }
