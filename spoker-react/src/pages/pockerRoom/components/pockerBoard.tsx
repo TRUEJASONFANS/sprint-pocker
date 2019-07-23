@@ -28,10 +28,17 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
   const cards = ['?', '0', '1', '2', '3', '5', '8', '13', '21'];
 
   function onClickPockerNumber(num) {
+
+    let flag;
+    if(num=='?') {
+      flag = false;
+    } else {
+      flag = true;
+    }
     var values = {
       fibonacciNum: num,
       palyerName: curUser,
-      clicked: true,
+      clicked: flag,
       roomName: roomName
     }
     console.log("click values:" + values);
@@ -50,15 +57,17 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
 
   return (
     <Layout>
-      <Header style={{ background: 'green' }}>
+      <Header style={{ background: 'green', margin:'5px'}}>
         <div style={{ textAlign: 'center' }}>
-            <span>{roomName} XXX</span>
-            <Button className="ui positive button">Exit</Button>
+            <span>{roomName}</span>
+        </div>
+        <div>
+          <Button className="ui positive button" style={{margin:"5px",left:"10px"}}>Exit</Button>
         </div>
       </Header>
       {/* 统计表格       */}
       <Layout>
-        <Content className="playerArea" style={{ padding: '0 24px', minHeight: 420 }}>
+        <Content className="playerArea" style={{ padding: '0 24px', height: "calc(70vh - 55px)", background:'white'}}>
           <PlayerAreaView usersList={scoreList}/>
         </Content>
         <Sider width={200} style={{ background: '#fff'}}>
@@ -88,7 +97,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
           />
         </Sider>
       </Layout>
-      <Footer style={{ textAlign: 'center', minHeight: 100 }}>
+      <Footer style={{ textAlign: 'center', minHeight: 100, background:'#fff' }}>
         <PokerBoardFooter cards={cards} okHanlder={onClickPockerNumber}/>
       </Footer>
     </Layout>
