@@ -92,15 +92,13 @@
   color: white;
 }
 
-.selctedCardBack {
+.selectedCardBack {
   background-image: url(../../../assets/card-back.svg);
-  background-color: rgb(101, 101, 101);
-  border-width: 2px;
-  border-style: solid;
-  border-color: rgb(73, 73, 73);
-  border-image: initial;
+  border: 1px dashed rgb(240, 243, 245);
+  margin: 1px;
+  background-color: #f8f8f8
 }
-.selctedCard {
+.selectedCard {
   border-radius: 10px;
   width: 100px;
   height: 140px;
@@ -109,7 +107,6 @@
   background-repeat: no-repeat;
   background-position: 50% 50%;
   font-weight: bold;
-  color: white;
   transform: scale(1);
   transition: transform 100ms ease-in-out;
   /**禁止用户选择文本**/
@@ -118,4 +115,17 @@
   -ms-user-select: none;
   user-select: none;
   font: 100px/220px Georgia, serif;
+}
+
+.selectedPlayerVote {
+  font-size: 45px;
+  color: white;
+}
+
+.selectedSmallCardId {
+  top: 20;
+  left: 6px;
+  font-size: 20px;
+  font: Georgia, serif;
+  color: white;
 }

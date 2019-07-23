@@ -14,9 +14,17 @@ class PlayerSelectedCard extends React.Component<Props2, any> {
     const card = this.props.card;
     let pokerCard;
     if (card.clicked) {
-      pokerCard = <div>{this.props.card.fibonacciNum} </div>
+      pokerCard = 
+        <div className={`${styles.selectedCard}`} style={{background:'#149c37'}}>
+          <div className={styles.selectedSmallCardId}>
+            <span>{this.props.card.fibonacciNum}</span>
+          </div>
+          <div className={styles.selectedPlayerVote}>
+            <span>{this.props.card.fibonacciNum}</span>
+          </div>
+        </div>;
     } else {
-      pokerCard = <div><div className={`${styles.selctedCard} ${styles.selctedCardBack}`} /><div>{this.props.card.playerName}</div></div>;
+      pokerCard = <div><div className={`${styles.selectedCard} ${styles.selectedCardBack}`} /><div>{this.props.card.playerName}</div></div>;
     }
     return <div>
       {pokerCard}
