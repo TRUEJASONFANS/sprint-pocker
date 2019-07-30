@@ -1,0 +1,1 @@
+export const hostUrl="http://bbs-bc.asml.com:8080";
