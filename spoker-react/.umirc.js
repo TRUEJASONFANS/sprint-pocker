@@ -1,5 +1,8 @@
 
 // ref: https://umijs.org/config/
+
+const hostUrl = 'http://bbs-bc.asml.com:8080';
+
 export default {
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
@@ -17,12 +20,12 @@ export default {
   ],
   "proxy": {// 配置fetch 路由转发至后台API服务地址.
     "/poker": {
-      "target": "http://localhost:8080/",
+      "target": `${hostUrl}`,
       "changeOrigin": true,
       secure: false, // 不进行证书验证
     },
     "/api": {
-      "target": "http://localhost:8080/",
+      "target": `${hostUrl}`,
       "changeOrigin": true,
       secure: false, // 不进行证书验证
     }

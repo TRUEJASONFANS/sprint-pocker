@@ -1,5 +1,6 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import {hostUrl} from '../constans';
 
 let stompClient;
 let socket;
@@ -14,7 +15,7 @@ export function openSocket(subscribeUrl, subs_action, instant_call) {
   // 连接 Websocket 服务端 
   // 生成cookie
   if (socket === undefined) {
-    socket = new SockJS("http://localhost:8080/pocker-websocket");
+    socket = new SockJS(`${hostUrl}/pocker-websocket`);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
       subscribe(subscribeUrl, subs_action);
