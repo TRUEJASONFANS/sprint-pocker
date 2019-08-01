@@ -58,11 +58,14 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
   return (
     <Layout>
       <Header style={{ background: 'green', margin:'5px'}}>
-        <div style={{ textAlign: 'center' }}>
-            <span>{roomName}</span>
-        </div>
         <div>
-          <Button className="ui positive button" style={{margin:"5px",left:"10px"}}>Exit</Button>
+          <div>
+            <span>{roomName}</span>
+            <div style={{float:"right", padding:"1px"}}>
+              <Button className="toolBarBtn">Reset</Button>
+              <Button className="toolBarBtn">Exit</Button>
+            </div>
+          </div>
         </div>
       </Header>
       {/* 统计表格       */}
