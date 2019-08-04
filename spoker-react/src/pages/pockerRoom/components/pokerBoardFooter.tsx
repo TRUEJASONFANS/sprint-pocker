@@ -4,56 +4,44 @@ import styles from './card.css';
 export interface Props {
   cards: string[];
   okHanlder: Function;
-}
-
-export interface State {
-  clickedIndex: number;
+  clickedIndexProp: number;
 }
 
 interface Props2 {
   index: number;
   card: string;
   okHanlder: Function;
-  changeclickIndexHandler: Function;
   clickedIndex: number;
 }
 
-class PokerBoardFooter extends React.Component<Props, State> {
+class PokerBoardFooter extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
       clickedIndex: -1,
     };
-    this.onChangePoker = this.onChangePoker.bind(this);
-  }
-  onChangePoker(i: number) {
-    this.setState({
-      clickedIndex: i
-    });
   }
   render() {
     return (
       <div className={styles.playerCardsContainer}>
         {this.props.cards.map((card, index) => (<PalyerScoreCard card={card} index={index} key={index} okHanlder={this.props.okHanlder}
-          changeclickIndexHandler={this.onChangePoker} clickedIndex={this.state.clickedIndex} />))}
+          clickedIndex={this.props.clickedIndexProp} />))}
       </div>
     );
   }
 
 }
 
-class PalyerScoreCard extends React.Component<Props2, State> {
+class PalyerScoreCard extends React.Component<Props2> {
   constructor(props) {
     super(props);
     this.onClickHandler = this.onClickHandler.bind(this);
   }
   onClickHandler() {
     if (this.props.clickedIndex != this.props.index) {
-      this.props.changeclickIndexHandler(this.props.index);
-      this.props.okHanlder(this.props.card);
+      this.props.okHanlder(this.props.card, this.props.index);
     } else {
-      this.props.changeclickIndexHandler(-1);
-      this.props.okHanlder('?');
+      this.props.okHanlder('?', -1);
     }
   }
   render() {
