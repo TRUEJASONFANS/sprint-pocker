@@ -21,3 +21,7 @@ export function addTikcetRecord(ticketRecord) {
     },
   });
 }
+
+export function onNextGame(roomName:string) {
+  request('/app/onNextGame/'+ roomName, {}, {});
+}

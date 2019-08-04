@@ -5,7 +5,7 @@ interface Props {
 }
 interface Props2 {
   card: {
-    clicked : boolean,
+    clicked: boolean,
     shown: boolean,
     fibonacciNum: number,
     playerName: string
@@ -24,17 +24,21 @@ class PlayerSelectedCard extends React.Component<Props2, any> {
         pokerCard = <div><div className={`${styles.selectedCard} ${styles.selectedCardBackClicked}`} /><div>{this.props.card.playerName}</div></div>;
       }
     } else {
-      pokerCard = 
-      <div className={`${styles.selectedCard}`} style={{background:'#149c37'}}>
-        <div className={styles.selectedSmallCardId}>
-          <span>{this.props.card.fibonacciNum}</span>
-        </div>
-        <div className={styles.selectedPlayerVote}>
-          <span>{this.props.card.fibonacciNum}</span>
-        </div>
-      </div>;
+      pokerCard =
+        <div className={`${styles.selectedCard}`} style={{ background: '#149c37' }}>
+          <div className={`${styles.cardRig}`}>
+            <div className={`${styles.selectedCardContainer}`}>
+                <div className={styles.selectedSmallCardId}>
+                  <span>{this.props.card.fibonacciNum}</span>
+                </div>
+                <div className={styles.selectedPlayerVote}>
+                  <span>{this.props.card.fibonacciNum}</span>
+                </div>
+            </div>
+          </div>
+        </div>;
     }
-    return <div>
+    return <div className={styles.pokerCard}>
       {pokerCard}
     </div>
   }
@@ -46,9 +50,9 @@ export default class PlayerAreaView extends React.Component<Props, any> {
   }
   render() {
     console.log("tag", this.props.usersList);
-    return <div>
+    return <div className={styles.playerAreaContainer}>
       {this.props.usersList.map((card, index) =>
-        <PlayerSelectedCard key={index} card={card}/>)
+        <PlayerSelectedCard key={index} card={card} />)
       }
     </div>
   }
