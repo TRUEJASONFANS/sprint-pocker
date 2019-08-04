@@ -45,6 +45,7 @@ export default {
           });
           pockerService.fetch((data) => {
             console.log('pocker room:', data.body);
+            
             dispatch({
               type: 'syncStoryPoint',
               payload: {
