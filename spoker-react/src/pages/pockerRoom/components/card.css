@@ -78,7 +78,7 @@
 
 .smallCardId {
   position: absolute;
-  top: 20;
+  bottom: 20;
   left: 6px;
   font-size: 20px;
   font: Georgia, serif;
@@ -124,15 +124,37 @@
   font: 100px/220px Georgia, serif;
 }
 
-.selectedPlayerVote {
-  font-size: 45px;
-  color: white;
-}
-
 .selectedSmallCardId {
-  top: 20;
+  top: 5;
   left: 6px;
   font-size: 20px;
   font: Georgia, serif;
   color: white;
+  text-align: top;
+  position: absolute;
+}
+
+
+.selectedPlayerVote {
+  font-size: 45px;
+  color: white;
+  position: relative;
+}
+
+.selectedCardContainer {
+  width: 100px;
+  height: 140px;
+  border-radius: 10px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+
+.pokerCard {
+  display: inline-block;
+  margin: 5px;
+}
+
+.playerAreaContainer{
+  position: relative;
+  left: 6px;
 }

@@ -25,6 +25,9 @@ export default {
     *addTicketRecord({payload:values}, {call}){
       yield call(pockerService.addTikcetRecord(values));
     },
+    *onNextGame({ payload: roomName }, { call }) {
+      yield call(pockerService.onNextGame(roomName));
+    }
   },
 
   subscriptions: {

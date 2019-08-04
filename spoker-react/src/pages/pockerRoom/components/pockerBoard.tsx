@@ -25,7 +25,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
   ];
 
   // const cards = ['1'];
-  const cards = ['?', '0', '1', '2', '3', '5', '8', '13', '21'];
+  const cards = ['??', '0', '1', '2', '3', '5', '8', '13', '21'];
 
   function onClickPockerNumber(num) {
 
@@ -55,6 +55,13 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
     });
   }
 
+  function onNextGame() {
+    dispatch({
+      type: 'pockerBoard/onNextGame',
+      payload: roomName
+    });
+  }
+
   return (
     <Layout>
       <Header style={{ background: 'green', margin:'5px'}}>
@@ -62,7 +69,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
           <div>
             <span>{roomName}</span>
             <div style={{float:"right", padding:"1px"}}>
-              <Button className="toolBarBtn">Reset</Button>
+              <Button className="toolBarBtn" onClick={()=>onNextGame()}>Next</Button>
               <Button className="toolBarBtn">Exit</Button>
             </div>
           </div>
