@@ -20,7 +20,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
       title: 'StoryPoint',
       dataIndex: 'fibonacciNum',
       key: 'fibonacciNum',
-      render: text => text
+      render: (text,record) =>  {if (record.shown)  return text; else return "**";} 
     }
   ];
 
