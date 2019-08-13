@@ -84,8 +84,11 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
           <div>
             <span>{roomName}</span>
             <div style={{float:"right", padding:"1px"}}>
-              <Button className="toolBarBtn" onClick={(e)=>onNextGame(e)}>Next</Button>
-              <Button className="toolBarBtn">Exit</Button>
+              <Button onClick={(e) => onNextGame(e)} type="primary" style={{margin:"5px"}}>Next</Button>
+              <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={curUser} >
+                <Button type="primary" style={{margin:"5px"}}>Commit</Button>
+              </RecordCreatorDlg>
+              <Button type="primary" style={{margin:"5px"}}>Exit</Button>
             </div>
           </div>
         </div>
@@ -96,24 +99,6 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
           <PlayerAreaView usersList={scoreList}/>
         </Content>
         <Sider width={200} style={{ background: '#fff'}}>
-          <Button shape="circle" className={styles.one} onClick={() => onClickPockerNumber(1)}>
-            1
-          </Button>
-          <Button shape="circle" onClick={() => onClickPockerNumber('3')}>
-            3
-          </Button>
-          <Button shape="circle" onClick={() => onClickPockerNumber('5')}>
-            5
-          </Button>
-          <Button shape="circle" onClick={() => onClickPockerNumber('8')}>
-            8
-          </Button>
-          <Button shape="circle" onClick={() => onClickPockerNumber('??')}>
-            ??
-          </Button>
-          <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={curUser}>
-            <Button>提交</Button>
-          </RecordCreatorDlg>
           <Table
             columns={columns}
             dataSource={scoreList}
