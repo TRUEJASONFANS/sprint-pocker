@@ -60,7 +60,7 @@ class PalyerScoreCard extends React.Component<Props2> {
         <div className={`${styles.cardWrapper} ${styles.perspectiveWrapper}`}>
           <div className={styles.animationWrapper}>
             <div className={`${styles.cardContainer}`} onClick={this.onClickHandler} style={containStyle}>
-              <div className={`${styles.card} ${styles.cardBack}`} style={cardStyle} />
+              <div className={`${styles.card}`} style={cardStyle} />
               <div className={` ${styles.cardFace}`}>
                 <div className={styles.smallCardId}>
                   <span>{this.props.card}</span>
