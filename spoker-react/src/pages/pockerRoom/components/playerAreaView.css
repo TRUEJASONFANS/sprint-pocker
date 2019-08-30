@@ -2,7 +2,6 @@
   border-radius: 10px;
   width: 100px;
   height: 140px;
-  position: absolute;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   font-weight: bold;
@@ -38,24 +37,29 @@
 }
 
 .playerVote {
-  position: relative;
-  bottom: 65px;
+  width:100px;
+  line-height:80px;
+  vertical-align : baseline;
   font-size: 45px;
   color: white;
   text-align: center;
 }
 
 .smallCardId {
-  left: 6px;
-  bottom: 90px;
   width:100px;
-  height: 30px;
+  line-height:30px;
   font-size: 20px;
   font: Georgia, serif;
   color: white;
   position: relative;
+  left: 0px;
+}
+.smallCardIdSpan {
+  margin-left: 3px;
 }
 
+
 .cardWapper {
-  position: absolute;
+  display: inline-block;
+  margin: 5px;
 }

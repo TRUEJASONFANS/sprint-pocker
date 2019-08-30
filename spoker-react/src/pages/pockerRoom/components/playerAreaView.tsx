@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './player_card.css';
+import styles from './playerAreaView.css';
 interface Props {
   usersList: []
 }
@@ -30,7 +30,7 @@ class PlayerSelectedCard extends React.Component<Props2, any> {
         <div className={`${styles.card}`} style={{ background: '#149c37' }}>
             <div className={`${styles.cardContainer}`}>
               <div className={styles.smallCardId}>
-                <span>{this.props.card.fibonacciNum}</span>
+                <span className={styles.smallCardIdSpan}>{this.props.card.fibonacciNum}</span>
               </div>
               <div className={styles.playerVote}>
                 <span>{this.props.card.fibonacciNum}</span>
