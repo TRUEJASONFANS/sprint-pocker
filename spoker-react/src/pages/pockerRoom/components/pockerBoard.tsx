@@ -79,10 +79,10 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
 
   return (
     <Layout>
-      <Header style={{ background: 'green', margin:'5px'}}>
+      <Header style={{ background: '#337AB7', margin:'5px'}} className={styles.header}>
         <div>
           <div>
-            <span>{roomName}</span>
+            <span className={styles.titile}>{roomName}</span>
             <div style={{float:"right", padding:"1px"}}>
               <Button onClick={(e) => onNextGame(e)} type="primary" style={{margin:"5px"}}>Next</Button>
               <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={curUser} >
