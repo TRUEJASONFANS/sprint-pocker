@@ -79,18 +79,14 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
 
   return (
     <Layout>
-      <Header style={{ background: '#337AB7', margin:'5px'}} className={styles.header}>
-        <div>
-          <div>
-            <span className={styles.titile}>{roomName}</span>
-            <div style={{float:"right", padding:"1px"}}>
-              <Button onClick={(e) => onNextGame(e)} type="primary" style={{margin:"5px"}}>Next</Button>
-              <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={curUser} >
-                <Button type="primary" style={{margin:"5px"}}>Commit</Button>
-              </RecordCreatorDlg>
-              <Button type="primary" style={{margin:"5px"}}>Exit</Button>
-            </div>
-          </div>
+      <Header className={styles.header}>
+        <span className={styles.titile}>{roomName}</span>
+        <div style={{ float: "right"}} className={styles.toolbar}>
+          <Button onClick={(e) => onNextGame(e)} type="primary" style={{ margin: "5px" }}>Next</Button>
+          <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={curUser} >
+            <Button type="primary" style={{ margin: "5px" }}>Commit</Button>
+          </RecordCreatorDlg>
+          <Button type="primary" style={{ margin: "5px" }}>Exit</Button>
         </div>
       </Header>
       {/* 统计表格       */}
