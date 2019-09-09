@@ -78,7 +78,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
   }
 
   return (
-    <Layout>
+    <Layout style={{background:'white'}}>
       <Header className={styles.header}>
         <span className={styles.titile}>{roomName}</span>
         <div style={{ float: "right"}} className={styles.toolbar}>
@@ -91,7 +91,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
       </Header>
       {/* 统计表格       */}
       <Layout>
-        <Content className="playerArea" style={{ padding: '0 24px', height: "calc(70vh - 55px)", background:'white'}}>
+        <Content className={styles.playerArea} >
           <PlayerAreaView usersList={scoreList}/>
         </Content>
         <Sider width={200} style={{ background: '#fff'}}>
