@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './card.css';
+import styles from './pokerBoardFooter.css';
 
 export interface Props {
   cards: string[];
