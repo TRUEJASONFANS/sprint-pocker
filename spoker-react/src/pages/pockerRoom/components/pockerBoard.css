@@ -24,3 +24,25 @@
   height: calc(70vh - 55px);
   background: #ffffff;
 }
+.storySwitcher {
+  text-align: center;
+  padding-top: 15px;
+  font-size: 11px;
+}
+.storySwitcherControls{
+  margin: 0 20px 20px 20px;
+}
+
+.storySwitcherControlsSvg {
+  height: 23px;
+  width: 23px;
+  cursor: pointer;
+  background: #fb8800;
+  border: 1px solid rgb(201, 109, 0);
+  border-radius: 3px;
+}
+.storyCounter {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 20px;
+}
