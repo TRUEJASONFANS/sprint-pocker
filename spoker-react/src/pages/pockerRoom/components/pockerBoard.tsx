@@ -1,7 +1,6 @@
-import { Button, Layout, notification } from 'antd';
+import { Button, Layout, notification, Table } from 'antd';
 import styles from './PockerBoard.css';
 import { connect } from 'dva';
-import { Table } from 'antd';
 import RecordCreatorDlg from '@/pages/pockerRoom/components/recordCreatorDlg';
 import PokerBoardFooter from './pokerBoardFooter';
 import PlayerAreaView from '@/pages/pockerRoom/components/playerAreaView';
@@ -56,10 +55,15 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
     });
   }
 
+  function changeColor(evt) {
+    console.log("hello svg"+ evt);
+  }
+
+  
   // using hook instead of state to trigger the render update.
   const [clickedIndex, setClickedIndex] = useState(-1);
 
-  function onNextGame(event) {
+  function onResetGame(event) {
     event.preventDefault();
     dispatch({
       type: 'pockerBoard/onNextGame',
@@ -82,7 +86,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
       <Header className={styles.header}>
         <span className={styles.titile}>{roomName}</span>
         <div style={{ float: "right"}} className={styles.toolbar}>
-          <Button onClick={(e) => onNextGame(e)} type="primary" style={{ margin: "5px" }}>Next</Button>
+          <Button onClick={(e) => onResetGame(e)} type="primary" style={{ margin: "5px" }}>Reset</Button>
           <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={curUser} >
             <Button type="primary" style={{ margin: "5px" }}>Commit</Button>
           </RecordCreatorDlg>
@@ -95,6 +99,18 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
           <PlayerAreaView usersList={scoreList}/>
         </Content>
         <Sider width={200} style={{ background: '#fff'}}>
+          <div className={styles.storySwitcher}>
+            <span>STORY #</span>
+            <div className={styles.storySwitcherControls}>
+              <svg className={styles.storySwitcherControlsSvg} viewBox="0 0 1792 1792" onClick={changeColor}>
+                <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" fill="#fff" ></path>              
+              </svg>
+              <span className={styles.storyCounter}>1/5</span>
+              <svg className={styles.storySwitcherControlsSvg}  viewBox="0 0 1792 1792">
+                <path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" fill="#fff"></path>
+              </svg>
+            </div>
+          </div>
           <Table
             columns={columns}
             dataSource={scoreList}
