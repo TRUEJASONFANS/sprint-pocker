@@ -5,9 +5,9 @@ import RecordCreatorDlg from '@/pages/pockerRoom/components/recordCreatorDlg';
 import PokerBoardFooter from './pokerBoardFooter';
 import PlayerAreaView from '@/pages/pockerRoom/components/playerAreaView';
 const { Header, Footer, Sider, Content } = Layout;
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
-function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
+function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag }) {
 
   const columns = [
     {
@@ -27,27 +27,6 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
   // const cards = ['1'];
   const cards = ['??', '0', '1', '2', '3', '5', '8', '13', '21'];
 
-  function onClickPockerNumber(num:string, index:number) {
-    setClickedIndex(index);
-    let flag;
-    if(num=='?') {
-      flag = false;
-    } else {
-      flag = true;
-    }
-    var values = {
-      fibonacciNum: num,
-      palyerName: curUser,
-      clicked: flag,
-      roomName: roomName
-    }
-    console.log("click values:" + values);
-    dispatch({
-      type: 'pockerBoard/onClickPocker',
-      payload: values
-    });
-  }
-
   function createRecordHandler(tickerRecord) {
     dispatch({
       type: 'pockerBoard/addTicketRecord',
@@ -55,13 +34,10 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
     });
   }
 
+  //svg click event
   function changeColor(evt) {
-    console.log("hello svg"+ evt);
+    // console.log("hello svg"+ evt); 
   }
-
-  
-  // using hook instead of state to trigger the render update.
-  const [clickedIndex, setClickedIndex] = useState(-1);
 
   function onResetGame(event) {
     event.preventDefault();
@@ -69,16 +45,23 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
       type: 'pockerBoard/onNextGame',
       payload: roomName
     });
-    setClickedIndex(-1);
-    notification.open({
-      message: 'A new Game start!',
-      description:
-        'this is new start!',
-      onClick: () => {
-        console.log('Notification Clicked!');
-      },
-      duration: 2
-    });
+  }
+
+  function openNotification() {
+    if (resetFlag) {
+      notification.open({
+        message: 'A new Game start!',
+        description:
+          'this is new start!',
+        onClick: () => {
+          //console.log('Notification Clicked!');
+        },
+        duration: 2
+      });
+      dispatch({type:"pockerBoard/syncResetflag", payload: {
+        resetFlag: !resetFlag
+      }})
+    }
   }
 
   return (
@@ -103,11 +86,11 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
             <span>STORY #</span>
             <div className={styles.storySwitcherControls}>
               <svg className={styles.storySwitcherControlsSvg} viewBox="0 0 1792 1792" onClick={changeColor}>
-                <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" fill="#fff" ></path>              
+                <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" fill="#fff" />             
               </svg>
               <span className={styles.storyCounter}>1/5</span>
               <svg className={styles.storySwitcherControlsSvg}  viewBox="0 0 1792 1792">
-                <path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" fill="#fff"></path>
+                <path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" fill="#fff"/>
               </svg>
             </div>
           </div>
@@ -120,20 +103,20 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser }) {
         </Sider>
       </Layout>
       <Footer style={{ textAlign: 'center', minHeight: 100, background:'#fff' }}>
-        <PokerBoardFooter cards={cards} okHanlder={onClickPockerNumber}  clickedIndexProp={clickedIndex}/>
+        <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={curUser} resetFlag={resetFlag}/>
       </Footer>
+      {openNotification()}
     </Layout>
   );
 }
 function mapStateToProps(state) {
-  const { roomName, scoreList } = state.pockerBoard;
-  const { userName } = state.global;
-  const curUser = userName;
-  console.log(scoreList);
+  const { roomName, scoreList, resetFlag } = state.pockerBoard;
+  const { curUser } = state.global;
   return {
     roomName,
     scoreList,
-    curUser
+    curUser,
+    resetFlag
   }
 }
 export default connect(mapStateToProps)(PockerBoard);

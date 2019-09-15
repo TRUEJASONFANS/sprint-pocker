@@ -5,7 +5,7 @@ export default {
   state: {
     scoreList: [],
     roomName: '',
-    average: '',
+    resetFlag: false,
   },
   reducers: {
     syncStoryPoint(state, { payload: { scoreList } }) {
@@ -13,6 +13,9 @@ export default {
     },
     syncRoomName(state, { payload: { roomName } }) {
       return { ...state, roomName }
+    },
+    syncResetflag(state, {payload: {resetFlag}}) {
+      return {...state, resetFlag}
     }
   },
   effects: {
@@ -47,8 +50,12 @@ export default {
             }
           });
           pockerService.fetch((data) => {
-            console.log('pocker room:', data.body);
-            
+            dispatch({
+              type: 'syncResetflag',
+              payload: {
+                resetFlag: JSON.parse(data.body).reset
+              }
+            });
             dispatch({
               type: 'syncStoryPoint',
               payload: {
