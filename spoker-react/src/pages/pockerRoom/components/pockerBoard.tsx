@@ -7,7 +7,7 @@ import PlayerAreaView from '@/pages/pockerRoom/components/playerAreaView';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useState,useEffect } from 'react';
 
-function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag }) {
+function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPage, totalPage }) {
 
   const columns = [
     {
@@ -88,7 +88,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag }) {
               <svg className={styles.storySwitcherControlsSvg} viewBox="0 0 1792 1792" onClick={changeColor}>
                 <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" fill="#fff" />             
               </svg>
-              <span className={styles.storyCounter}>1/5</span>
+              <span className={styles.storyCounter}>{curPage}/{totalPage}</span>
               <svg className={styles.storySwitcherControlsSvg}  viewBox="0 0 1792 1792">
                 <path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" fill="#fff"/>
               </svg>
@@ -110,7 +110,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag }) {
   );
 }
 function mapStateToProps(state) {
-  const { roomName, scoreList, resetFlag } = state.pockerBoard;
+  const { roomName, scoreList, resetFlag, curPage, totalPage} = state.pockerBoard;
   const { curUser } = state.global;
   return {
     roomName,
