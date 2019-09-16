@@ -1,11 +1,14 @@
 import pathToRegexp from 'path-to-regexp';
 import * as pockerService from '@/pages/pockerRoom/services/pockerService';
+import { number } from 'prop-types';
 export default {
   namespace: 'pockerBoard',
   state: {
     scoreList: [],
     roomName: '',
     resetFlag: false,
+    curpage: number,
+    totalPage: number
   },
   reducers: {
     syncStoryPoint(state, { payload: { scoreList } }) {
@@ -62,7 +65,7 @@ export default {
                 scoreList: JSON.parse(data.body).playerScoreList,
               }
             })
-          }, roomId);
+          }, roomId, 1);
         }
       });
     },
