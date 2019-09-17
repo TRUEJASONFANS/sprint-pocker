@@ -7,6 +7,7 @@ export interface Props {
   roomName: string;
   curUser: string;
   resetFlag: boolean;
+  curPage: number;
 }
 
 interface Props2 {
@@ -42,7 +43,8 @@ class PokerBoardFooter extends React.Component<Props, State> {
       fibonacciNum: num,
       palyerName: this.props.curUser,
       clicked: flag,
-      roomName: this.props.roomName
+      roomName: this.props.roomName,
+      curPage: this.props.curPage
     }
     this.props.dispatch({
       type: 'pockerBoard/onClickPocker',
