@@ -7,18 +7,24 @@ export default {
     scoreList: [],
     roomName: '',
     resetFlag: false,
-    curpage: number,
+    curPage: number,
     totalPage: number
   },
   reducers: {
-    syncStoryPoint(state, { payload: { scoreList } }) {
-      return { ...state, scoreList }
+    syncStoryPoint(state, { payload: { scoreList} }) {
+      return {...state, scoreList }
     },
     syncRoomName(state, { payload: { roomName } }) {
-      return { ...state, roomName }
+      return {...state, roomName }
     },
     syncResetflag(state, {payload: {resetFlag}}) {
       return {...state, resetFlag}
+    },
+    syncCurPage(state, {payload: {curPage}}) {
+      return {...state, curPage}
+    },
+    syncTotalPage(state, {payload: {totalPage}}) {
+      return {...state, totalPage}
     }
   },
   effects: {
@@ -40,11 +46,11 @@ export default {
     init({ dispatch, history }) {
       return history.listen(location => {
         const match = pathToRegexp('/pockerRoom/:id').exec(location.pathname);
+        
         if (match) {
           var roomId = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
 
           //TODO: verify the backend whether the room is created or not
-          
           // join room
           dispatch({
             type: 'syncRoomName',
@@ -53,16 +59,35 @@ export default {
             }
           });
           pockerService.fetch((data) => {
+            let paseJson = JSON.parse(data.body);
             dispatch({
               type: 'syncResetflag',
               payload: {
-                resetFlag: JSON.parse(data.body).reset
+                resetFlag: paseJson.reset
+              }
+            });
+            dispatch({
+              type: 'syncResetflag',
+              payload: {
+                resetFlag: paseJson.reset
+              }
+            });
+            dispatch({
+              type: 'syncCurPage',
+              payload: {
+                curPage: paseJson.curNum
+              }
+            });
+            dispatch({
+              type: 'syncTotalPage',
+              payload: {
+                totalPage: paseJson.totalNum
               }
             });
             dispatch({
               type: 'syncStoryPoint',
               payload: {
-                scoreList: JSON.parse(data.body).playerScoreList,
+                scoreList: paseJson.playerScoreList,
               }
             })
           }, roomId, 1);

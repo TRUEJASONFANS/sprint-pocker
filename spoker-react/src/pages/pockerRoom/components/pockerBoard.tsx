@@ -103,7 +103,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPag
         </Sider>
       </Layout>
       <Footer style={{ textAlign: 'center', minHeight: 100, background:'#fff' }}>
-        <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={curUser} resetFlag={resetFlag}/>
+        <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={curUser} resetFlag={resetFlag} curPage={curPage}/>
       </Footer>
       {openNotification()}
     </Layout>
@@ -116,7 +116,9 @@ function mapStateToProps(state) {
     roomName,
     scoreList,
     curUser,
-    resetFlag
+    resetFlag,
+    curPage,
+    totalPage
   }
 }
 export default connect(mapStateToProps)(PockerBoard);
