@@ -1,8 +1,10 @@
 .content {
-  min-height: calc(100vh - 220px);
+  padding-bottom:100px; 
+  background:#ffffff;
 }
 .footer {
-  height: 50px;
+  position:absolute;bottom:100px;width:100%;height:100px;
+  background:#ffffff;
 }
 .titile {
   font-size: 45px;
@@ -18,11 +20,6 @@
 }
 .toolbar {
   padding: 0;
-}
-.playerArea {
-  padding: 0 24px;
-  height: calc(70vh - 55px);
-  background: #ffffff;
 }
 .storySwitcher {
   text-align: center;
@@ -45,4 +42,7 @@
   font-size: 30px;
   font-weight: bold;
   margin: 20px;
+}
+.addStoryBtn {
+  text-align: center;
 }
