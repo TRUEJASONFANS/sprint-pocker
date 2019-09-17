@@ -3,8 +3,11 @@ import styles from './pokerBoardFooter.css';
 
 export interface Props {
   cards: string[];
-  okHanlder: Function;
-  clickedIndexProp: number;
+  dispatch: Function;
+  roomName: string;
+  curUser: string;
+  resetFlag: boolean;
+  curPage: number;
 }
 
 interface Props2 {
@@ -13,19 +16,51 @@ interface Props2 {
   okHanlder: Function;
   clickedIndex: number;
 }
+interface State {
+  clickedIndex: number
+}
 
-class PokerBoardFooter extends React.Component<Props> {
+class PokerBoardFooter extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
       clickedIndex: -1,
     };
+    this.onClickPockerNumber = this.onClickPockerNumber.bind(this);
   }
+
+  onClickPockerNumber(num:string, index:number) {
+    this.setState({
+      clickedIndex: index
+    });
+    let flag;
+    if(num=='?') {
+      flag = false;
+    } else {
+      flag = true;
+    }
+    var values = {
+      fibonacciNum: num,
+      palyerName: this.props.curUser,
+      clicked: flag,
+      roomName: this.props.roomName,
+      curPage: this.props.curPage
+    }
+    this.props.dispatch({
+      type: 'pockerBoard/onClickPocker',
+      payload: values
+    });
+  }
+
   render() {
+    if (this.props.resetFlag) {
+      this.setState({
+        clickedIndex: -1
+      });
+    }
     return (
       <div className={styles.playerCardsContainer}>
-        {this.props.cards.map((card, index) => (<PalyerScoreCard card={card} index={index} key={index} okHanlder={this.props.okHanlder}
-          clickedIndex={this.props.clickedIndexProp} />))}
+        {this.props.cards.map((card, index) => (<PalyerScoreCard card={card} index={index} key={index} okHanlder={this.onClickPockerNumber} clickedIndex={this.state.clickedIndex} />))}
       </div>
     );
   }
