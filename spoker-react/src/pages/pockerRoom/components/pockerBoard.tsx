@@ -78,10 +78,10 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPag
       </Header>
       {/* 统计表格       */}
       <Layout>
-        <Content className={styles.playerArea} >
+        <Content className={styles.content} >
           <PlayerAreaView usersList={scoreList}/>
         </Content>
-        <Sider width={200} style={{ background: '#fff'}}>
+        <Sider style={{ background: '#fff'}}>
           <div className={styles.storySwitcher}>
             <span>STORY #</span>
             <div className={styles.storySwitcherControls}>
@@ -100,9 +100,12 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPag
             rowKey={record => record.playerName}
             pagination={false}
           />
+          <div className={styles.addStoryBtn}>
+            <Button type="primary" style={{ margin: "5px" }} size={"small"}>Add a internal task</Button>
+          </div>
         </Sider>
       </Layout>
-      <Footer style={{ textAlign: 'center', minHeight: 100, background:'#fff' }}>
+      <Footer className={styles.footer}>
         <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={curUser} resetFlag={resetFlag} curPage={curPage}/>
       </Footer>
       {openNotification()}
