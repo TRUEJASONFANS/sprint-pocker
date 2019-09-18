@@ -20,12 +20,12 @@ class PlayerSelectedCard extends React.Component<Props2, any> {
     const card = this.props.card;
     let pokerCard;
     let leftStyle = { left: `${10 + this.props.index * 110}px` };
-    if (!card.shown) {
+    if (!card.shown) {// 如果还不能翻牌， 意思是指有人已经出牌，但并没有全部出完
       pokerCard = <div><div className={`${styles.card} ${styles.cardBack}`} /><div>{this.props.card.playerName}</div></div>;
-      if (card.clicked) {
+      if (card.clicked) { // 该玩家已经出牌，但是碍于场上玩家并没有全部出牌，不翻牌。
         pokerCard = <div><div className={`${styles.card} ${styles.cardBackClicked}`} /><div>{this.props.card.playerName}</div></div>;
       }
-    } else {
+    } else { // 全部出完了，可以显示牌了
       pokerCard = (
         <div className={`${styles.card}`} style={{ background: '#149c37' }}>
             <div className={`${styles.cardContainer}`}>
