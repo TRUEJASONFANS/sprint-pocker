@@ -34,11 +34,14 @@ export default {
     *onClickPocker({ payload: values }, { call, put }) {
       yield call(pockerService.onClickPocker, values)
     },
-    *addTicketRecord({payload:values}, {call}){
+    *addTicketRecord({ payload: values }, { call }) {
       yield call(pockerService.addTikcetRecord(values));
     },
     *onNextGame({ payload: roomName }, { call }) {
       yield call(pockerService.onNextGame(roomName));
+    },
+    *AddStory({ payload: values }, { call }) {
+      yield call(pockerService.addStory(values));
     }
   },
 
