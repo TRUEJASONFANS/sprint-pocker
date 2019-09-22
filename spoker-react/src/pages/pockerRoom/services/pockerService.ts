@@ -4,7 +4,7 @@ import * as restAPI from '@/utils/request';
 export function fetch(action: Function, roomId:string, curPage:number) {
   // subscribe('/pocker/pockerBoard/' + roomId, action);
   // request('/app/joinPockerBoard/' + roomId, {}, {});
-  openSocket('/pocker/pockerBoard/' + roomId , action, () => request('/app/joinPockerBoard/' + roomId + '/' + curPage, {}, {}));
+  openSocket('/pocker/pockerBoard/' + roomId , action, () => request('/app/joinPockerBoard/' + roomId + '/' + curPage, {},{}));
 }
 
 export function onClickPocker(values) {

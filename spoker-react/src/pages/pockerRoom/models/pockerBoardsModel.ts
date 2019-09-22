@@ -1,6 +1,6 @@
 import pathToRegexp from 'path-to-regexp';
 import * as pockerService from '@/pages/pockerRoom/services/pockerService';
-import { number } from 'prop-types';
+import { number, string } from 'prop-types';
 export default {
   namespace: 'pockerBoard',
   state: {
@@ -8,24 +8,22 @@ export default {
     roomName: '',
     resetFlag: false,
     curPage: number,
-    totalPage: number
+    totalPage: number,
+    clickedNum: number,
+    playerName: string
   },
   reducers: {
-    syncStoryPoint(state, { payload: { scoreList} }) {
-      return {...state, scoreList }
-    },
+
     syncRoomName(state, { payload: { roomName } }) {
       return {...state, roomName }
     },
-    syncResetflag(state, {payload: {resetFlag}}) {
-      return {...state, resetFlag}
+    
+    syncPage(state, {payload: {curPage, totalPage, resetFlag, scoreList, playerName, clickedNum}}) {
+      return {...state, curPage, totalPage, resetFlag , scoreList, playerName, clickedNum}
     },
-    syncCurPage(state, {payload: {curPage}}) {
-      return {...state, curPage}
-    },
-    syncTotalPage(state, {payload: {totalPage}}) {
-      return {...state, totalPage}
-    }
+    // syncTotalPage(state, {payload: {totalPage}}) {
+    //   return {...state, totalPage}
+    // }
   },
   effects: {
     *queryStoryPoints({ payload: roomName }, { call }) {
@@ -65,37 +63,18 @@ export default {
             }
           });
           pockerService.fetch((data) => {
-            let paseJson = JSON.parse(data.body);
+            let parseJson = JSON.parse(data.body);
             dispatch({
-              type: 'syncResetflag',
+              type: 'syncPage',
               payload: {
-                resetFlag: paseJson.reset
+                curPage: parseJson.curNum,
+                totalPage: parseJson.totalNum,
+                resetFlag: parseJson.reset,
+                clickedNum: parseJson.clickedNum,
+                scoreList: parseJson.playerScoreList,
+                playerName: parseJson.playerName,
               }
             });
-            dispatch({
-              type: 'syncResetflag',
-              payload: {
-                resetFlag: paseJson.reset
-              }
-            });
-            dispatch({
-              type: 'syncCurPage',
-              payload: {
-                curPage: paseJson.curNum
-              }
-            });
-            dispatch({
-              type: 'syncTotalPage',
-              payload: {
-                totalPage: paseJson.totalNum
-              }
-            });
-            dispatch({
-              type: 'syncStoryPoint',
-              payload: {
-                scoreList: paseJson.playerScoreList,
-              }
-            })
           }, roomId, 1);
         }
       });

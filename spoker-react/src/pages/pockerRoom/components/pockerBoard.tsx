@@ -7,7 +7,7 @@ import PlayerAreaView from '@/pages/pockerRoom/components/playerAreaView';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useState,useEffect } from 'react';
 
-function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPage, totalPage }) {
+function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, curPage, totalPage, clickedNum}) {
 
   const columns = [
     {
@@ -102,7 +102,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPag
         <span className={styles.titile}>{roomName}</span>
         <div style={{ float: "right"}} className={styles.toolbar}>
           <Button onClick={(e) => onResetGame(e)} type="primary" style={{ margin: "5px" }}>Reset</Button>
-          <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={curUser} >
+          <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={playerName} >
             <Button type="primary" style={{ margin: "5px" }}>Commit</Button>
           </RecordCreatorDlg>
           <Button type="primary" style={{ margin: "5px" }}>Exit</Button>
@@ -138,22 +138,22 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPag
         </Sider>
       </Layout>
       <Footer className={styles.footer}>
-        <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={curUser} resetFlag={resetFlag} curPage={curPage}/>
+        <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={playerName} resetFlag={resetFlag} curPage={curPage} clickedNum={clickedNum}/>
       </Footer>
       {openNotification()}
     </Layout>
   );
 }
 function mapStateToProps(state) {
-  const { roomName, scoreList, resetFlag, curPage, totalPage} = state.pockerBoard;
-  const { curUser } = state.global;
+  const { roomName, scoreList, resetFlag, curPage, totalPage, clickedNum, playerName} = state.pockerBoard;
   return {
     roomName,
     scoreList,
-    curUser,
+    playerName,
     resetFlag,
     curPage,
-    totalPage
+    totalPage,
+    clickedNum,
   }
 }
 export default connect(mapStateToProps)(PockerBoard);
