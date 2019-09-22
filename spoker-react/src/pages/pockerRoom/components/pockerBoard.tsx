@@ -64,6 +64,18 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPag
     }
   }
 
+  function onAddStory() {
+    let values = {
+      curPage : curPage,
+      totalPage : totalPage,
+      roomName: roomName
+    }
+    dispatch({
+      type: "pockerBoard/AddStory", 
+      payload: values
+    })
+  }
+
   return (
     <Layout style={{background:'white'}}>
       <Header className={styles.header}>
@@ -101,7 +113,7 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPag
             pagination={false}
           />
           <div className={styles.addStoryBtn}>
-            <Button type="primary" style={{ margin: "5px" }} size={"small"}>Add a internal task</Button>
+            <Button type="primary" style={{ margin: "5px" }} size={"small"} onClick={onAddStory}>Add a internal task</Button>
           </div>
         </Sider>
       </Layout>

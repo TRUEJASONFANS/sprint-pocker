@@ -25,3 +25,14 @@ export function addTikcetRecord(ticketRecord) {
 export function onNextGame(roomName:string) {
   request('/app/onNextGame/'+ roomName, {}, {});
 }
+
+export function addStory(values: Pageable) {
+  request('/app/onAddStory/'+ values.roomName , {}, JSON.stringify(values));
+} 
+
+interface Pageable {
+  curPage: number,
+  totalPage: number,
+  roomName: string
+}
+
