@@ -11,7 +11,7 @@ let socket;
   
 // }
 
-export function openSocket(subscribeUrl, subs_action, instant_call) {
+export function openSocket(subscribeUrl, subs_action:Function, instant_call:Function) {
   // 连接 Websocket 服务端 
   // 生成cookie
   if (socket === undefined) {
