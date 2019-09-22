@@ -35,8 +35,28 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPag
   }
 
   //svg click event
-  function changeColor(evt) {
-    // console.log("hello svg"+ evt); 
+  function goToLastPage(evt) {
+    let values = {
+      curPage : curPage - 1,
+      totalPage : totalPage,
+      roomName: roomName
+    }
+    dispatch({
+      type: 'pockerBoard/onNavigateToPage',
+      payload: values,
+    });
+  }
+
+  function goToNextPage(evt) {
+    let values = {
+      curPage : curPage + 1,
+      totalPage : totalPage,
+      roomName: roomName
+    }
+    dispatch({
+      type: 'pockerBoard/onNavigateToPage',
+      payload: values,
+    });
   }
 
   function onResetGame(event) {
@@ -97,11 +117,11 @@ function PockerBoard({ dispatch, roomName, scoreList, curUser, resetFlag, curPag
           <div className={styles.storySwitcher}>
             <span>STORY #</span>
             <div className={styles.storySwitcherControls}>
-              <svg className={styles.storySwitcherControlsSvg} viewBox="0 0 1792 1792" onClick={changeColor}>
+              <svg className={styles.storySwitcherControlsSvg} viewBox="0 0 1792 1792" onClick={goToLastPage}>
                 <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" fill="#fff" />             
               </svg>
               <span className={styles.storyCounter}>{curPage + "/" + totalPage}</span>
-              <svg className={styles.storySwitcherControlsSvg}  viewBox="0 0 1792 1792">
+              <svg className={styles.storySwitcherControlsSvg}  viewBox="0 0 1792 1792" onClick={goToNextPage}>
                 <path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" fill="#fff"/>
               </svg>
             </div>

@@ -26,13 +26,19 @@ export function onNextGame(roomName:string) {
   request('/app/onNextGame/'+ roomName, {}, {});
 }
 
-export function addStory(values: Pageable) {
-  request('/app/onAddStory/'+ values.roomName , {}, JSON.stringify(values));
-} 
-
 interface Pageable {
   curPage: number,
   totalPage: number,
   roomName: string
 }
+
+export function addStory(values: Pageable) {
+  request('/app/onAddStory/'+ values.roomName , {}, JSON.stringify(values));
+} 
+
+export function onNavigateToPage(values: Pageable) {
+  request('/app/onNavigateToPage/'+ values.roomName , {}, JSON.stringify(values));
+}
+
+
 

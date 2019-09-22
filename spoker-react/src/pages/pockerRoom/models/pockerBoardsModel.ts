@@ -31,7 +31,7 @@ export default {
     *queryStoryPoints({ payload: roomName }, { call }) {
       yield call(pockerService, roomName);
     },
-    *onClickPocker({ payload: values }, { call, put }) {
+    *onClickPocker({ payload: values }, { call }) {
       yield call(pockerService.onClickPocker, values)
     },
     *addTicketRecord({ payload: values }, { call }) {
@@ -42,7 +42,10 @@ export default {
     },
     *AddStory({ payload: values }, { call }) {
       yield call(pockerService.addStory(values));
-    }
+    },
+    *onNavigateToPage({ payload: values }, { call }) {
+      yield call(pockerService.onNavigateToPage(values));
+    },
   },
 
   subscriptions: {
