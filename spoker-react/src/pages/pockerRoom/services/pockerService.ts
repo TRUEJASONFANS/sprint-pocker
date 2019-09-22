@@ -1,5 +1,6 @@
 import { subscribe, request, openSocket} from '@/services/websocket_service';
 import * as restAPI from '@/utils/request';
+import { __values } from 'tslib';
 
 export function fetch(action: Function, roomId:string, curPage:number) {
   // subscribe('/pocker/pockerBoard/' + roomId, action);
@@ -24,4 +25,14 @@ export function addTikcetRecord(ticketRecord) {
 
 export function onNextGame(roomName:string) {
   request('/app/onNextGame/'+ roomName, {}, {});
+}
+
+interface Pageable {
+  curPage: number,
+  totalPage: number,
+  roomName: string
+}
+
+export function AddStory(values: Pageable) {
+  request('/app/onAddStory'+ values.roomName , {}, JSON.stringify(values));
 }
