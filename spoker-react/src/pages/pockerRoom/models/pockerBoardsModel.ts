@@ -18,8 +18,8 @@ export default {
       return {...state, roomName }
     },
     
-    syncPage(state, {payload: {curPage, totalPage, resetFlag, scoreList, playerName, clickedNum}}) {
-      return {...state, curPage, totalPage, resetFlag , scoreList, playerName, clickedNum}
+    syncPage(state, {payload: {curPage, totalPage, resetFlag, scoreList, playerName, clickedNum, featureName}}) {
+      return {...state, curPage, totalPage, resetFlag , scoreList, playerName, clickedNum, featureName}
     },
     // syncTotalPage(state, {payload: {totalPage}}) {
     //   return {...state, totalPage}
@@ -73,6 +73,7 @@ export default {
                 clickedNum: parseJson.clickedNum,
                 scoreList: parseJson.playerScoreList,
                 playerName: parseJson.playerName,
+                featureName: parseJson.featureName
               }
             });
           }, roomId, 1);
