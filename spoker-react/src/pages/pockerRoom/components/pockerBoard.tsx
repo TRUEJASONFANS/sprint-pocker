@@ -4,10 +4,11 @@ import { connect } from 'dva';
 import RecordCreatorDlg from '@/pages/pockerRoom/components/recordCreatorDlg';
 import PokerBoardFooter from './pokerBoardFooter';
 import PlayerAreaView from '@/pages/pockerRoom/components/playerAreaView';
+import AddStoryDlg from '@/pages/pockerRoom/components/addStoryDlg';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useState,useEffect } from 'react';
 
-function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, curPage, totalPage, clickedNum}) {
+function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, curPage, totalPage, clickedNum, featureName}) {
 
   const columns = [
     {
@@ -99,7 +100,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
   return (
     <Layout style={{background:'white'}}>
       <Header className={styles.header}>
-        <span className={styles.titile}>{roomName}</span>
+        <span className={styles.titile}>{featureName}</span>
         <div style={{ float: "right"}} className={styles.toolbar}>
           <Button onClick={(e) => onResetGame(e)} type="primary" style={{ margin: "5px" }}>Reset</Button>
           <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={playerName} >
@@ -133,7 +134,9 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
             pagination={false}
           />
           <div className={styles.addStoryBtn}>
-            <Button type="primary" style={{ margin: "5px" }} size={"small"} onClick={onAddStory}>Add a internal task</Button>
+            <AddStoryDlg onOk={onAddStory}>
+              <Button type="primary" style={{ margin: "5px" }} size={"small"}>Add a internal task</Button>
+            </AddStoryDlg>
           </div>
         </Sider>
       </Layout>
@@ -145,7 +148,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
   );
 }
 function mapStateToProps(state) {
-  const { roomName, scoreList, resetFlag, curPage, totalPage, clickedNum, playerName} = state.pockerBoard;
+  const { roomName, scoreList, resetFlag, curPage, totalPage, clickedNum, playerName, featureName} = state.pockerBoard;
   return {
     roomName,
     scoreList,
@@ -154,6 +157,7 @@ function mapStateToProps(state) {
     curPage,
     totalPage,
     clickedNum,
+    featureName
   }
 }
 export default connect(mapStateToProps)(PockerBoard);

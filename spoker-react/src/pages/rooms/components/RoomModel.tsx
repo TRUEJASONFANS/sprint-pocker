@@ -61,10 +61,11 @@ class RoomEditModel extends Component {
                 rules: [{ required: true, message: '请输入房间名称' }],
               })(<Input />)}
             </FormItem>
-            <FormItem {...formItemLayout} label="描述">
+            <FormItem {...formItemLayout} label="F/I descripiton">
               {getFieldDecorator('desc', {
                 initialValue: desc,
-              })(<Input  placeholder="标注你的房间"/>)}
+                rules: [{ required: true }],
+              })(<Input  placeholder="Describe your first ticket"/>)}
             </FormItem>
           </Form>
         </Modal>
