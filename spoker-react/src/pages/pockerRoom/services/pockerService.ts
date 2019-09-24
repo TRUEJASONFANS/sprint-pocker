@@ -29,7 +29,8 @@ export function onNextGame(roomName:string) {
 interface Pageable {
   curPage: number,
   totalPage: number,
-  roomName: string
+  roomName: string,
+  title:string
 }
 
 export function addStory(values: Pageable) {

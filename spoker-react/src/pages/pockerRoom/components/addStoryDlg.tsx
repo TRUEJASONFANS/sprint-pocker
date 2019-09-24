@@ -24,8 +24,7 @@ class AddStoryDlg extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.hideModelHandler();
-        console.log("values", values);
-        onOk();
+        onOk(values);
       }
     });
   };
@@ -56,7 +55,7 @@ class AddStoryDlg extends Component {
             <FormItem {...formItemLayout} label="Title">
               {getFieldDecorator('title', {
                  rules: [{ required: true, message: '请输入Title' }]
-              })(<TextArea />)}
+              })(<Input />)}
             </FormItem>
           </Form>
         </Modal>
