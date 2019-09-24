@@ -85,12 +85,14 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
     }
   }
 
-  function onAddStory() {
+  function onAddStory(title) {
     let values = {
       curPage : curPage,
       totalPage : totalPage,
-      roomName: roomName
+      roomName: roomName,
+      ...title
     }
+    console.log("Add a story:" + values);
     dispatch({
       type: "pockerBoard/AddStory", 
       payload: values
