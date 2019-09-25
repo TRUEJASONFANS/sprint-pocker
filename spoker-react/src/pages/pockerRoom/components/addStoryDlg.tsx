@@ -4,7 +4,10 @@ import { connect } from 'dva';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
-class AddStoryDlg extends Component {
+interface Props {
+  featureName: String,
+}
+class AddStoryDlg extends Component<Props, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,9 +55,15 @@ class AddStoryDlg extends Component {
           onCancel={this.hideModelHandler}
         >
           <Form layout={'horizontal'} onSubmit={this.okHandler}>
-            <FormItem {...formItemLayout} label="Title">
+            <FormItem {...formItemLayout} label="F/I title">
               {getFieldDecorator('title', {
-                 rules: [{ required: true, message: '请输入Title' }]
+                 rules: [{ required: true, message: '请输入Title' }],
+                 initialValue: this.props.featureName,
+              })(<Input />)}
+            </FormItem>
+            <FormItem {...formItemLayout} label="task title">
+              {getFieldDecorator('taskTitle', {
+                 rules: [{ required: false, message: '请输入internal task title' }],
               })(<Input />)}
             </FormItem>
           </Form>

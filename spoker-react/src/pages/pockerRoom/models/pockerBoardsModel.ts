@@ -10,7 +10,8 @@ export default {
     curPage: number,
     totalPage: number,
     clickedNum: number,
-    playerName: string
+    playerName: string,
+    internalTaskName: string
   },
   reducers: {
 
@@ -18,8 +19,8 @@ export default {
       return {...state, roomName }
     },
     
-    syncPage(state, {payload: {curPage, totalPage, resetFlag, scoreList, playerName, clickedNum, featureName}}) {
-      return {...state, curPage, totalPage, resetFlag , scoreList, playerName, clickedNum, featureName}
+    syncPage(state, {payload: {curPage, totalPage, resetFlag, scoreList, playerName, clickedNum, featureName, internalTaskName}}) {
+      return {...state, curPage, totalPage, resetFlag , scoreList, playerName, clickedNum, featureName, internalTaskName}
     },
     // syncTotalPage(state, {payload: {totalPage}}) {
     //   return {...state, totalPage}
@@ -73,7 +74,8 @@ export default {
                 clickedNum: parseJson.clickedNum,
                 scoreList: parseJson.playerScoreList,
                 playerName: parseJson.playerName,
-                featureName: parseJson.featureName
+                featureName: parseJson.featureName,
+                internalTaskName: parseJson.internalTaskName
               }
             });
           }, roomId, 1);
