@@ -4,7 +4,12 @@ import { connect } from 'dva';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
-class RecordCreatorDlg extends Component {
+interface Props {
+  featureName: String,
+  internalTaskName: String,
+}
+
+class RecordCreatorDlg extends Component<Props,any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,9 +71,16 @@ class RecordCreatorDlg extends Component {
                 rules: [{ required: true, message: '请输入ticket 估值' }]
               })(<Input />)}
             </FormItem>
+            <FormItem {...formItemLayout} label="Feature Name">
+              {getFieldDecorator('featureTitle', {
+                 rules: [{ required: true, message: '请输入Title' }],
+                 initialValue: this.props.featureName
+              })(<Input disabled/>)}
+            </FormItem>
             <FormItem {...formItemLayout} label="Title">
               {getFieldDecorator('title', {
-                 rules: [{ required: true, message: '请输入Title' }]
+                 rules: [{ required: true, message: '请输入Title' }],
+                 initialValue: this.props.internalTaskName
               })(<TextArea />)}
             </FormItem>
           </Form>

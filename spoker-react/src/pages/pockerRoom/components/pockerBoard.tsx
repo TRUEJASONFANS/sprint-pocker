@@ -8,7 +8,7 @@ import AddStoryDlg from '@/pages/pockerRoom/components/addStoryDlg';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useState,useEffect } from 'react';
 
-function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, curPage, totalPage, clickedNum, featureName}) {
+function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName}) {
 
   const columns = [
     {
@@ -85,12 +85,12 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
     }
   }
 
-  function onAddStory(title) {
+  function onAddStory(formData) {
     let values = {
       curPage : curPage,
       totalPage : totalPage,
       roomName: roomName,
-      ...title
+      ...formData
     }
     console.log("Add a story:" + values);
     dispatch({
@@ -102,10 +102,10 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
   return (
     <Layout style={{background:'white'}}>
       <Header className={styles.header}>
-        <span className={styles.titile}>{featureName}</span>
+        <span className={styles.titile}>{featureName} {internalTaskName}</span>
         <div style={{ float: "right"}} className={styles.toolbar}>
           <Button onClick={(e) => onResetGame(e)} type="primary" style={{ margin: "5px" }}>Reset</Button>
-          <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={playerName} >
+          <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={playerName} featureName={featureName} internalTaskName={internalTaskName}>
             <Button type="primary" style={{ margin: "5px" }}>Commit</Button>
           </RecordCreatorDlg>
           <Button type="primary" style={{ margin: "5px" }}>Exit</Button>
@@ -136,7 +136,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
             pagination={false}
           />
           <div className={styles.addStoryBtn}>
-            <AddStoryDlg onOk={onAddStory}>
+            <AddStoryDlg onOk={onAddStory} featureName={featureName}>
               <Button type="primary" style={{ margin: "5px" }} size={"small"}>Add a internal task</Button>
             </AddStoryDlg>
           </div>
@@ -150,7 +150,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
   );
 }
 function mapStateToProps(state) {
-  const { roomName, scoreList, resetFlag, curPage, totalPage, clickedNum, playerName, featureName} = state.pockerBoard;
+  const { roomName, scoreList, resetFlag, curPage, totalPage, clickedNum, playerName, featureName, internalTaskName} = state.pockerBoard;
   return {
     roomName,
     scoreList,
@@ -159,7 +159,8 @@ function mapStateToProps(state) {
     curPage,
     totalPage,
     clickedNum,
-    featureName
+    featureName,
+    internalTaskName
   }
 }
 export default connect(mapStateToProps)(PockerBoard);
