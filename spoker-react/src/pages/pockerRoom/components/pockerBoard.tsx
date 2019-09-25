@@ -7,6 +7,7 @@ import PlayerAreaView from '@/pages/pockerRoom/components/playerAreaView';
 import AddStoryDlg from '@/pages/pockerRoom/components/addStoryDlg';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useState,useEffect } from 'react';
+import router from 'umi/router';
 
 function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName}) {
 
@@ -99,6 +100,10 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
     })
   }
 
+  function backToRoomPage() {
+    router.push('/rooms');
+  }
+
   return (
     <Layout style={{background:'white'}}>
       <Header className={styles.header}>
@@ -108,7 +113,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
           <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={playerName} featureName={featureName} internalTaskName={internalTaskName}>
             <Button type="primary" style={{ margin: "5px" }}>Commit</Button>
           </RecordCreatorDlg>
-          <Button type="primary" style={{ margin: "5px" }}>Exit</Button>
+          <Button type="primary" style={{ margin: "5px" }} onClick={backToRoomPage}>Exit</Button>
         </div>
       </Header>
       {/* 统计表格       */}
