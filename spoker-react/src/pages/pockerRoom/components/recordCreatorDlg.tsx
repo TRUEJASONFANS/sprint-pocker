@@ -46,10 +46,10 @@ class RecordCreatorDlg extends Component<Props,any> {
 
   render() {
     let estimateAvgVals = 0;
-    const estimateVals = this.props.record.map(score => score.fibonacciNum).filter(a => a !== "??");
+    const estimateVals = this.props.record.map(score => score.fibonacciNum).filter(a => a !== "??" && a!== "?");
     if (estimateVals.length > 0) {
       estimateAvgVals = estimateVals.map(item => +item).reduce((prev, curv) => prev + curv, 0) / estimateVals.length;
-    }
+    } 
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -72,7 +72,7 @@ class RecordCreatorDlg extends Component<Props,any> {
               })(<Input />)}
             </FormItem>
             <FormItem {...formItemLayout} label="Feature Name">
-              {getFieldDecorator('featureTitle', {
+              {getFieldDecorator('feature', {
                  rules: [{ required: true, message: '请输入Title' }],
                  initialValue: this.props.featureName
               })(<Input disabled/>)}
@@ -81,6 +81,11 @@ class RecordCreatorDlg extends Component<Props,any> {
               {getFieldDecorator('title', {
                  rules: [{ required: true, message: '请输入Title' }],
                  initialValue: this.props.internalTaskName
+              })(<Input />)}
+            </FormItem>
+            <FormItem {...formItemLayout} label="description">
+              {getFieldDecorator('description', {
+                 rules: [{ required: true, message: '请输入description' }],
               })(<TextArea />)}
             </FormItem>
           </Form>
