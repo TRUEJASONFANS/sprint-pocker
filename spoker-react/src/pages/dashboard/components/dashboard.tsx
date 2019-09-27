@@ -7,9 +7,9 @@ function Dashboard({ dispatch, itemList, curPage }) {
 
     const columns = [
         {
-            title: 'Ticket Number',
-            dataIndex: 'ticketNum',
-            key: 'ticketNum',
+            title: 'Feature',
+            dataIndex: 'feature',
+            key: 'feature',
             render: text => text,
         },
         {
@@ -56,7 +56,7 @@ function Dashboard({ dispatch, itemList, curPage }) {
             <Table
                 columns={columns}
                 dataSource={itemList}
-                rowKey={record => record.ticketNum}
+                rowKey={record => record.id}
                 pagination={false}
             />
             <Pagination
