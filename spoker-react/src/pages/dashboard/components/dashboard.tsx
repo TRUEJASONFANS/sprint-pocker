@@ -3,6 +3,8 @@ import { connect } from 'dva';
 import { Table, Pagination, Button} from 'antd';
 import { routerRedux } from 'dva/router';
 import DashboardItemCreator from '@/pages/dashboard/components/dashboardItemCreator';
+import styles from '@/pages/dashboard/components/dashboard.css';
+
 function Dashboard({ dispatch, itemList, curPage }) {
 
     const columns = [
@@ -50,7 +52,7 @@ function Dashboard({ dispatch, itemList, curPage }) {
         <div>
             <div>
                 <DashboardItemCreator onOk={createHandler}>
-                    <Button type="primary">Create tickets</Button>
+                    <Button type="primary" className={styles.createTicketBtn}>Create tickets</Button>
                 </DashboardItemCreator>
             </div>
             <Table
