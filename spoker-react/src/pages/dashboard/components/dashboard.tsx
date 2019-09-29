@@ -52,7 +52,7 @@ function Dashboard({ dispatch, itemList, curPage }) {
         <div>
             <div>
                 <DashboardItemCreator onOk={createHandler}>
-                    <Button type="primary" className={styles.createTicketBtn}>Create tickets</Button>
+                    <Button type="primary" className={styles.createTicketBtn}>Create tasks</Button>
                 </DashboardItemCreator>
             </div>
             <Table
