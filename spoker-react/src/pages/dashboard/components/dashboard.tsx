@@ -3,6 +3,8 @@ import { connect } from 'dva';
 import { Table, Pagination, Button} from 'antd';
 import { routerRedux } from 'dva/router';
 import DashboardItemCreator from '@/pages/dashboard/components/dashboardItemCreator';
+import SearchTable from './SearchTable'
+
 function Dashboard({ dispatch, itemList, curPage }) {
 
     const columns = [
@@ -53,10 +55,9 @@ function Dashboard({ dispatch, itemList, curPage }) {
                     <Button type="primary">Create tickets</Button>
                 </DashboardItemCreator>
             </div>
-            <Table
+            <SearchTable 
                 columns={columns}
                 dataSource={itemList}
-                rowKey={record => record.id}
                 pagination={false}
             />
             <Pagination
