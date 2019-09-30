@@ -65,15 +65,9 @@ class RecordCreatorDlg extends Component<Props,any> {
           onCancel={this.hideModelHandler}
         >
           <Form layout={'horizontal'} onSubmit={this.okHandler}>
-            <FormItem {...formItemLayout} label="Ticket估值">
-              {getFieldDecorator('storyPoint', {
-                initialValue: estimateAvgVals,
-                rules: [{ required: true, message: '请输入ticket 估值' }]
-              })(<Input />)}
-            </FormItem>
             <FormItem {...formItemLayout} label="Feature Name">
               {getFieldDecorator('feature', {
-                 rules: [{ required: true, message: '请输入Title' }],
+                 rules: [{ required: true, message: '请输入feature' }],
                  initialValue: this.props.featureName
               })(<Input disabled/>)}
             </FormItem>
@@ -83,10 +77,14 @@ class RecordCreatorDlg extends Component<Props,any> {
                  initialValue: this.props.internalTaskName
               })(<Input />)}
             </FormItem>
-            <FormItem {...formItemLayout} label="description">
-              {getFieldDecorator('description', {
-                 rules: [{ required: true, message: '请输入description' }],
-              })(<TextArea />)}
+            <FormItem {...formItemLayout} label="Story Point">
+              {getFieldDecorator('storyPoint', {
+                initialValue: estimateAvgVals,
+                rules: [{ required: true, message: '请输入ticket 估值' }]
+              })(<Input />)}
+            </FormItem>
+            <FormItem {...formItemLayout} label="Description">
+              {getFieldDecorator('description', {})(<TextArea />)}
             </FormItem>
           </Form>
         </Modal>

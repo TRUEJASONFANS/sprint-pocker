@@ -62,10 +62,15 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
   }
 
   function onResetGame(event) {
+    let values = {
+      curPage : curPage ,
+      totalPage : totalPage,
+      roomName: roomName
+    }
     event.preventDefault();
     dispatch({
       type: 'pockerBoard/onNextGame',
-      payload: roomName
+      payload: values
     });
   }
 

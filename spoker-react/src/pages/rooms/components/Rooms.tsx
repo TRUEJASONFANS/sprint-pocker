@@ -4,6 +4,7 @@ import styles from './Rooms.css';
 import { routerRedux } from 'dva/router';
 import { Table, Pagination, Button } from 'antd';
 import { ROOM_PAGE_SIZE } from '@/pages/constants';
+import SearchTable from './SearchTable';
 
 function Rooms({ dispatch, list: dataSource, loading, total, page: current, userName }) {
   function createHandler(values) {
@@ -41,16 +42,15 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current, user
 
   return (
     <div>
-      <div className={styles.create}>
+      <span className={styles.create}>
         <RoomModel owner={userName} record={{}} onOk={createHandler}>
-          <Button type="primary">Create Rooms</Button>
+          <Button type="primary" className={styles.createRoomBtn}>Create Rooms</Button>
         </RoomModel>
-      </div>
-      <Table
+      </span>
+      <SearchTable 
         loading={loading}
         columns={columns}
         dataSource={dataSource}
-        rowKey={record => record.roomNum}
         pagination={false}
       />
       <Pagination
@@ -67,7 +67,6 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current, user
 function mapStateToProps(state) {
   const { list, total, page } = state.rooms;
   const { userName } = state.global;
-  console.log("table:",state.rooms);
   return {
     list,
     total,
