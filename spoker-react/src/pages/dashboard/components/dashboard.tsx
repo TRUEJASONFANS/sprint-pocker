@@ -4,6 +4,7 @@ import { Table, Pagination, Button} from 'antd';
 import { routerRedux } from 'dva/router';
 import DashboardItemCreator from '@/pages/dashboard/components/dashboardItemCreator';
 import SearchTable from './SearchTable'
+import styles from '@/pages/dashboard/components/dashboard.css';
 
 function Dashboard({ dispatch, itemList, curPage }) {
 
@@ -52,7 +53,7 @@ function Dashboard({ dispatch, itemList, curPage }) {
         <div>
             <span>
                 <DashboardItemCreator onOk={createHandler}>
-                    <Button type="primary">Create tickets</Button>
+                    <Button type="primary" className={styles.createTicketBtn}>Create tasks</Button>
                 </DashboardItemCreator>
             </span>
             <SearchTable 
