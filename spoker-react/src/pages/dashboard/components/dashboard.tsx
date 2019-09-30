@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Table, Pagination, Button} from 'antd';
 import { routerRedux } from 'dva/router';
 import DashboardItemCreator from '@/pages/dashboard/components/dashboardItemCreator';
+import SearchTable from './SearchTable'
 import styles from '@/pages/dashboard/components/dashboard.css';
 
 function Dashboard({ dispatch, itemList, curPage }) {
@@ -50,15 +51,14 @@ function Dashboard({ dispatch, itemList, curPage }) {
 
     return (
         <div>
-            <div>
+            <span>
                 <DashboardItemCreator onOk={createHandler}>
                     <Button type="primary" className={styles.createTicketBtn}>Create tasks</Button>
                 </DashboardItemCreator>
-            </div>
-            <Table
+            </span>
+            <SearchTable 
                 columns={columns}
                 dataSource={itemList}
-                rowKey={record => record.id}
                 pagination={false}
             />
             <Pagination
