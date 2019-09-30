@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Modal, Form, Input } from 'antd';
 const FormItem = Form.Item;
+const { TextArea } = Input;
 
 class DashboardItemCreator extends Component {
 
@@ -55,19 +56,24 @@ class DashboardItemCreator extends Component {
                     onCancel={this.hideModelHandler}
                 >
                     <Form layout={"horizontal"} onSubmit={this.okHandler}>
-                        <FormItem {...formItemLayout} label="Ticket Number">
-                            {getFieldDecorator('ticketNum', {
-                                rules: [{ required: true, message: '请输入Ticket Number' }],
+                        <FormItem {...formItemLayout} label="Feature Name">
+                            {getFieldDecorator('feature', {
+                                rules: [{ required: true, message: '请输入feature' }],
                             })(<Input />)}
                         </FormItem>
                         <FormItem {...formItemLayout} label="Title">
-                            {getFieldDecorator('title', {})(<Input />)}
-                        </FormItem>
-                        <FormItem {...formItemLayout} label="Description">
-                            {getFieldDecorator('description', {})(<Input />)}
+                            {getFieldDecorator('title', {
+                                rules: [{ required: true, message: '请输入Title' }]
+                            })(<Input />)}
                         </FormItem>
                         <FormItem {...formItemLayout} label="Story Point">
-                            {getFieldDecorator('storyPoint', {})(<Input />)}
+                            {getFieldDecorator('storyPoint', { 
+                                rules: [{ required: true, message: '请输入ticket 估值' }] })
+                                (<Input />)
+                            }
+                        </FormItem>
+                        <FormItem {...formItemLayout} label="Description">
+                            {getFieldDecorator('description', {})(<TextArea />)}
                         </FormItem>
                     </Form>
                 </Modal>

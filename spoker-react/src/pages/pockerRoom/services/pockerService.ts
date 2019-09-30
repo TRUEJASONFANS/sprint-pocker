@@ -22,8 +22,8 @@ export function addTikcetRecord(ticketRecord) {
   });
 }
 
-export function onNextGame(roomName:string) {
-  request('/app/onNextGame/'+ roomName, {}, {});
+export function onNextGame(values: Pageable) {
+  request('/app/onNextGame/'+ values.roomName + '/' + values.curPage, {}, {});
 }
 
 interface Pageable {

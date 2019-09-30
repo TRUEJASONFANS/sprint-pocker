@@ -44,7 +44,7 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current, user
     <div>
       <span className={styles.create}>
         <RoomModel owner={userName} record={{}} onOk={createHandler}>
-          <Button type="primary">Create Rooms</Button>
+          <Button type="primary" className={styles.createRoomBtn}>Create Rooms</Button>
         </RoomModel>
       </span>
       <SearchTable 
