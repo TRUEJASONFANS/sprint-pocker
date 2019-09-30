@@ -50,11 +50,11 @@ function Dashboard({ dispatch, itemList, curPage }) {
 
     return (
         <div>
-            <div>
+            <span>
                 <DashboardItemCreator onOk={createHandler}>
                     <Button type="primary">Create tickets</Button>
                 </DashboardItemCreator>
-            </div>
+            </span>
             <SearchTable 
                 columns={columns}
                 dataSource={itemList}
