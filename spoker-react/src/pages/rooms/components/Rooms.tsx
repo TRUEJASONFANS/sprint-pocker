@@ -42,11 +42,11 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current, user
 
   return (
     <div>
-      <div className={styles.create}>
+      <span className={styles.create}>
         <RoomModel owner={userName} record={{}} onOk={createHandler}>
           <Button type="primary">Create Rooms</Button>
         </RoomModel>
-      </div>
+      </span>
       <SearchTable 
         loading={loading}
         columns={columns}
