@@ -14,8 +14,7 @@
   vertical-align: -10px
 }
 .header {
-  background: #337AB7;
-  padding: 0 5px;
+  background: #337AB7 !important;
   margin: 5px;
 }
 .toolbar {

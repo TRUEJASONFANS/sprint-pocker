@@ -7,11 +7,12 @@ export default {
     scoreList: [],
     roomName: '',
     resetFlag: false,
-    curPage: number,
-    totalPage: number,
-    clickedNum: number,
-    playerName: string,
-    internalTaskName: string
+    curPage: 1,
+    totalPage: 1,
+    clickedNum: -1,
+    playerName: '',
+    featureName: '',
+    internalTaskName: ''
   },
   reducers: {
 
