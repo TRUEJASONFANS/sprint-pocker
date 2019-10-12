@@ -1,6 +1,6 @@
 import { DASHBOARD_PAGE_SIZE } from '@/pages/constants';
 import { connect } from 'dva';
-import { Table, Pagination, Button} from 'antd';
+import { Table, Pagination, Button, Popconfirm } from 'antd';
 import { routerRedux } from 'dva/router';
 import DashboardItemCreator from '@/pages/dashboard/components/dashboardItemCreator';
 import SearchTable from './SearchTable'
@@ -32,7 +32,18 @@ function Dashboard({ dispatch, itemList, curPage }) {
             dataIndex: 'storyPoint',
             key: 'storyPoint',
             render: text => text
-        }
+        },
+        {
+            title: 'Operation',
+            //dataIndex: 'storyPoint',
+            key: 'operation',
+            render: (text, record) =>
+            (
+              <Popconfirm title="Sure to delete?" onConfirm={() => deleteHandler(record.id)}>
+                <a>Delete</a>
+              </Popconfirm>
+            )
+        }  
     ];
 
     function pageChangeHandler(page) {
@@ -48,6 +59,13 @@ function Dashboard({ dispatch, itemList, curPage }) {
           payload: newItem,
         });
       }
+
+    function deleteHandler(id) {
+        dispatch({
+            type: 'dashboard/deleteOne',
+            payload: id,
+          });
+    }
 
     return (
         <div>
