@@ -17,7 +17,7 @@ export function create(newItem) {
   });
 }
 
-export function remove(ticketNum) {
+export function deleteOne(ticketNum) {
   return request(`/api/dashboard/${ticketNum}`, {
     method: 'delete',
   });
