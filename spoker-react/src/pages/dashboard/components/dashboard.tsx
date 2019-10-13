@@ -35,7 +35,6 @@ function Dashboard({ dispatch, itemList, curPage }) {
         },
         {
             title: 'Operation',
-            //dataIndex: 'storyPoint',
             key: 'operation',
             render: (text, record) =>
             (
