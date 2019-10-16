@@ -29,7 +29,7 @@ class DashboardItemCreator extends Component {
         const { onOk, owner } = this.props;
         this.props.form.validateFields((err, values) => {
           if (!err) {
-            onOk({creator: "", ...values,  createTime:"", updateTime:"", id:""});
+            onOk({creator: "", ...values,  createTime:"", updateTime:"", id: this.props.record.id});
             this.hideModelHandler();
           }
         });
@@ -40,6 +40,7 @@ class DashboardItemCreator extends Component {
         // children should be the hooked button.
         const { getFieldDecorator } = this.props.form;
         const { children } = this.props;
+        const { feature, title, storyPoint,  description} = this.props.record;
         const formItemLayout = {
             labelCol: { span: 6 },
             wrapperCol: { span: 14 },
@@ -48,7 +49,7 @@ class DashboardItemCreator extends Component {
             <span>
                 <span onClick={this.showModelHandler}>{children}</span>
                 <Modal
-                    title="创建Ticket Note"
+                    title="编辑Ticket Note"
                     visible={this.state.visible}
                     onOk={this.okHandler}
                     okText="确认"
@@ -58,22 +59,25 @@ class DashboardItemCreator extends Component {
                     <Form layout={"horizontal"} onSubmit={this.okHandler}>
                         <FormItem {...formItemLayout} label="Feature Name">
                             {getFieldDecorator('feature', {
+                                initialValue: feature,
                                 rules: [{ required: true, message: '请输入feature' }],
                             })(<Input />)}
                         </FormItem>
                         <FormItem {...formItemLayout} label="Title">
                             {getFieldDecorator('title', {
+                                initialValue: title,
                                 rules: [{ required: true, message: '请输入Title' }]
                             })(<Input />)}
                         </FormItem>
                         <FormItem {...formItemLayout} label="Story Point">
                             {getFieldDecorator('storyPoint', { 
+                                initialValue: storyPoint,
                                 rules: [{ required: true, message: '请输入ticket 估值' }] })
                                 (<Input />)
                             }
                         </FormItem>
                         <FormItem {...formItemLayout} label="Description">
-                            {getFieldDecorator('description', {})(<TextArea />)}
+                            {getFieldDecorator('description', {initialValue: description,})(<TextArea />)}
                         </FormItem>
                     </Form>
                 </Modal>

@@ -26,7 +26,13 @@ export default {
       yield call(dashboardService.deleteOne, ticketNum);
       const page = yield select(state => state.page);
       yield put({ type: 'fetch', payload: { page } });
+    },
+    *update({ payload: item }, { call, select, put}) {
+      yield call(dashboardService.update, item);
+      const page = yield select(state => state.page);
+      yield put({ type: 'fetch', payload: { page } });
     }
+
   },
   subscriptions: {
     setup({ dispatch, history }) {
