@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Modal, Form, Input } from 'antd';
+import * as roomService from '@/pages/rooms/services/roomsService';
 
 const FormItem = Form.Item;
 
@@ -29,10 +30,31 @@ class RoomEditModel extends Component {
     console.log(owner);
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        onOk({creator: owner, ...values});
+        onOk({ creator: owner, ...values });
         this.hideModelHandler();
       }
     });
+  };
+
+  validateRoomPassword = (rule, value, callback) => {
+    const name = this.props.record.name;
+    const roomPassword = value;
+
+    const promise = roomService.checkRoomPassword({name, roomPassword});
+    promise.then(value => {
+      // success
+      if (value.data.statusCode === 2000) {
+        callback();
+
+      } else {
+        const message = value.data.message;
+        console.log(message);
+        callback(message);
+      }
+    }, error => {
+      // failure
+    });
+
   };
 
   render() {
@@ -47,7 +69,7 @@ class RoomEditModel extends Component {
       <span>
         <span onClick={this.showModelHandler}>{children}</span>
         <Modal
-          title="创建房间"
+          title="请输入房间密码"
           visible={this.state.visible}
           onOk={this.okHandler}
           okText = "确认"
@@ -55,23 +77,15 @@ class RoomEditModel extends Component {
           onCancel={this.hideModelHandler}
         >
           <Form layout={"horizontal"} onSubmit={this.okHandler}>
-            <FormItem {...formItemLayout} label="房间名">
-              {getFieldDecorator('name', {
-                initialValue: name,
-                rules: [{ required: true, message: '请输入房间名称' }],
-              })(<Input />)}
-            </FormItem>
             <FormItem {...formItemLayout} label="房间密码">
               {getFieldDecorator('roomPassword', {
                 initialValue: roomPassword,
-                rules: [{ required: true, message: '请输入房间密码' }],
+                rules: [{ required: true, message: '请输入房间密码' },
+                {
+                  validator: this.validateRoomPassword,
+                }
+                ],
               })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="F/I descripiton">
-              {getFieldDecorator('desc', {
-                initialValue: desc,
-                rules: [{ required: true }],
-              })(<Input  placeholder="Describe your first ticket"/>)}
             </FormItem>
           </Form>
         </Modal>
