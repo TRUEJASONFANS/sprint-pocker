@@ -85,7 +85,7 @@ class RoomEditModel extends Component {
                   validator: this.validateRoomPassword,
                 }
                 ],
-              })(<Input />)}
+              })(<Input.Password />)}
             </FormItem>
           </Form>
         </Modal>

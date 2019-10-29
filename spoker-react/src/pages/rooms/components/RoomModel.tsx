@@ -65,7 +65,7 @@ class RoomEditModel extends Component {
               {getFieldDecorator('roomPassword', {
                 initialValue: roomPassword,
                 rules: [{ required: true, message: '请输入房间密码' }],
-              })(<Input />)}
+              })(<Input.Password />)}
             </FormItem>
             <FormItem {...formItemLayout} label="F/I descripiton">
               {getFieldDecorator('desc', {
