@@ -1,6 +1,6 @@
 import { DASHBOARD_PAGE_SIZE } from '@/pages/constants';
 import { connect } from 'dva';
-import { Table, Pagination, Button, Popconfirm } from 'antd';
+import { Table, Divider, Pagination, Button, Popconfirm } from 'antd';
 import { routerRedux } from 'dva/router';
 import DashboardItemCreator from '@/pages/dashboard/components/dashboardItemCreator';
 import SearchTable from './SearchTable'
@@ -38,9 +38,15 @@ function Dashboard({ dispatch, itemList, curPage }) {
             key: 'operation',
             render: (text, record) =>
             (
+                <span className={styles.operation}>
+                <DashboardItemCreator record={record} onOk={editHandler.bind(null, record.id)}>
+                  <a>Edit</a>
+                </DashboardItemCreator> 
+                <Divider type="vertical" />    
               <Popconfirm title="Sure to delete?" onConfirm={() => deleteHandler(record.id)}>
                 <a>Delete</a>
               </Popconfirm>
+              </span>
             )
         }  
     ];
@@ -66,10 +72,17 @@ function Dashboard({ dispatch, itemList, curPage }) {
           });
     }
 
+    function editHandler(id, values) {
+        dispatch({
+          type: 'dashboard/update',
+          payload: values,
+        });
+      }
+    
     return (
         <div>
             <span>
-                <DashboardItemCreator onOk={createHandler}>
+                <DashboardItemCreator record={{}} onOk={createHandler}>
                     <Button type="primary" className={styles.createTicketBtn}>Create tasks</Button>
                 </DashboardItemCreator>
             </span>

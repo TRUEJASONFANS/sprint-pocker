@@ -1,5 +1,6 @@
 // import {request} from '../../../utils/request';
 import {openSocket, request} from '@/services/websocket_service';
+import { request as requestUtil } from '@/utils/request';// Note: use the {} if the export file don't use the default
 
 // export function fetch({ page = 1 }) {
 //   // ` `字符串模版
@@ -18,6 +19,20 @@ export function create(values) {
   request('/app/addRoom', {},	 
     JSON.stringify(values)
   );
+}
+
+export function checkRoomPassword(values) {
+  const id = values.name;
+  console.log("Check room password ", values);
+  const url = `/api/rooms/${id}`;
+  return requestUtil(url, {
+    method: 'POST',
+    body: JSON.stringify(values),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+
 }
 
 export function w_connect(action) {

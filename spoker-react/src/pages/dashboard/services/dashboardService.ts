@@ -22,3 +22,14 @@ export function deleteOne(ticketNum) {
     method: 'delete',
   });
 }
+
+export function update(values) {
+  const id = values.id;
+  return request(`/api/dashboard/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(values),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+}
