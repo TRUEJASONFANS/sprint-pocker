@@ -44,7 +44,8 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
     promise.then(value => {
       // success
       if (value.data.statusCode === 2000) {
-        const link = value.data;
+        const link = value.data.data.link;
+        setInviteLink(link);
       } else {
         const message = value.data.message;
         console.log(message);
