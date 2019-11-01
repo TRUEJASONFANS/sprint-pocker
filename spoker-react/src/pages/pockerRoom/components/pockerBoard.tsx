@@ -1,4 +1,4 @@
-import { Button, Layout, notification, Table } from 'antd';
+import { Button, Layout, notification, Table, Collapse, Input } from 'antd';
 import styles from './PockerBoard.css';
 import { connect } from 'dva';
 import RecordCreatorDlg from '@/pages/pockerRoom/components/recordCreatorDlg';
@@ -8,8 +8,11 @@ import AddStoryDlg from '@/pages/pockerRoom/components/addStoryDlg';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useState,useEffect } from 'react';
 import router from 'umi/router';
+import * as pockerService from '@/pages/pockerRoom/services/pockerService';
 
 function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName}) {
+
+  const [inviteLink, setInviteLink] = useState(null);
 
   const columns = [
     {
@@ -34,6 +37,22 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
       type: 'pockerBoard/addTicketRecord',
       payload: tickerRecord,
     });
+  }
+
+  function generateInviteLink() {
+    const promise = pockerService.generateInviteLink(roomName);
+    promise.then(value => {
+      // success
+      if (value.data.statusCode === 2000) {
+        const link = value.data;
+      } else {
+        const message = value.data.message;
+        console.log(message);
+      }
+    }, error => {
+      // failure
+    });
+
   }
 
   //svg click event
@@ -150,6 +169,11 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
               <Button type="primary" style={{ margin: "5px" }} size={"small"}>Add a internal task</Button>
             </AddStoryDlg>
           </div>
+          <Collapse defaultActiveKey={[]} onChange={generateInviteLink}>
+            <Collapse.Panel header="Invite link" key="1" >
+              <div style={{ overflow:"scroll"}}>{inviteLink}}</div>
+            </Collapse.Panel>
+          </Collapse>
         </Sider>
       </Layout>
       <Footer className={styles.footer}>
