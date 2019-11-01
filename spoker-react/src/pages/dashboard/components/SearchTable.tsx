@@ -11,38 +11,33 @@ class SearchTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          dataSource : props.dataSource
+            searchText : ""
         };
     }
 
  
     handleSearch = searchText => {
-      var filteredData = this.props.dataSource.filter(({feature, title, description, storyPoint }) => {
-        var flag = false;
-        searchText = searchText.toLowerCase();
-        if (feature != null) {
-            feature = feature.toLowerCase();
-            flag = flag || feature.includes(searchText);
-        }
-        if (title != null) {
-            title = title.toLowerCase();
-            flag = flag || title.includes(searchText);
-        }
-        if (description != null) {
-            description = description.toLowerCase();
-            flag = flag || description.includes(searchText);
-        }
-        if (storyPoint != null) {
-            storyPoint = storyPoint.toString().toLowerCase();
-            flag = flag || storyPoint.includes(searchText)
-        }
-        return flag;
-      });
-      this.setState({
-          dataSource : filteredData
-      })
+        this.setState({
+            searchText: searchText
+        })
     }
 
+    filterDatasource(searchText, dataSource:[]) {
+        var filteredData = dataSource.filter(({ feature, description }) => {
+            var flag = false;
+            searchText = searchText.toLowerCase();
+            if (feature != null) {
+                feature = feature.toLowerCase();
+                flag = flag || feature.includes(searchText);
+            }
+            if (description != null) {
+                description = description.toLowerCase();
+                flag = flag || description.includes(searchText);
+            }
+            return flag
+        });
+        return filteredData;
+    }
 
     render() {
         return (
@@ -52,8 +47,9 @@ class SearchTable extends Component {
                 </span>
                 <Table
                     columns={this.props.columns}
-                    dataSource={this.state.dataSource}
+                    dataSource={this.filterDatasource(this.state.searchText, this.props.dataSource)}
                     pagination={false}
+                    rowKey={record => record.roomNum}
                 />
             </span>
         )

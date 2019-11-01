@@ -1,4 +1,5 @@
 import RoomModel from '@/pages/rooms/components/RoomModel';
+import RoomPasswordModel from '@/pages/rooms/components/RoomPasswordModel';
 import { connect } from 'dva';
 import styles from './Rooms.css';
 import { routerRedux } from 'dva/router';
@@ -30,7 +31,7 @@ function Rooms({ dispatch, list: dataSource, loading, total, page: current, user
       title: 'Name',
       dataIndex: 'name',
       key: 'name',   
-      render: text => { return <a onClick={joinRoom(text)}>{text}</a>},
+      render: text => <RoomPasswordModel owner={userName} record={{name: text, roomPassword:""}} onOk={joinRoom(text)}> <a>{text}</a> </RoomPasswordModel>,
     },
     {
       title: 'Description',
