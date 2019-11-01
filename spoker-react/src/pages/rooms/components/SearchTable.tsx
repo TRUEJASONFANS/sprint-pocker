@@ -2,36 +2,46 @@ import React, { Component } from "react";
 import { Table, Input} from 'antd';
 import 'antd/dist/antd.css';
 import styles from './Rooms.css';
+import { Interface } from 'readline';
 
 const { Search } = Input;
 
-
-class SearchTable extends Component {
+interface Props {
+    dataSource: [],
+    loading: any,
+    columns: []
+}
+class SearchTable extends Component<Props, any> {
 
     constructor(props) {
         super(props);
         this.state = {
-          dataSource : props.dataSource
+            searchText : ""
         };
     }
 
     handleSearch = searchText => {
-    var filteredData = this.props.dataSource.filter(({ name, desc }) => {
-        var flag = false;
-        searchText = searchText.toLowerCase();
-        if (name != null) {
-            name = name.toLowerCase();
-            flag = flag || name.includes(searchText);
-        }
-        if (desc != null) {
-            desc = desc.toLowerCase();
-            flag = flag || desc.includes(searchText);
-        }
-        return  flag
-    });
-    this.setState({
-        dataSource : filteredData
-    })
+        
+        this.setState({
+            searchText: searchText
+        })
+    }
+    
+    filterDatasource(searchText, dataSource:[]) {
+        var filteredData = dataSource.filter(({ name, desc }) => {
+            var flag = false;
+            searchText = searchText.toLowerCase();
+            if (name != null) {
+                name = name.toLowerCase();
+                flag = flag || name.includes(searchText);
+            }
+            if (desc != null) {
+                desc = desc.toLowerCase();
+                flag = flag || desc.includes(searchText);
+            }
+            return flag
+        });
+        return filteredData;
     }
 
     render() {
@@ -43,8 +53,9 @@ class SearchTable extends Component {
                 <Table
                     loading={this.props.loading}
                     columns={this.props.columns}
-                    dataSource={this.state.dataSource}
+                    dataSource={this.filterDatasource(this.state.searchText, this.props.dataSource)}
                     pagination={false}
+                    rowKey={record => record.roomNum}
                 />
             </span>
         )
