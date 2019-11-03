@@ -172,7 +172,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
           </div>
           <Collapse defaultActiveKey={[]} onChange={generateInviteLink}>
             <Collapse.Panel header="Invite link" key="1" >
-              <div style={{ overflow:"scroll"}}>{inviteLink}}</div>
+              <div style={{ overflow:"scroll"}}>{inviteLink}</div>
             </Collapse.Panel>
           </Collapse>
         </Sider>
