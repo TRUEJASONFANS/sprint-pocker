@@ -23,7 +23,7 @@ export function addTikcetRecord(ticketRecord) {
 }
 
 export function generateInviteLink(roomName) {
-  return restAPI.request('/api/roomToken/' + roomName, {
+  return restAPI.request('/api/room/token/' + roomName, {
     method: 'POST',
     body:JSON.stringify({name: roomName}),
     headers: {
