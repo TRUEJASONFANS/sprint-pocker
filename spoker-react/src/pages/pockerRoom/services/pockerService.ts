@@ -22,6 +22,16 @@ export function addTikcetRecord(ticketRecord) {
   });
 }
 
+export function generateInviteLink(roomName) {
+  return restAPI.request('/api/room/token/' + roomName, {
+    method: 'POST',
+    body:JSON.stringify({name: roomName}),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+}
+
 export function onNextGame(values: Pageable) {
   request('/app/onNextGame/'+ values.roomName + '/' + values.curPage, {}, {});
 }
