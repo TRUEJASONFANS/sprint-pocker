@@ -4,7 +4,7 @@
 }
 .footer {
   position:absolute;bottom:100px;height:100px;
-  background:#ffffff;
+  background:#ffffff !important;
 }
 .titile {
   font-size: 45px;
