@@ -8,7 +8,6 @@
   min-height: 120px;
   padding: 15px 0 0;
   border-top: 1px solid #e6ebef;
-  z-index: 2;
 }
 .card {
   border-radius: 10px;
@@ -36,7 +35,6 @@
   position: absolute;
   left: 0;
   cursor: pointer;
-  z-index: 1;
 }
 .cardInHand:hover {
   transform: scale(1.1);
@@ -52,7 +50,6 @@
   position: relative;
   width: 100px;
   height: 140px;
-  z-index: 1;
 }
 
 .cardRig .perspectiveWrapper {
