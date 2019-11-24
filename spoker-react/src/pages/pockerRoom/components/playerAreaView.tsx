@@ -1,15 +1,18 @@
 import * as React from 'react';
 import styles from './playerAreaView.css';
+import CandidateBoard from './candidateBoard';
 interface Props {
-  usersList: []
+  usersList: Card[],
+  resetHandler: Function,
+}
+interface Card {
+  clicked: boolean,
+  shown: boolean,
+  fibonacciNum: number,
+  playerName: string,
 }
 interface Props2 {
-  card: {
-    clicked: boolean,
-    shown: boolean,
-    fibonacciNum: number,
-    playerName: string,
-  },
+  card:Card,
   index: number
 }
 class PlayerSelectedCard extends React.Component<Props2, any> {
@@ -46,13 +49,12 @@ class PlayerSelectedCard extends React.Component<Props2, any> {
 }
 
 export default class PlayerAreaView extends React.Component<Props, any> {
-  constructor(props) {
-    super(props);
-  }
+
   render() {
     return (
       <div>
         {this.props.usersList.map((card, index) => <PlayerSelectedCard key={index} index={index} card={card} />)}
+        <CandidateBoard usersList={this.props.usersList}/>
       </div>)
   }
 }
