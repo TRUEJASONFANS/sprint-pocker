@@ -48,13 +48,14 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
   cancel() {
     this.setState({ visiable: false });
     console.log(this.props.resetHandler);
-    this.props.resetHandler();
+    // this.props.resetHandler();
   }
   render() {
-    let candidateCards = new Set();
+    let candidateCardsSet = new Set();
     this.props.usersList.map((card, index) => {
-      candidateCards.add(card.fibonacciNum);
+      candidateCardsSet.add(card.fibonacciNum);
     });
+    let candidateCards = [...candidateCardsSet];
     return (
       <div>
         <Modal
@@ -63,18 +64,19 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
           footer={null}
           onCancel={this.cancel}
         >
-          {candidateCards.forEach(value => { 
+          {candidateCards.map((card, index)=>
             <div className={`${styles.card}`} style={{ background: '#149c37' }}>
             <div className={`${styles.cardContainer}`}>
               <div className={styles.smallCardId}>
-                <span className={styles.smallCardIdSpan}>{value}</span>
+                <span className={styles.smallCardIdSpan}>{card}</span>
               </div>
               <div className={styles.playerVote}>
-                <span>{value}</span>
+                <span>{card}</span>
               </div>
             </div>
-            </div>
-          })}
+        </div>
+          )}
+          
         </Modal>
       </div>
     )
