@@ -1,0 +1,51 @@
+.card {
+    border-radius: 10px;
+    width: 100px;
+    height: 140px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    font-weight: bold;
+    transform: scale(1);
+    transition: transform 100ms ease-in-out;
+    /**禁止用户选择文本**/
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font: 100px/220px Georgia, serif;
+  }
+  
+  .cardContainer {
+    width: 100px;
+    height: 140px;
+    will-change: transform;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+  }
+  
+  .playerVote {
+    width:100px;
+    line-height:80px;
+    vertical-align : baseline;
+    font-size: 45px;
+    color: white;
+    text-align: center;
+  }
+  
+  .smallCardId {
+    width:100px;
+    line-height:30px;
+    font-size: 20px;
+    font: Georgia, serif;
+    color: white;
+    position: relative;
+    left: 0px;
+  }
+  .smallCardIdSpan {
+    margin-left: 3px;
+  }
+  
+  .cardWapper {
+    display: inline-block;
+    margin: 5px;
+  }
+  
