@@ -63,22 +63,21 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
           visible={this.state.visiable}
           footer={null}
           onCancel={this.cancel}
-          maskClosable={false}
+          maskClosable = {false}
         >
-          <div>
-          {candidateCards.map((card, index) =>
-            <div className={`${styles.card}`} style={{ background: '#149c37' }} >
-              <div className={`${styles.cardContainer}`}>
-                <div className={styles.smallCardId}>
-                  <span className={styles.smallCardIdSpan}>{card}</span>
-                </div>
-                <div className={styles.playerVote}>
-                  <span>{card}</span>
-                </div>
+          {candidateCards.map((card, index)=>
+            <div className={`${styles.card}`} style={{ background: '#149c37' }}>
+            <div className={`${styles.cardContainer}`}>
+              <div className={styles.smallCardId}>
+                <span className={styles.smallCardIdSpan}>{card}</span>
+              </div>
+              <div className={styles.playerVote}>
+                <span>{card}</span>
               </div>
             </div>
+        </div>
           )}
-          </div>
+          
         </Modal>
       </div>
     )
