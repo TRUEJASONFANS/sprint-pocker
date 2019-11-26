@@ -1,4 +1,4 @@
-import { Button, Layout, notification, Table, Collapse, Input } from 'antd';
+import { Button, Layout, notification, Table } from 'antd';
 import styles from './PockerBoard.css';
 import { connect } from 'dva';
 import RecordCreatorDlg from '@/pages/pockerRoom/components/recordCreatorDlg';
@@ -7,12 +7,11 @@ import PokerBoardFooter from './pokerBoardFooter';
 import PlayerAreaView from '@/pages/pockerRoom/components/playerAreaView';
 import AddStoryDlg from '@/pages/pockerRoom/components/addStoryDlg';
 const { Header, Footer, Sider, Content } = Layout;
-import React, { useState,useEffect } from 'react';
+import React from 'react';
 import router from 'umi/router';
 
 function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName}) {
 
-  const [inviteLink, setInviteLink] = useState(null);
 
   const columns = [
     {
@@ -121,11 +120,10 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
           <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={playerName} featureName={featureName} internalTaskName={internalTaskName}>
             <Button type="primary" style={{ margin: "5px" }}>Commit</Button>
           </RecordCreatorDlg>
-          <Button type="primary" style={{ margin: "5px" }} onClick={backToRoomPage}>Exit</Button>
           <RoomInfoDlg roomName={roomName} >
             <Button type="primary" style={{ margin: "5px" }}>Info</Button>
           </RoomInfoDlg>
-
+          <Button type="primary" style={{ margin: "5px" }} onClick={backToRoomPage}>Exit</Button>
         </div>
       </Header>
       {/* 统计表格       */}

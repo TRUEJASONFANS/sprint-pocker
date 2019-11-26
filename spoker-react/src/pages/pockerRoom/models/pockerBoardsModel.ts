@@ -12,7 +12,8 @@ export default {
     clickedNum: -1,
     playerName: '',
     featureName: '',
-    internalTaskName: ''
+    internalTaskName: '',
+    owner:''
   },
   reducers: {
 
