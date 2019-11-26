@@ -13,10 +13,7 @@
     -ms-user-select: none;
     user-select: none;
     font: 100px/220px Georgia, serif;
-    display: inline-block;
-    margin: 5px
   }
-
   
   .card:hover {
     transform: scale(1.1);
