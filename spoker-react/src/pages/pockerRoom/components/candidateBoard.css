@@ -15,6 +15,12 @@
     font: 100px/220px Georgia, serif;
   }
   
+  .card:hover {
+    transform: scale(1.1);
+    transition: transform 100ms ease-in-out;
+  }
+
+  
   .cardContainer {
     width: 100px;
     height: 140px;

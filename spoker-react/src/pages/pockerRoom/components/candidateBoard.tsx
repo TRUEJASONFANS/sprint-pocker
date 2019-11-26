@@ -63,6 +63,7 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
           visible={this.state.visiable}
           footer={null}
           onCancel={this.cancel}
+          maskClosable = {false}
         >
           {candidateCards.map((card, index)=>
             <div className={`${styles.card}`} style={{ background: '#149c37' }}>
