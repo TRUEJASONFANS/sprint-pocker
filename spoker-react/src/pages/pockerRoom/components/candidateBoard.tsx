@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Modal } from 'antd';
 import styles from './candidateBoard.css';
+
 interface Card {
   clicked: boolean,
   shown: boolean,
@@ -9,7 +10,7 @@ interface Card {
 }
 interface Props {
   usersList: Card[],
-  resetHandler: Function,
+  isOwner,
 }
 interface State {
   visiable: boolean,
@@ -47,7 +48,6 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
 
   cancel() {
     this.setState({ visiable: false });
-    console.log(this.props.resetHandler);
     // this.props.resetHandler();
   }
   render() {
@@ -56,6 +56,8 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
       candidateCardsSet.add(card.fibonacciNum);
     });
     let candidateCards = [...candidateCardsSet];
+    let wrapClassNameStyle = this.props.isOwner ? "candidateModalOwner":"candidateModal";
+
     return (
       <div>
         <Modal
@@ -64,23 +66,43 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
           footer={null}
           onCancel={this.cancel}
           maskClosable={false}
+          wrapClassName={wrapClassNameStyle}
         >
           <div>
-          {candidateCards.map((card, index) =>
-            <div className={`${styles.card}`} style={{ background: '#149c37' }} >
-              <div className={`${styles.cardContainer}`}>
-                <div className={styles.smallCardId}>
-                  <span className={styles.smallCardIdSpan}>{card}</span>
-                </div>
-                <div className={styles.playerVote}>
-                  <span>{card}</span>
-                </div>
-              </div>
-            </div>
-          )}
+            {candidateCards.map((card, index) => <PureCandidateCard card={card} key={index} isOwner={this.props.isOwner} />)}
           </div>
         </Modal>
       </div>
     )
+  }
+}
+interface CardProps {
+  card: string,
+  isOwner: boolean
+
+}
+class PureCandidateCard extends React.PureComponent<CardProps> {
+
+  onClick(e) {
+    if (!this.props.isOwner) {
+      e.preventDefault();
+      return;
+    }
+    // trigger the click final score broad cast
+  }
+  render() {
+    return (
+      <div className={`${styles.card}`} style={{ background: '#149c37' }} onClick={this.onClick} >
+        <div className={`${styles.cardContainer}`}>
+          <div className={styles.smallCardId}>
+            <span className={styles.smallCardIdSpan}>{this.props.card}</span>
+          </div>
+          <div className={styles.playerVote}>
+            <span>{this.props.card}</span>
+          </div>
+        </div>
+      </div>
+    )
+
   }
 }
