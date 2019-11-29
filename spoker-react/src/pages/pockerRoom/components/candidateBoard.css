@@ -57,4 +57,12 @@
     display: inline-block;
     margin: 5px;
   }
-  
+ 
+  :global(.candidateModal .ant-modal-body)  {
+    filter:grayscale(1);
+    background:gray;
+  }
+
+  :global(.candidateModalOwner .ant-modal-body)  {
+    filter: none;
+  }

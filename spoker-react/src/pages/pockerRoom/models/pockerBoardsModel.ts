@@ -13,7 +13,7 @@ export default {
     playerName: '',
     featureName: '',
     internalTaskName: '',
-    owner:''
+    isOwner:''
   },
   reducers: {
 
@@ -21,8 +21,10 @@ export default {
       return {...state, roomName }
     },
     
-    syncPage(state, {payload: {curPage, totalPage, resetFlag, scoreList, playerName, clickedNum, featureName, internalTaskName}}) {
-      return {...state, curPage, totalPage, resetFlag , scoreList, playerName, clickedNum, featureName, internalTaskName}
+    syncPage(state, {payload: {curPage, totalPage, resetFlag, scoreList, playerName, 
+      clickedNum, featureName, internalTaskName, isOwner}}) {
+      return {...state, curPage, totalPage, resetFlag , scoreList, playerName, 
+        clickedNum, featureName, internalTaskName, isOwner}
     },
     // syncTotalPage(state, {payload: {totalPage}}) {
     //   return {...state, totalPage}
@@ -77,7 +79,8 @@ export default {
                 scoreList: parseJson.playerScoreList,
                 playerName: parseJson.playerName,
                 featureName: parseJson.featureName,
-                internalTaskName: parseJson.internalTaskName
+                internalTaskName: parseJson.internalTaskName,
+                isOwner: parseJson.own,
               }
             });
           }, roomId, 1);

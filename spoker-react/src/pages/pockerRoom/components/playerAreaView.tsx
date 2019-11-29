@@ -3,7 +3,7 @@ import styles from './playerAreaView.css';
 import CandidateBoard from './candidateBoard';
 interface Props {
   usersList: Card[],
-  resetHandler: Function,
+  isOwner: boolean,
 }
 interface Card {
   clicked: boolean,
@@ -54,7 +54,7 @@ export default class PlayerAreaView extends React.Component<Props, any> {
     return (
       <div>
         {this.props.usersList.map((card, index) => <PlayerSelectedCard key={index} index={index} card={card} />)}
-        <CandidateBoard usersList={this.props.usersList}/>
+        <CandidateBoard usersList={this.props.usersList} isOwner={this.props.isOwner}/>
       </div>)
   }
 }
