@@ -11,7 +11,7 @@ import React from 'react';
 import router from 'umi/router';
 
 function PockerBoard({ dispatch, roomName, scoreList, playerName, 
-  resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName, isOwner}) {
+  resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName}) {
 
   const columns = [
     {
@@ -129,7 +129,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
       {/* 统计表格       */}
       <Layout>
         <Content className={styles.content} >
-          <PlayerAreaView usersList={scoreList} isOwner={isOwner}/>
+          <PlayerAreaView usersList={scoreList}/>
         </Content>
         <Sider style={{ background: '#fff'}}>
           <div className={styles.storySwitcher}>
@@ -166,8 +166,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
 }
 function mapStateToProps(state) {
   const { roomName, scoreList, resetFlag, curPage, 
-    totalPage, clickedNum, playerName, featureName, internalTaskName, isOwner } = state.pockerBoard;
-  console.log("isOwner:" + isOwner);
+    totalPage, clickedNum, playerName, featureName, internalTaskName } = state.pockerBoard;
   return {
     roomName,
     scoreList,
@@ -177,8 +176,7 @@ function mapStateToProps(state) {
     totalPage,
     clickedNum,
     featureName,
-    internalTaskName,
-    isOwner
+    internalTaskName
   }
 }
 export default connect(mapStateToProps)(PockerBoard);
