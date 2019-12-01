@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Modal } from 'antd';
 import styles from './candidateBoard.css';
+import {connect} from 'dva';
 
 interface Card {
   clicked: boolean,
@@ -9,15 +10,15 @@ interface Card {
   playerName: string,
 }
 interface Props {
-  usersList: Card[],
-  isOwner,
+  pockerBoard, 
+  loading
 }
 interface State {
   visiable: boolean,
 }
+@connect(({ pockerBoard, loading }) => ({pockerBoard,loading}))
 export default class CandidateBoard extends React.PureComponent<Props, State> {
   timeHanlder: NodeJS.Timeout
-
   constructor(props) {
     super(props);
     this.state = {
@@ -27,8 +28,10 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
   }
 
   componentDidUpdate = () => {
+    const { pockerBoard, loading } = this.props
+    const {scoreList, isOwner} = pockerBoard;
     let shown = false;
-    this.props.usersList.forEach(card => {
+    scoreList.forEach(card => {
       if (card.shown) {
         shown = true;
       }
@@ -51,12 +54,14 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
     // this.props.resetHandler();
   }
   render() {
+    const { pockerBoard, loading } = this.props
+    const {scoreList, isOwner} = pockerBoard;
     let candidateCardsSet = new Set();
-    this.props.usersList.map((card, index) => {
+    scoreList.map((card, index) => {
       candidateCardsSet.add(card.fibonacciNum);
     });
     let candidateCards = [...candidateCardsSet];
-    let wrapClassNameStyle = this.props.isOwner ? "candidateModalOwner":"candidateModal";
+    let wrapClassNameStyle = isOwner ? "candidateModalOwner":"candidateModal";
 
     return (
       <div>
@@ -69,7 +74,7 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
           wrapClassName={wrapClassNameStyle}
         >
           <div>
-            {candidateCards.map((card, index) => <PureCandidateCard card={card} key={index} isOwner={this.props.isOwner} />)}
+            {candidateCards.map((card, index) => <PureCandidateCard card={card} key={index} isOwner={isOwner} />)}
           </div>
         </Modal>
       </div>

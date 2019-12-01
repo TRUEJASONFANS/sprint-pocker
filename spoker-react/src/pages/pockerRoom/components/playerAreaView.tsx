@@ -2,8 +2,7 @@ import * as React from 'react';
 import styles from './playerAreaView.css';
 import CandidateBoard from './candidateBoard';
 interface Props {
-  usersList: Card[],
-  isOwner: boolean,
+  usersList: Card[]
 }
 interface Card {
   clicked: boolean,
@@ -54,7 +53,7 @@ export default class PlayerAreaView extends React.Component<Props, any> {
     return (
       <div>
         {this.props.usersList.map((card, index) => <PlayerSelectedCard key={index} index={index} card={card} />)}
-        <CandidateBoard usersList={this.props.usersList} isOwner={this.props.isOwner}/>
+        <CandidateBoard usersList={this.props.usersList}/>
       </div>)
   }
 }
