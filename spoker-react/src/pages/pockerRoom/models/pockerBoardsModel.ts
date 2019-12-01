@@ -13,7 +13,7 @@ export default {
     playerName: '',
     featureName: '',
     internalTaskName: '',
-    isOwner:''
+    isOwner: false
   },
   reducers: {
 
@@ -49,6 +49,9 @@ export default {
     *onNavigateToPage({ payload: values }, { call }) {
       yield call(pockerService.onNavigateToPage(values));
     },
+    *OnSelectCandidate({ payload: values}, {call}) {
+      yield call(pockerService.OnSelectCandidate(values));
+    }
   },
 
   subscriptions: {

@@ -85,7 +85,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
         onClick: () => {
           //console.log('Notification Clicked!');
         },
-        duration: 2
+        duration: 1
       });
       dispatch({type:"pockerBoard/syncResetflag", payload: {
         resetFlag: !resetFlag
@@ -100,7 +100,6 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
       roomName: roomName,
       ...formData
     }
-    console.log("Add a story:" + values);
     dispatch({
       type: "pockerBoard/AddStory", 
       payload: values
