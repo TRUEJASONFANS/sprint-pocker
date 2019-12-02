@@ -15,15 +15,15 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
 
   const columns = [
     {
-      title: '姓名',
-      dataIndex: 'playerName',
-      key: 'playerName',
+      title: 'Task',
+      dataIndex: 'internalTaskTitle',
+      key: 'internalTaskTitle',
       render: text => text
     },
     {
-      title: 'StoryPoint',
-      dataIndex: 'fibonacciNum',
-      key: 'fibonacciNum',
+      title: 'Final Score',
+      dataIndex: 'finalScore',
+      key: 'finalScore',
       render: (text,record) =>  {if (record.shown)  return text; else return "**";} 
     }
   ];
