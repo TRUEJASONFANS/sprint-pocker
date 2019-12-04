@@ -69,7 +69,7 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
 
   render() {
     const { pockerBoard } = this.props
-    const { scoreList, isOwner, finalScores } = pockerBoard;
+    const { scoreList, isOwner, finalScores, curPage } = pockerBoard;
 
     let candidateCardsSet = new Set();
     scoreList.map((card, index) => {
@@ -83,7 +83,7 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
         shown = true;
       }
     });
-    if (finalScores.length > 0) {
+    if (finalScores.length >= curPage) {
       shown = false;
     }
     return (
