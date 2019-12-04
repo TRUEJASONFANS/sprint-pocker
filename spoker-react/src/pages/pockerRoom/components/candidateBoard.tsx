@@ -46,6 +46,16 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
     clearTimeout(this.timeHanlder);
   };
 
+  componentWillMount = () => {
+    setInterval(function () {
+      var now = new Date();
+      const offsetMs = now.getTimezoneOffset() * 60 * 1000;
+      const dateLocal = new Date(now.getTime() - offsetMs);
+      var str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");
+      console.log(str);
+    }, 60000);
+  }
+
   cancel() {
     const { pockerBoard, dispatch } = this.props
     const { curPage, totalPage, roomName } = pockerBoard;
@@ -71,7 +81,7 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
     const { pockerBoard } = this.props
     const { scoreList, isOwner, finalScores, curPage } = pockerBoard;
 
-    let candidateCardsSet = new Set();
+    let candidateCardsSet = new Set<String>();
     scoreList.map((card, index) => {
       candidateCardsSet.add(card.fibonacciNum);
     });
@@ -79,13 +89,10 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
     let wrapClassNameStyle = isOwner ? "candidateModalOwner" : "candidateModal";
     let shown = false;
     scoreList.forEach(card => {
-      if (card.shown) {
+      if (card.shown && finalScores.length < curPage) {
         shown = true;
       }
     });
-    if (finalScores.length >= curPage) {
-      shown = false;
-    }
     return (
       <div>
         <Modal
@@ -97,7 +104,7 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
           wrapClassName={wrapClassNameStyle}
         >
           <div>
-            {candidateCards.map((card, index) => (
+            {candidateCards.map((card: string, index) => (
               <PureCandidateCard
                 card={card}
                 key={index}
@@ -134,7 +141,7 @@ class PureCandidateCard extends React.PureComponent<CardProps> {
       return;
     }
     const { curPage, roomName } = this.props.pockerBoard;
-    let finalCandidate:FinalCandidate = {
+    let finalCandidate: FinalCandidate = {
       pageNum: curPage,
       roomName: roomName,
       score: this.props.card,
