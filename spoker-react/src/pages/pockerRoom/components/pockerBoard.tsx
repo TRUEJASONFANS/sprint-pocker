@@ -10,21 +10,21 @@ const { Header, Footer, Sider, Content } = Layout;
 import React from 'react';
 import router from 'umi/router';
 
-function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName}) {
-
+function PockerBoard({ dispatch, roomName, scoreList, playerName, 
+  resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName, finalScores}) {
 
   const columns = [
     {
-      title: '姓名',
-      dataIndex: 'playerName',
-      key: 'playerName',
+      title: 'Task',
+      dataIndex: 'internalTaskTitle',
+      key: 'internalTaskTitle',
       render: text => text
     },
     {
-      title: 'StoryPoint',
-      dataIndex: 'fibonacciNum',
-      key: 'fibonacciNum',
-      render: (text,record) =>  {if (record.shown)  return text; else return "**";} 
+      title: 'Final Score',
+      dataIndex: 'finalScore',
+      key: 'finalScore',
+      render: text => text
     }
   ];
 
@@ -85,7 +85,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
         onClick: () => {
           //console.log('Notification Clicked!');
         },
-        duration: 2
+        duration: 1
       });
       dispatch({type:"pockerBoard/syncResetflag", payload: {
         resetFlag: !resetFlag
@@ -100,7 +100,6 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
       roomName: roomName,
       ...formData
     }
-    console.log("Add a story:" + values);
     dispatch({
       type: "pockerBoard/AddStory", 
       payload: values
@@ -146,8 +145,8 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
           </div>
           <Table
             columns={columns}
-            dataSource={scoreList}
-            rowKey={record => record.playerName}
+            dataSource={finalScores}
+            rowKey={record => record.internalTaskTitle}
             pagination={false}
           />
           <div className={styles.addStoryBtn}>
@@ -165,7 +164,8 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName, resetFlag, cur
   );
 }
 function mapStateToProps(state) {
-  const { roomName, scoreList, resetFlag, curPage, totalPage, clickedNum, playerName, featureName, internalTaskName} = state.pockerBoard;
+  const { roomName, scoreList, resetFlag, curPage, 
+    totalPage, clickedNum, playerName, featureName, internalTaskName, finalScores } = state.pockerBoard;
   return {
     roomName,
     scoreList,
@@ -175,7 +175,8 @@ function mapStateToProps(state) {
     totalPage,
     clickedNum,
     featureName,
-    internalTaskName
+    internalTaskName, 
+    finalScores
   }
 }
 export default connect(mapStateToProps)(PockerBoard);
