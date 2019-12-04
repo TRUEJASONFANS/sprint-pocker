@@ -36,11 +36,11 @@ export function onNextGame(values: Pageable) {
   request('/app/onNextGame/'+ values.roomName + '/' + values.curPage, {}, {});
 }
 
-interface Pageable {
+export interface Pageable {
   curPage: number,
   totalPage: number,
   roomName: string,
-  title:string
+  title?:string
 }
 
 export function addStory(values: Pageable) {
@@ -51,5 +51,11 @@ export function onNavigateToPage(values: Pageable) {
   request('/app/onNavigateToPage/'+ values.roomName , {}, JSON.stringify(values));
 }
 
-
-
+export interface FinalCandidate {
+  pageNum: number,
+  roomName: string,
+  score : string,
+}
+export function OnSelectCandidate(values: FinalCandidate) {
+  request('/app/OnSelectCandidate/'+ values.roomName, {}, JSON.stringify(values));
+}

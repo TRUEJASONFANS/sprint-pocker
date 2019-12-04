@@ -1,7 +1,7 @@
 import { DASHBOARD_PAGE_SIZE } from '@/pages/constants';
 import { connect } from 'dva';
 import { Table, Divider, Pagination, Button, Popconfirm } from 'antd';
-import { routerRedux } from 'dva/router';
+import { routerRedux } from 'dva';
 import DashboardItemCreator from '@/pages/dashboard/components/dashboardItemCreator';
 import SearchTable from './SearchTable'
 import styles from '@/pages/dashboard/components/dashboard.css';
