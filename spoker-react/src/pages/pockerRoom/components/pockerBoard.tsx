@@ -11,7 +11,7 @@ import React from 'react';
 import router from 'umi/router';
 
 function PockerBoard({ dispatch, roomName, scoreList, playerName, 
-  resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName}) {
+  resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName, finalScores}) {
 
   const columns = [
     {
@@ -24,7 +24,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
       title: 'Final Score',
       dataIndex: 'finalScore',
       key: 'finalScore',
-      render: (text,record) =>  {if (record.shown)  return text; else return "**";} 
+      render: text => text
     }
   ];
 
@@ -145,8 +145,8 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
           </div>
           <Table
             columns={columns}
-            dataSource={scoreList}
-            rowKey={record => record.playerName}
+            dataSource={finalScores}
+            rowKey={record => record.internalTaskTitle}
             pagination={false}
           />
           <div className={styles.addStoryBtn}>
@@ -165,7 +165,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
 }
 function mapStateToProps(state) {
   const { roomName, scoreList, resetFlag, curPage, 
-    totalPage, clickedNum, playerName, featureName, internalTaskName } = state.pockerBoard;
+    totalPage, clickedNum, playerName, featureName, internalTaskName, finalScores } = state.pockerBoard;
   return {
     roomName,
     scoreList,
@@ -175,7 +175,8 @@ function mapStateToProps(state) {
     totalPage,
     clickedNum,
     featureName,
-    internalTaskName
+    internalTaskName, 
+    finalScores
   }
 }
 export default connect(mapStateToProps)(PockerBoard);
