@@ -14,11 +14,21 @@ class RoomEditModel extends Component {
   }
 
   showModelHandler = e => {
-    if (e) e.stopPropagation();
-    this.setState({
-      visible: true,
-    });
-  };
+    const name = this.props.record.name;
+    const roomPassword = "";    
+    const {onOk} = this.props;
+    const promise = roomService.checkRoomPassword({name, roomPassword});
+    Promise.all([promise]).then(value => {
+      if (value[0].data.statusCode === 2000) {
+        onOk({});
+      } else {
+        if (e) e.stopPropagation();
+        this.setState({
+          visible: true,
+        });
+      }
+  });
+}
 
   hideModelHandler = e => {
     this.setState({
