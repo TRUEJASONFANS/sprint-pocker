@@ -74,17 +74,13 @@ class PalyerScoreCard extends React.Component<Props2> {
       height: 140,
       transform: this.props.clickedNum === this.props.card ? 
       "matrix3d(0.968846, -0.247665, 0, 0, 0.246399, 0.963893, 0.100983, 0, -0.0250101, -0.0978374, 0.994888, 0, 0, -126.512, 0, 1)":
-      "matrix(1, 0, 0, 1, 0, 0)" 
-    };
-    let cardStyle = {
+      "matrix(1, 0, 0, 1, 0, 0)",
       background: this.props.index < 5 ? "#0466d2" : "#149c37",
-    }
+    };
     return (
-      <div className={`${styles.cardRig} ${styles.cardInHand}`} style={leftStyle}>
-        <div className={`${styles.cardWrapper} ${styles.perspectiveWrapper}`}>
-          <div className={styles.animationWrapper}>
+      <div className={styles.cardInHand} style={leftStyle}>
             <div className={`${styles.cardContainer}`} onClick={this.onClickHandler} style={containStyle}>
-              <div className={`${styles.card}`} style={cardStyle} />
+              <div className={`${styles.card}`}  />
               <div className={` ${styles.cardFace}`}>
                 <div className={styles.smallCardId}>
                   <span>{this.props.card}</span>
@@ -92,9 +88,7 @@ class PalyerScoreCard extends React.Component<Props2> {
                 <div className={styles.playerVote}>
                   <span>{this.props.card}</span>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
       </div>);
 

@@ -1,9 +1,10 @@
+
 .content {
   padding-bottom:100px; 
   background:#ffffff;
 }
 .footer {
-  position:absolute;bottom:100px;height:100px;
+  height:120px;
   background:#ffffff !important;
 }
 .titile {
@@ -44,4 +45,8 @@
 }
 .addStoryBtn {
   text-align: center;
+}
+
+.pathMenu {
+  position: absolute;
 }
