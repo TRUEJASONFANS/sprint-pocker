@@ -9,6 +9,7 @@ import AddStoryDlg from '@/pages/pockerRoom/components/addStoryDlg';
 const { Header, Footer, Sider, Content } = Layout;
 import React from 'react';
 import router from 'umi/router';
+import ReactPathManu from '@/component/reactPathMenu';
 
 function PockerBoard({ dispatch, roomName, scoreList, playerName, 
   resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName, finalScores}) {
@@ -111,7 +112,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
   }
 
   return (
-    <Layout style={{background:'white'}}>
+    <Layout style={{minHeight:"100%", border:"red solid"}}>
       <Header className={styles.header}>
         <span className={styles.titile}>{featureName} {internalTaskName}</span>
         <div style={{ float: "right"}} className={styles.toolbar}>
@@ -155,9 +156,13 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
             </AddStoryDlg>
           </div>
         </Sider>
+        
       </Layout>
       <Footer className={styles.footer}>
-        <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={playerName} resetFlag={resetFlag} curPage={curPage} clickedNum={clickedNum}/>
+        <div>
+          <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={playerName} resetFlag={resetFlag} curPage={curPage} clickedNum={clickedNum} />
+          <ReactPathManu className={styles.pathMenu}/>
+        </div>
       </Footer>
       {openNotification()}
     </Layout>
