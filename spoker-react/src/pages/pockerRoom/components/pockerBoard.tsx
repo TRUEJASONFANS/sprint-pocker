@@ -159,7 +159,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
         </Sider>
       </Content>
       <Footer className={styles.footer}>
-        <div className={styles.playCardContainers}>
+        <div className={styles.playCandidateCardContainers}>
           <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={playerName} resetFlag={resetFlag} curPage={curPage} clickedNum={clickedNum} />
         </div>
         <div className={styles.pathMenu}>

@@ -274,7 +274,7 @@ export default class ReactPathManu extends React.Component<any, State> {
   render() {
     let mainButtonRotation = { rotate: spring(this.state.isOpen ? 0 : -135, { stiffness: 500, damping: 30 }) };
     return (
-      <div style={{paddingRight: "10px"}}>
+      <div style={{paddingRight: "60px"}}>
         {this.renderChildButtons()}
         <Motion style={mainButtonRotation}>
           {({ rotate }) =>

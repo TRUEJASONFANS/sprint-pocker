@@ -64,18 +64,26 @@
 }
 
 .footer {
-  flex: 1 0 auto;
+  flex: 0.5 0 auto;
   background: #ffffff !important;
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  padding: 0 !important;
 }
 
-.playCardContainers {
-  flex: 0.5 0 auto;
+.playCandidateCardContainers {
+  flex: 0.5 0 140px;
+  height: 180px;
 }
 
 .pathMenu {
   flex: 0.5 0 auto;
   display: flex;
   justify-content:flex-end;
+  align-items: center;
+  align-content: center;
+  height: 180px;
 }
