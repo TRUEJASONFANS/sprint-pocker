@@ -1,11 +1,12 @@
 .content {
-  padding-bottom:100px; 
-  background:#ffffff;
+  padding-bottom: 100px;
+  background: #ffffff;
+  flex: 0.5 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
 }
-.footer {
-  position:absolute;bottom:100px;height:100px;
-  background:#ffffff !important;
-}
+
 .titile {
   font-size: 45px;
   color: #ffffff;
@@ -13,18 +14,32 @@
   line-height: 45px;
   vertical-align: -10px
 }
+
 .header {
   background: #337AB7 !important;
   margin: 5px;
+  flex: 0 0 auto;
 }
+
+.playerAreaView {
+  flex: 1 0 auto;
+}
+
+.finalScoreSider {
+  background: #ffffff !important;
+  flex: 0 0 auto;
+}
+
 .toolbar {
   padding: 0;
 }
+
 .storySwitcher {
   text-align: center;
   padding-top: 15px;
   font-size: 11px;
 }
+
 .storySwitcherControls {
   margin: 0 20px 20px 20px;
 }
@@ -37,11 +52,38 @@
   border: 1px solid rgb(201, 109, 0);
   border-radius: 3px;
 }
+
 .storyCounter {
   font-size: 30px;
   font-weight: bold;
   margin: 20px;
 }
+
 .addStoryBtn {
   text-align: center;
+}
+
+.footer {
+  flex: 0.5 0 auto;
+  background: #ffffff !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  padding: 0 !important;
+}
+
+.playCandidateCardContainers {
+  flex: 0.5 0 140px;
+  height: 180px;
+}
+
+.pathMenu {
+  flex: 0.5 0 auto;
+  display: flex;
+  justify-content:flex-end;
+  align-items: center;
+  align-content: center;
+  height: 180px;
 }
