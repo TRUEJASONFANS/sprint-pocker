@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './reactPathMenu.css';
 import { Motion, StaggeredMotion, spring } from 'react-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faPencilAlt, faTooth, faToriiGate, faTrafficLight, faTrain, faTransgender, faTree, faTrophy } from '@fortawesome/free-solid-svg-icons';
 // Components 
 
 //Constants 
@@ -31,7 +31,7 @@ const FLY_OUT_RADIUS = 130,
 
 // Names of icons for each button retreived from fontAwesome, we'll add a little extra just in case 
 // the NUM_CHILDREN is changed to a bigger value
-let childButtonIcons = ['pencil', 'at', 'camera', 'bell', 'comment', 'bolt', 'ban', 'code'];
+let childButtonIcons = [faPencilAlt, faTooth, faToriiGate, faTrafficLight, faTrain, faTransgender, faTree, faTrophy];
 
 
 // Utility functions
@@ -51,16 +51,16 @@ function finalChildDeltaPositions(index) {
 function range(start, stop, step) {
   var a = [start], b = start;
   while (b < stop) {
-      a.push(b += step || 1);
+    a.push(b += step || 1);
   }
   return a;
 }
 interface State {
-    isOpen: boolean,
-    childButtons: any[],
+  isOpen: boolean,
+  childButtons: any[],
 }
 
-export default class ReactPathManu extends React.Component<any,State> {
+export default class ReactPathManu extends React.Component<any, State> {
   constructor(props) {
     super(props);
 
@@ -89,8 +89,6 @@ export default class ReactPathManu extends React.Component<any,State> {
     return {
       width: MAIN_BUTTON_DIAM,
       height: MAIN_BUTTON_DIAM,
-      top: M_Y - (MAIN_BUTTON_DIAM / 2),
-      left: M_X - (MAIN_BUTTON_DIAM / 2)
     };
   }
 
@@ -98,8 +96,8 @@ export default class ReactPathManu extends React.Component<any,State> {
     return {
       width: CHILD_BUTTON_DIAM,
       height: CHILD_BUTTON_DIAM,
-      top: spring(M_Y - (CHILD_BUTTON_DIAM / 2), SPRING_CONFIG),
-      left: spring(M_X - (CHILD_BUTTON_DIAM / 2), SPRING_CONFIG),
+      top: spring( (CHILD_BUTTON_DIAM / 2), SPRING_CONFIG),
+      left: spring( (CHILD_BUTTON_DIAM / 2), SPRING_CONFIG),
       rotate: spring(-180, SPRING_CONFIG),
       scale: spring(0.5, SPRING_CONFIG)
     };
@@ -109,8 +107,8 @@ export default class ReactPathManu extends React.Component<any,State> {
     return {
       width: CHILD_BUTTON_DIAM,
       height: CHILD_BUTTON_DIAM,
-      top: M_Y - (CHILD_BUTTON_DIAM / 2),
-      left: M_X - (CHILD_BUTTON_DIAM / 2),
+      top:  (CHILD_BUTTON_DIAM / 2),
+      left:  (CHILD_BUTTON_DIAM / 2),
       rotate: -180,
       scale: 0.5
     };
@@ -121,8 +119,8 @@ export default class ReactPathManu extends React.Component<any,State> {
     return {
       width: CHILD_BUTTON_DIAM,
       height: CHILD_BUTTON_DIAM,
-      top: M_Y - deltaY,
-      left: M_X + deltaX,
+      top: deltaY,
+      left: deltaX,
       rotate: 0,
       scale: 1
     };
@@ -133,8 +131,8 @@ export default class ReactPathManu extends React.Component<any,State> {
     return {
       width: CHILD_BUTTON_DIAM,
       height: CHILD_BUTTON_DIAM,
-      top: spring(M_Y - deltaY, SPRING_CONFIG),
-      left: spring(M_X + deltaX, SPRING_CONFIG),
+      top: spring( - deltaY, SPRING_CONFIG),
+      left: spring( deltaX, SPRING_CONFIG),
       rotate: spring(0, SPRING_CONFIG),
       scale: spring(1, SPRING_CONFIG)
     };
@@ -241,53 +239,54 @@ export default class ReactPathManu extends React.Component<any,State> {
         return shouldApplyTargetStyle() ? targetButtonStyles[i] : buttonStyleInPreviousFrame;
       });
 
-      return  nextFrameTargetStyles;
+      return nextFrameTargetStyles;
     };
 
     return (
       <StaggeredMotion
-				defaultStyles={targetButtonStylesInit}
-				styles={calculateStylesForNextFrame}>
-				{interpolatedStyles =>
-					<div>
-						{interpolatedStyles.map(({height, left, rotate, scale, top, width}, index) =>
-							<div
-								className={styles.childButton}
-								key={index}
-								style={{
-									left,
-									height,
-									top,
-									transform: `rotate(${rotate}deg) scale(${scale})`,
-									width
-								}}
-							>
-								<i className={"fa fa-" + childButtonIcons[index] + " fa-lg"}></i>
-							</div>
-						)}
-					</div>
-				}
-			</StaggeredMotion>
+        defaultStyles={targetButtonStylesInit}
+        styles={calculateStylesForNextFrame}>
+        {interpolatedStyles =>
+          <div style={{position:"relative"}}>
+            {interpolatedStyles.map(({ height, left, rotate, scale, top, width }, index) =>
+              <div
+                className={styles.childButton}
+                key={index}
+                style={{
+                  left,
+                  height,
+                  top,
+                  transform: `rotate(${rotate}deg) scale(${scale})`,
+                  width,
+
+                }}
+                onClick={()=> {alert("ww")}}
+              >
+                <FontAwesomeIcon icon={childButtonIcons[index]} size="1x"/>
+              </div>
+            )}
+          </div>
+        }
+      </StaggeredMotion>
     );
   }
 
   render() {
     let mainButtonRotation = { rotate: spring(this.state.isOpen ? 0 : -135, { stiffness: 500, damping: 30 }) };
     return (
-      <div>
-				{this.renderChildButtons()}
+      <div style={{paddingRight: "10px"}}>
+        {this.renderChildButtons()}
         <Motion style={mainButtonRotation}>
-					{({rotate}) =>
-						<div
-							className={styles.mainButton}
-							style={{...this.mainButtonStyles(), transform: `rotate(${rotate}deg)`}}
-							onClick={this.toggleMenu}>
-							{/*Using fa-close instead of fa-plus because fa-plus doesn't center properly*/}
-                            <FontAwesomeIcon icon={faTimesCircle}/>
-						</div>
-					}
-				</Motion>
-			</div>
+          {({ rotate }) =>
+            <div
+              className={styles.mainButton}
+              style={{ ...this.mainButtonStyles(), transform: `rotate(${rotate}deg)` }}
+              onClick={this.toggleMenu}>
+              <FontAwesomeIcon icon={faTimesCircle} size="6x" />
+            </div>
+          }
+        </Motion>
+      </div>
     );
   }
 };

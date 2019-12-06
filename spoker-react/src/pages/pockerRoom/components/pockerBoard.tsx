@@ -11,8 +11,8 @@ import React from 'react';
 import router from 'umi/router';
 import ReactPathManu from '@/component/reactPathMenu';
 
-function PockerBoard({ dispatch, roomName, scoreList, playerName, 
-  resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName, finalScores}) {
+function PockerBoard({ dispatch, roomName, scoreList, playerName,
+  resetFlag, curPage, totalPage, clickedNum, featureName, internalTaskName, finalScores }) {
 
   const columns = [
     {
@@ -42,8 +42,8 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
   //svg click event
   function goToLastPage(evt) {
     let values = {
-      curPage : curPage - 1,
-      totalPage : totalPage,
+      curPage: curPage - 1,
+      totalPage: totalPage,
       roomName: roomName
     }
     dispatch({
@@ -54,8 +54,8 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
 
   function goToNextPage(evt) {
     let values = {
-      curPage : curPage + 1,
-      totalPage : totalPage,
+      curPage: curPage + 1,
+      totalPage: totalPage,
       roomName: roomName
     }
     dispatch({
@@ -66,8 +66,8 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
 
   function onResetGame(event) {
     let values = {
-      curPage : curPage ,
-      totalPage : totalPage,
+      curPage: curPage,
+      totalPage: totalPage,
       roomName: roomName
     }
     event.preventDefault();
@@ -88,21 +88,23 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
         },
         duration: 1
       });
-      dispatch({type:"pockerBoard/syncResetflag", payload: {
-        resetFlag: !resetFlag
-      }})
+      dispatch({
+        type: "pockerBoard/syncResetflag", payload: {
+          resetFlag: !resetFlag
+        }
+      })
     }
   }
 
   function onAddStory(formData) {
     let values = {
-      curPage : curPage,
-      totalPage : totalPage,
+      curPage: curPage,
+      totalPage: totalPage,
       roomName: roomName,
       ...formData
     }
     dispatch({
-      type: "pockerBoard/AddStory", 
+      type: "pockerBoard/AddStory",
       payload: values
     })
   }
@@ -112,10 +114,10 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
   }
 
   return (
-    <Layout style={{minHeight:"100%", border:"red solid"}}>
+    <Layout style={{ minHeight: "100%", flexFlow: "column nowrap", alignContent: "flex-start" }}>
       <Header className={styles.header}>
         <span className={styles.titile}>{featureName} {internalTaskName}</span>
-        <div style={{ float: "right"}} className={styles.toolbar}>
+        <div style={{ float: "right" }} className={styles.toolbar}>
           <Button onClick={(e) => onResetGame(e)} type="primary" style={{ margin: "5px" }}>Reset</Button>
           <RecordCreatorDlg record={scoreList} onOk={createRecordHandler} creator={playerName} featureName={featureName} internalTaskName={internalTaskName}>
             <Button type="primary" style={{ margin: "5px" }}>Commit</Button>
@@ -126,21 +128,20 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
           <Button type="primary" style={{ margin: "5px" }} onClick={backToRoomPage}>Exit</Button>
         </div>
       </Header>
-      {/* 统计表格       */}
-      <Layout>
-        <Content className={styles.content} >
-          <PlayerAreaView usersList={scoreList}/>
-        </Content>
-        <Sider style={{ background: '#fff'}}>
+      <Content className={styles.content}>
+        <div className={styles.playerAreaView}>
+          <PlayerAreaView usersList={scoreList} />
+        </div>
+        <Sider className={styles.finalScoreSider}>
           <div className={styles.storySwitcher}>
             <span>STORY #</span>
             <div className={styles.storySwitcherControls}>
               <svg className={styles.storySwitcherControlsSvg} viewBox="0 0 1792 1792" onClick={goToLastPage}>
-                <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" fill="#fff" />             
+                <path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" fill="#fff" />
               </svg>
               <span className={styles.storyCounter}>{curPage + "/" + totalPage}</span>
-              <svg className={styles.storySwitcherControlsSvg}  viewBox="0 0 1792 1792" onClick={goToNextPage}>
-                <path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" fill="#fff"/>
+              <svg className={styles.storySwitcherControlsSvg} viewBox="0 0 1792 1792" onClick={goToNextPage}>
+                <path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" fill="#fff" />
               </svg>
             </div>
           </div>
@@ -156,12 +157,13 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
             </AddStoryDlg>
           </div>
         </Sider>
-        
-      </Layout>
+      </Content>
       <Footer className={styles.footer}>
-        <div>
+        <div className={styles.playCardContainers}>
           <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={playerName} resetFlag={resetFlag} curPage={curPage} clickedNum={clickedNum} />
-          <ReactPathManu className={styles.pathMenu}/>
+        </div>
+        <div className={styles.pathMenu}>
+          <ReactPathManu/>
         </div>
       </Footer>
       {openNotification()}
@@ -169,7 +171,7 @@ function PockerBoard({ dispatch, roomName, scoreList, playerName,
   );
 }
 function mapStateToProps(state) {
-  const { roomName, scoreList, resetFlag, curPage, 
+  const { roomName, scoreList, resetFlag, curPage,
     totalPage, clickedNum, playerName, featureName, internalTaskName, finalScores } = state.pockerBoard;
   return {
     roomName,
@@ -180,7 +182,7 @@ function mapStateToProps(state) {
     totalPage,
     clickedNum,
     featureName,
-    internalTaskName, 
+    internalTaskName,
     finalScores
   }
 }
