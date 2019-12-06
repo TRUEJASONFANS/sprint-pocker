@@ -51,10 +51,11 @@ export default class PlayerAreaView extends React.Component<Props, any> {
 
   render() {
     return (
-      <div>
+      <>
         {this.props.usersList.map((card, index) => <PlayerSelectedCard key={index} index={index} card={card} />)}
         <CandidateBoard/>
-      </div>)
+      </>
+     )
   }
 }
 
