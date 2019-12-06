@@ -1,5 +1,20 @@
-.card {
+.cardInHand:hover {
+  transform: scale(1.1);
+  transition: transform 100ms ease-in-out;
+}
+
+.cardInHand {
+  position: absolute;
+}
+
+.cardContainer {
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  will-change: transform;
+  cursor: pointer;
+  text-align: center;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   font-weight: bold;
@@ -14,45 +29,29 @@
   font: 100px/220px Georgia, serif;
 }
 
-.cardInHand:hover {
-  transform: scale(1.1);
-  transition: transform 100ms ease-in-out;
-}
-
-.cardInHand {
-  display: inline-block;
-}
-
-.cardContainer {
-  transition: transform 0.3s ease;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  transform: matrix(1, 0, 0, 1, 0, 0);
-  will-change: transform;
-  cursor: pointer;
-  text-align: center;
-}
-
 .smallCardId {
   position: absolute;
-  bottom: 20;
-  left: 6px;
+  margin-left: 3px;
+  line-height: 20px;
+  width: 100px;
   font-size: 20px;
   font: Georgia, serif;
   color: white;
-   /**禁止用户选择文本**/
-   -webkit-user-select: none;
-   -moz-user-select: none;
-   -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  text-align: left;
 }
 
-.cardFace .playerVote {
-  position: relative;
-  padding-top: 40px;
+.playerVote {
+  position: absolute;
   font-size: 45px;
+  line-height: 140px;
+  width: 100px;
   color: white;
-   /**禁止用户选择文本**/
-   -webkit-user-select: none;
-   -moz-user-select: none;
-   -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  text-align: center;
+  vertical-align: middle;
 }
