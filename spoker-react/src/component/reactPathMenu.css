@@ -1,5 +1,6 @@
 .mainButton {
-	position: absolute;
+	position: relative;
+	left: -20px;
 	width: 90px;
 	height: 90px;
 	border-radius: 100%;
