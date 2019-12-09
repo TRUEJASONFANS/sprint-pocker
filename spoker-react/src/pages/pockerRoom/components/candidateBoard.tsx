@@ -12,12 +12,13 @@ interface Card {
 interface Props {
   pockerBoard,
   loading,
+  global,
   dispatch: Function,
 }
 interface State {
   visiable: boolean,
 }
-@connect(({ pockerBoard, loading }) => ({ pockerBoard, loading }))
+@connect(({ global, pockerBoard, loading }) => ({ global, pockerBoard, loading }))
 export default class CandidateBoard extends React.PureComponent<Props, State> {
   timeHanlder: NodeJS.Timeout
   constructor(props) {
@@ -47,13 +48,7 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
   };
 
   componentWillMount = () => {
-    setInterval(function () {
-      var now = new Date();
-      const offsetMs = now.getTimezoneOffset() * 60 * 1000;
-      const dateLocal = new Date(now.getTime() - offsetMs);
-      var str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");
-      console.log(str);
-    }, 60000);
+
   }
 
   cancel() {
@@ -78,15 +73,19 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { pockerBoard } = this.props
-    const { scoreList, isOwner, finalScores, curPage } = pockerBoard;
+    const { pockerBoard, global} = this.props
+    const { scoreList, roomOwner, finalScores, curPage} = pockerBoard;
+    const {userName} = global;
 
     let candidateCardsSet = new Set<String>();
     scoreList.map((card, index) => {
       candidateCardsSet.add(card.fibonacciNum);
     });
     let candidateCards = [...candidateCardsSet];
-    let wrapClassNameStyle = isOwner ? "candidateModalOwner" : "candidateModal";
+
+    console.log("userName：" + userName);
+    let isOwner = roomOwner === userName;
+    let wrapClassNameStyle =  isOwner ? "candidateModalOwner" : "candidateModal";
     let shown = false;
     scoreList.forEach(card => {
       if (card.shown && finalScores.length < curPage) {

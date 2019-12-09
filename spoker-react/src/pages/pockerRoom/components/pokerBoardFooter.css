@@ -19,8 +19,6 @@
   background-position: 50% 50%;
   font-weight: bold;
   color: white;
-  transform: scale(1);
-  transition: transform 100ms ease-in-out;
   /**禁止用户选择文本**/
   -webkit-user-select: none;
   -moz-user-select: none;
