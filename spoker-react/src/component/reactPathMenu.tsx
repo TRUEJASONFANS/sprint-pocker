@@ -156,7 +156,6 @@ export default class ReactPathManu extends React.Component<any, State> {
       return isOpen ? this.finalChildButtonStylesInit(i) : this.initialChildButtonStylesInit();
     });
 
-    console.log(targetButtonStylesInit);
     //StaggeredMotion now takes an Array of object
     //const targetButtonStylesInit = Object.keys(targetButtonStylesInitObject).map(key => targetButtonStylesInitObject[key]);
 
