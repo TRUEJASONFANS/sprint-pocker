@@ -32,15 +32,6 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
 
   componentDidUpdate = () => {
     const { pockerBoard } = this.props
-
-    // if (shown && !this.state.visiable) {
-    //   this.timeHanlder = setTimeout(() => {
-    //     this.setState({
-    //       visiable: true
-    //     });
-    //   }, 2000)
-    // }
-
   };
 
   componentWillUnmount = () => {
@@ -66,10 +57,17 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
     this.setState({ visiable: false });
   }
 
-  onSelelctCandidate() {
-    this.setState({
-      visiable: true
+  onSelelctCandidate(finalCandidate) {
+    setTimeout(() => {
+      this.setState({
+        visiable: true
+      });
+         // trigger the click final score broad cast
+      this.props.dispatch({
+      type: "pockerBoard/OnSelectCandidate",
+      payload: finalCandidate
     });
+    }, 2000);
   }
 
   render() {
@@ -109,7 +107,6 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
                 key={index}
                 isOwner={isOwner}
                 pockerBoard={pockerBoard}
-                dispatch={this.props.dispatch}
                 onSelelctCandidate={this.onSelelctCandidate}
               />
             ))}
@@ -122,16 +119,19 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
 interface CardProps {
   card: string,
   isOwner: boolean,
-  dispatch: Function,
   pockerBoard: any,
   onSelelctCandidate: Function
 }
-class PureCandidateCard extends React.PureComponent<CardProps> {
-  dipatch: Function
+interface CardState {
+  isClicked: boolean,
+}
+class PureCandidateCard extends React.PureComponent<CardProps, CardState> {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
-    this.dipatch = this.props.dispatch;
+    this.state = {
+      isClicked : false
+    }
   }
 
   onClick(e) {
@@ -145,13 +145,11 @@ class PureCandidateCard extends React.PureComponent<CardProps> {
       roomName: roomName,
       score: this.props.card,
     }
-    // trigger the click final score broad cast
-    this.dipatch({
-      type: "pockerBoard/OnSelectCandidate",
-      payload: finalCandidate
-    });
-    this.props.onSelelctCandidate();
+    const {isClicked} = this.state;
+    this.setState({isClicked: !isClicked});
+    this.props.onSelelctCandidate(finalCandidate);
   }
+  
   render() {
     return (
       <div className={`${styles.card}`} style={{ background: '#149c37' }} onClick={this.onClick} >
