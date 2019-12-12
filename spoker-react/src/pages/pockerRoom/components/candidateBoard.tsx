@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Modal } from 'antd';
+import { Modal , Form , Input} from 'antd';
 import styles from './candidateBoard.css';
 import { connect } from 'dva';
 import { FinalCandidate } from '../services/pockerService';
+const FormItem = Form.Item;
 interface Card {
   clicked: boolean,
   shown: boolean,
@@ -17,14 +18,18 @@ interface Props {
 }
 interface State {
   visiable: boolean,
+  selectedCandidate: boolean,
+  shownAddStoryDlg: boolean,
 }
 @connect(({ global, pockerBoard, loading }) => ({ global, pockerBoard, loading }))
-export default class CandidateBoard extends React.PureComponent<Props, State> {
+export class CandidateBoard extends React.PureComponent<Props, State> {
   timeHanlder: NodeJS.Timeout
   constructor(props) {
     super(props);
     this.state = {
       visiable: false,
+      selectedCandidate: false,
+      shownAddStoryDlg: false
     }
     this.cancel = this.cancel.bind(this);
     this.onSelelctCandidate = this.onSelelctCandidate.bind(this);
@@ -32,15 +37,6 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
 
   componentDidUpdate = () => {
     const { pockerBoard } = this.props
-
-    // if (shown && !this.state.visiable) {
-    //   this.timeHanlder = setTimeout(() => {
-    //     this.setState({
-    //       visiable: true
-    //     });
-    //   }, 2000)
-    // }
-
   };
 
   componentWillUnmount = () => {
@@ -63,13 +59,47 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
       type: "pockerBoard/onNextGame",
       payload: values,
     });
-    this.setState({ visiable: false });
+    this.setState({ selectedCandidate: false });
   }
 
-  onSelelctCandidate() {
-    this.setState({
-      visiable: true
+  onSelelctCandidate(finalCandidate) {
+    setTimeout(() => {
+      this.setState({
+        visiable: true
+      });
+         // trigger the click final score broad cast
+      this.props.dispatch({
+      type: "pockerBoard/OnSelectCandidate",
+      payload: finalCandidate
     });
+    }, 2000);
+  }
+
+  showConfirm(shown: boolean) {
+    var _this = this;
+    if (shown && this.state.selectedCandidate) {
+      Modal.confirm({
+        title: 'Do you want to go to next internal task?',
+        content: 'When clicked the OK button to create next internal task',
+        onOk() {
+          _this.setState({
+            shownAddStoryDlg: true
+          });
+        },
+        onCancel() {},
+      });
+    }
+  }
+
+  showAddStoryDlg() {
+    
+  }
+
+  okHandler() {
+
+  }
+  hideModelHandler() {
+    this.setState({shownAddStoryDlg: false});
   }
 
   render() {
@@ -83,7 +113,6 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
     });
     let candidateCards = [...candidateCardsSet];
 
-    console.log("userName：" + userName);
     let isOwner = roomOwner === userName;
     let wrapClassNameStyle =  isOwner ? "candidateModalOwner" : "candidateModal";
     let shown = false;
@@ -92,6 +121,11 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
         shown = true;
       }
     });
+    const formItemLayout = {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 14 },
+    };
+    const { getFieldDecorator } = this.props.form;
     return (
       <div>
         <Modal
@@ -109,11 +143,30 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
                 key={index}
                 isOwner={isOwner}
                 pockerBoard={pockerBoard}
-                dispatch={this.props.dispatch}
                 onSelelctCandidate={this.onSelelctCandidate}
               />
             ))}
           </div>
+        </Modal>
+        {this.showConfirm(shown)}
+        <Modal
+          visible={this.state.shownAddStoryDlg}
+          onOk={this.okHandler}
+          onCancel={this.hideModelHandler}
+        >
+          <Form layout={'horizontal'} onSubmit={this.okHandler}>
+            <FormItem {...formItemLayout} label="F/I title">
+              {getFieldDecorator('title', {
+                 rules: [{ required: true, message: '请输入Title' }],
+                 initialValue: this.props.featureName,
+              })(<Input />)}
+            </FormItem>
+            <FormItem {...formItemLayout} label="task title">
+              {getFieldDecorator('taskTitle', {
+                 rules: [{ required: false, message: '请输入internal task title' }],
+              })(<Input />)}
+            </FormItem>
+          </Form>
         </Modal>
       </div>
     );
@@ -122,16 +175,19 @@ export default class CandidateBoard extends React.PureComponent<Props, State> {
 interface CardProps {
   card: string,
   isOwner: boolean,
-  dispatch: Function,
   pockerBoard: any,
   onSelelctCandidate: Function
 }
-class PureCandidateCard extends React.PureComponent<CardProps> {
-  dipatch: Function
+interface CardState {
+  isClicked: boolean,
+}
+class PureCandidateCard extends React.PureComponent<CardProps, CardState> {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
-    this.dipatch = this.props.dispatch;
+    this.state = {
+      isClicked : false
+    }
   }
 
   onClick(e) {
@@ -145,13 +201,11 @@ class PureCandidateCard extends React.PureComponent<CardProps> {
       roomName: roomName,
       score: this.props.card,
     }
-    // trigger the click final score broad cast
-    this.dipatch({
-      type: "pockerBoard/OnSelectCandidate",
-      payload: finalCandidate
-    });
-    this.props.onSelelctCandidate();
+    const {isClicked} = this.state;
+    this.setState({isClicked: !isClicked});
+    this.props.onSelelctCandidate(finalCandidate);
   }
+  
   render() {
     return (
       <div className={`${styles.card}`} style={{ background: '#149c37' }} onClick={this.onClick} >
@@ -168,3 +222,4 @@ class PureCandidateCard extends React.PureComponent<CardProps> {
 
   }
 }
+export default Form.create()(CandidateBoard);
