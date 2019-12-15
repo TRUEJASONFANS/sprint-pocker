@@ -14,11 +14,12 @@ interface Props2 {
   card:Card,
   index: number
 }
-class PlayerSelectedCard extends React.Component<Props2, any> {
+class PlayerSelectedCard extends React.PureComponent<Props2, any> {
   constructor(props) {
     super(props);
   }
   render() {
+    console.log("PayerCard updated");
     const card = this.props.card;
     let pokerCard;
     let leftStyle = { left: `${10 + this.props.index * 110}px` };
@@ -48,9 +49,10 @@ class PlayerSelectedCard extends React.Component<Props2, any> {
   }
 }
 
-export default class PlayerAreaView extends React.Component<Props, any> {
+export default class PlayerAreaView extends React.PureComponent<Props, any> {
 
   render() {
+    console.log("playerAreaView: rerender");
     return (
       <>
         {this.props.usersList.map((card, index) => <PlayerSelectedCard key={index} index={index} card={card} />)}

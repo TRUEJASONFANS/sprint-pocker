@@ -17,9 +17,9 @@ interface Props {
   dispatch: Function,
 }
 interface State {
-  visiable: boolean,
-  selectedCandidate: boolean,
+  showCandidateBoard: boolean,
   shownAddStoryDlg: boolean,
+  shownConfirm: boolean
 }
 @connect(({ global, pockerBoard, loading }) => ({ global, pockerBoard, loading }))
 export class CandidateBoard extends React.PureComponent<Props, State> {
@@ -27,12 +27,13 @@ export class CandidateBoard extends React.PureComponent<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
-      visiable: false,
-      selectedCandidate: false,
-      shownAddStoryDlg: false
+      showCandidateBoard: false,
+      shownAddStoryDlg: false,
+      shownConfirm: false,
     }
     this.cancel = this.cancel.bind(this);
     this.onSelelctCandidate = this.onSelelctCandidate.bind(this);
+    this.renderNextTaskModal = this.renderNextTaskModal.bind(this);
   }
 
   componentDidUpdate = () => {
@@ -43,9 +44,6 @@ export class CandidateBoard extends React.PureComponent<Props, State> {
     clearTimeout(this.timeHanlder);
   };
 
-  componentWillMount = () => {
-
-  }
 
   cancel() {
     const { pockerBoard, dispatch } = this.props
@@ -59,52 +57,93 @@ export class CandidateBoard extends React.PureComponent<Props, State> {
       type: "pockerBoard/onNextGame",
       payload: values,
     });
-    this.setState({ selectedCandidate: false });
+    this.setState({ showCandidateBoard: false });
   }
 
   onSelelctCandidate(finalCandidate) {
     setTimeout(() => {
-      this.setState({
-        visiable: true
-      });
          // trigger the click final score broad cast
       this.props.dispatch({
       type: "pockerBoard/OnSelectCandidate",
       payload: finalCandidate
     });
-    }, 2000);
+    this.setState({
+      shownConfirm: true
+    });
+    }, 1000);
   }
 
-  showConfirm(shown: boolean) {
+  showConfirm() {
     var _this = this;
-    if (shown && this.state.selectedCandidate) {
+    if (this.state.shownConfirm) {
       Modal.confirm({
         title: 'Do you want to go to next internal task?',
         content: 'When clicked the OK button to create next internal task',
         onOk() {
-          _this.setState({
-            shownAddStoryDlg: true
-          });
+          _this.setState(
+            { 
+              shownAddStoryDlg: true ,
+              shownConfirm: false,
+            }
+          );
+          Modal.destroyAll();
         },
-        onCancel() {},
+        onCancel() {
+          Modal.destroyAll();
+          _this.setState({
+            showCandidateBoard: true,
+            shownConfirm: false,
+          });
+         },
       });
     }
   }
 
-  showAddStoryDlg() {
-    
+  renderCard(candidateCards, isOwner, pockerBoard) {
+    return candidateCards.map((card: string, index) => (
+      <PureCandidateCard
+        card={card}
+        key={index}
+        isOwner={isOwner}
+        pockerBoard={pockerBoard}
+        onSelelctCandidate={this.onSelelctCandidate}
+      />))
   }
 
-  okHandler() {
-
-  }
-  hideModelHandler() {
-    this.setState({shownAddStoryDlg: false});
+  renderNextTaskModal(getFieldDecorator, featureName:string) {
+    const formItemLayout = {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 14 },
+    };
+    const okHandler = function() {
+      Modal.destroyAll();
+    }
+    let _this = this;
+    const hideModelHandler = function() {
+      _this.setState({shownAddStoryDlg: false});
+      Modal.destroyAll();
+    }
+    return (
+      <Modal
+        visible={this.state.shownAddStoryDlg}
+        onOk={okHandler}
+        onCancel={hideModelHandler}
+      >
+        <Form layout={'horizontal'} onSubmit={okHandler}>
+          <FormItem {...formItemLayout} label="F/I title">
+            {getFieldDecorator('title', {rules: [{ required: true, message: '请输入Title' }],initialValue: featureName,})(<Input />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="task title">
+            {getFieldDecorator('taskTitle', {rules: [{ required: false, message: '请输入internal task title' }],})(<Input />)}
+          </FormItem>
+        </Form>
+      </Modal>
+    )
   }
 
   render() {
     const { pockerBoard, global} = this.props
-    const { scoreList, roomOwner, finalScores, curPage} = pockerBoard;
+    const { scoreList, roomOwner, finalScores, curPage , featureName} = pockerBoard;
     const {userName} = global;
 
     let candidateCardsSet = new Set<String>();
@@ -121,52 +160,20 @@ export class CandidateBoard extends React.PureComponent<Props, State> {
         shown = true;
       }
     });
-    const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
-    };
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
         <Modal
           title="Candidate Cards"
-          visible={shown}
+          visible={shown || this.state.showCandidateBoard}
           footer={null}
           onCancel={this.cancel}
           maskClosable={false}
           wrapClassName={wrapClassNameStyle}
         >
-          <div>
-            {candidateCards.map((card: string, index) => (
-              <PureCandidateCard
-                card={card}
-                key={index}
-                isOwner={isOwner}
-                pockerBoard={pockerBoard}
-                onSelelctCandidate={this.onSelelctCandidate}
-              />
-            ))}
-          </div>
-        </Modal>
-        {this.showConfirm(shown)}
-        <Modal
-          visible={this.state.shownAddStoryDlg}
-          onOk={this.okHandler}
-          onCancel={this.hideModelHandler}
-        >
-          <Form layout={'horizontal'} onSubmit={this.okHandler}>
-            <FormItem {...formItemLayout} label="F/I title">
-              {getFieldDecorator('title', {
-                 rules: [{ required: true, message: '请输入Title' }],
-                 initialValue: this.props.featureName,
-              })(<Input />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label="task title">
-              {getFieldDecorator('taskTitle', {
-                 rules: [{ required: false, message: '请输入internal task title' }],
-              })(<Input />)}
-            </FormItem>
-          </Form>
+          <div>{this.renderCard(candidateCards, isOwner, pockerBoard)}</div>
+          {this.showConfirm()}
+          {this.renderNextTaskModal(getFieldDecorator, featureName)}
         </Modal>
       </div>
     );
