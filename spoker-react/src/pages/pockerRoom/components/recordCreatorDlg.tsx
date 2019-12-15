@@ -7,6 +7,7 @@ const { TextArea } = Input;
 interface Props {
   featureName: String,
   internalTaskName: String,
+  record: [],
 }
 
 class RecordCreatorDlg extends Component<Props,any> {
