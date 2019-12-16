@@ -19,7 +19,7 @@ interface Props {
 interface State {
   showCandidateBoard: boolean,
   shownAddStoryDlg: boolean,
-  shownConfirm: boolean
+  showConfirm: boolean
 }
 @connect(({ global, pockerBoard, loading }) => ({ global, pockerBoard, loading }))
 export class CandidateBoard extends React.PureComponent<Props, State> {
@@ -29,11 +29,11 @@ export class CandidateBoard extends React.PureComponent<Props, State> {
     this.state = {
       showCandidateBoard: false,
       shownAddStoryDlg: false,
-      shownConfirm: false,
+      showConfirm: false,
     }
     this.cancel = this.cancel.bind(this);
     this.onSelelctCandidate = this.onSelelctCandidate.bind(this);
-    this.renderNextTaskModal = this.renderNextTaskModal.bind(this);
+    this.renderTaskModal = this.renderTaskModal.bind(this);
   }
 
   componentDidUpdate = () => {
@@ -68,22 +68,25 @@ export class CandidateBoard extends React.PureComponent<Props, State> {
       payload: finalCandidate
     });
     this.setState({
-      shownConfirm: true
+      showCandidateBoard: true,
+      showConfirm: true,
+      shownAddStoryDlg: false
     });
     }, 1000);
   }
 
   showConfirm() {
     var _this = this;
-    if (this.state.shownConfirm) {
+    if (this.state.showConfirm) {
       Modal.confirm({
         title: 'Do you want to go to next internal task?',
-        content: 'When clicked the OK button to create next internal task',
+        content: 'When clicked on OK button to create next internal task',
         onOk() {
           _this.setState(
             { 
-              shownAddStoryDlg: true ,
-              shownConfirm: false,
+              shownAddStoryDlg: true,
+              showConfirm: false,
+              showCandidateBoard: true,
             }
           );
           Modal.destroyAll();
@@ -92,7 +95,7 @@ export class CandidateBoard extends React.PureComponent<Props, State> {
           Modal.destroyAll();
           _this.setState({
             showCandidateBoard: true,
-            shownConfirm: false,
+            showConfirm: false,
           });
          },
       });
@@ -110,15 +113,45 @@ export class CandidateBoard extends React.PureComponent<Props, State> {
       />))
   }
 
-  renderNextTaskModal(getFieldDecorator, featureName:string) {
+  renderTaskModal(getFieldDecorator, featureName:string, pockerBoard) {
+    let _this = this;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
-    const okHandler = function() {
+    const { curPage, totalPage, roomName } = pockerBoard;
+    const okHandler = function(e) {
+      _this.setState({
+        showCandidateBoard: false,
+        showConfirm: false,
+        shownAddStoryDlg: false,
+      });
+
+      _this.props.form.validateFields((err, formData) => {
+        if (!err) {
+          let values = {
+            curPage: curPage,
+            totalPage: totalPage,
+            roomName: roomName,
+            ...formData
+          }
+          _this.props.dispatch({
+            type: "pockerBoard/AddStory",
+            payload: values
+          })
+          let values2 = {
+            curPage: curPage + 1,
+            totalPage: totalPage,
+            roomName: roomName
+          }
+          _this.props.dispatch({
+            type: 'pockerBoard/onNavigateToPage',
+            payload: values2,
+          });
+        }
+      });
       Modal.destroyAll();
     }
-    let _this = this;
     const hideModelHandler = function() {
       _this.setState({shownAddStoryDlg: false});
       Modal.destroyAll();
@@ -173,7 +206,7 @@ export class CandidateBoard extends React.PureComponent<Props, State> {
         >
           <div>{this.renderCard(candidateCards, isOwner, pockerBoard)}</div>
           {this.showConfirm()}
-          {this.renderNextTaskModal(getFieldDecorator, featureName)}
+          {this.renderTaskModal(getFieldDecorator, featureName, this.props.pockerBoard)}
         </Modal>
       </div>
     );
