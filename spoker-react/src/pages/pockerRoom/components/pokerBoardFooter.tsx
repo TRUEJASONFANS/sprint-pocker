@@ -8,7 +8,10 @@ export interface Props {
   curUser: string;
   resetFlag: boolean;
   curPage: number;
-  clickedNum: string;
+}
+
+interface State {
+  clickedNum: string,
 }
 
 interface Props2 {
@@ -18,10 +21,13 @@ interface Props2 {
   clickedNum: string;
 }
 
-class PokerBoardFooter extends React.Component<Props, any> {
+class PokerBoardFooter extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.onClickPockerNumber = this.onClickPockerNumber.bind(this);
+    this.state = {
+      clickedNum: '?',
+    }
   }
 
   onClickPockerNumber(num: string, index: number) {
@@ -43,19 +49,28 @@ class PokerBoardFooter extends React.Component<Props, any> {
       type: 'pockerBoard/onClickPocker',
       payload: values
     });
+    this.setState({
+      clickedNum: num
+    });
   }
 
   render() {
+    console.log("cards:" + this.props.cards);
+    if (this.props.resetFlag && this.state.clickedNum !== '?') {
+      this.setState({
+        clickedNum: '?'
+      })
+    }
     return (
       <div style={{display:"inline-block"}}>
-        {this.props.cards.map((card, index) => (<PalyerScoreCard card={card} index={index} key={index} okHanlder={this.onClickPockerNumber} clickedNum={this.props.clickedNum} />))}
+        {this.props.cards.map((card, index) => (<PalyerScoreCard card={card} index={index} key={index} okHanlder={this.onClickPockerNumber} clickedNum={this.state.clickedNum} />))}
       </div>
     );
   }
 
 }
 
-class PalyerScoreCard extends React.Component<Props2> {
+class PalyerScoreCard extends React.PureComponent<Props2> {
   constructor(props) {
     super(props);
     this.onClickHandler = this.onClickHandler.bind(this);

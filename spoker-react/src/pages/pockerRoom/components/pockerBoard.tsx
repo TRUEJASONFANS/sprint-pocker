@@ -19,7 +19,6 @@ interface Props {
   resetFlag: boolean, 
   curPage: number, 
   totalPage: number, 
-  clickedNum: string, 
   featureName: string, 
   internalTaskName: string, 
   finalScores: [],
@@ -146,7 +145,6 @@ class PockerBoard extends PureComponent<Props, State> {
     const finalScores = this.props.finalScores;
     const scoreList = this.props.scoreList;
     const resetFlag = this.props.resetFlag;
-    const clickedNum = this.props.clickedNum;
     return (
       <Layout style={{ minHeight: "100%", flexFlow: "column nowrap", alignContent: "flex-start" }}>
         <Header className={styles.header}>
@@ -195,7 +193,7 @@ class PockerBoard extends PureComponent<Props, State> {
         </Content>
         <Footer className={styles.footer}>
           <div className={styles.playCandidateCardContainers}>
-            <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={playerName} resetFlag={resetFlag} curPage={curPage} clickedNum={clickedNum} />
+            <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={playerName} resetFlag={resetFlag} curPage={curPage}/>
           </div>
           <div className={styles.pathMenu}>
             <ReactPathManu />
@@ -208,7 +206,7 @@ class PockerBoard extends PureComponent<Props, State> {
 }
 function mapStateToProps(state) {
   const { roomName, scoreList, resetFlag, curPage,
-    totalPage, clickedNum, playerName, featureName, internalTaskName, finalScores } = state.pockerBoard;
+    totalPage, playerName, featureName, internalTaskName, finalScores } = state.pockerBoard;
   return {
     roomName,
     scoreList,
@@ -216,7 +214,6 @@ function mapStateToProps(state) {
     resetFlag,
     curPage,
     totalPage,
-    clickedNum,
     featureName,
     internalTaskName,
     finalScores
