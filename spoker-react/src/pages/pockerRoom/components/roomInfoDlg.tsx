@@ -59,7 +59,7 @@ export default class RoomInfoDlg extends Component {
           <Descriptions title="Room Info" column = {1}>
             <Descriptions.Item label="Room Name">{this.props.roomName}</Descriptions.Item>
             <Descriptions.Item label="Invite Link">
-              <div style={{ overflow: "scroll", width:"300px", height: "100px" }}>{this.state.inviteLink}</div>
+              <div style={{ overflow: "scroll", width:"380px", height: "120px" }}>{this.state.inviteLink}</div>
             </Descriptions.Item>
           </Descriptions>
         
