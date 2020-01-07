@@ -9,15 +9,26 @@ class RoomEditModel extends Component {
     super(props);
     this.state = {
       visible: false,
+      passWordValidateMsg: "",
     };
   }
 
   showModelHandler = e => {
-    if (e) e.stopPropagation();
-    this.setState({
-      visible: true,
-    });
-  };
+    const name = this.props.record.name;
+    const roomPassword = "";    
+    const {onOk} = this.props;
+    const promise = roomService.checkRoomPassword({name, roomPassword});
+    promise.then(value => {
+      if (value.data.statusCode === 2000) {
+        onOk({});
+      } else {
+        if (e) e.stopPropagation();
+        this.setState({
+          visible: true,
+        });
+      }
+  });
+}
 
   hideModelHandler = e => {
     this.setState({
@@ -30,32 +41,26 @@ class RoomEditModel extends Component {
     console.log(owner);
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        onOk({ creator: owner, ...values });
-        this.hideModelHandler();
+        const name = this.props.record.name;
+        const roomPassword = values.roomPassword;    
+        const promise = roomService.checkRoomPassword({name, roomPassword});
+        Promise.all([promise]).then(value => {
+          if (value[0].data.statusCode === 2000) {
+            onOk({ creator: owner, ...values });
+            this.hideModelHandler();
+          } else {
+            const message = value[0].data.message;
+            this.setState({
+              visible: true,
+              passWordValidateMsg: message
+            });
+            console.log(message);
+          }
+        });
       }
     });
   };
 
-  validateRoomPassword = (rule, value, callback) => {
-    const name = this.props.record.name;
-    const roomPassword = value;
-
-    const promise = roomService.checkRoomPassword({name, roomPassword});
-    promise.then(value => {
-      // success
-      if (value.data.statusCode === 2000) {
-        callback();
-
-      } else {
-        const message = value.data.message;
-        console.log(message);
-        callback(message);
-      }
-    }, error => {
-      // failure
-    });
-
-  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -80,14 +85,13 @@ class RoomEditModel extends Component {
             <FormItem {...formItemLayout} label="房间密码">
               {getFieldDecorator('roomPassword', {
                 initialValue: roomPassword,
-                rules: [{ required: true, message: '请输入房间密码' },
-                {
-                  validator: this.validateRoomPassword,
-                }
+                rules: [{ required: true, message: '请输入房间密码'}
                 ],
               })(<Input.Password />)}
             </FormItem>
           </Form>
+          <label style={{ margin: "45px" }} ><font size="4" face="arial" color="red">{this.state.passWordValidateMsg}</font>
+          </label>
         </Modal>
       </span>
     );

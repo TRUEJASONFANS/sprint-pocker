@@ -8,30 +8,34 @@ export interface Props {
   curUser: string;
   resetFlag: boolean;
   curPage: number;
-  clickedNum: string;
+}
+
+interface State {
+  clickedNum: string,
 }
 
 interface Props2 {
   index: number;
   card: string;
   okHanlder: Function;
-  clickedNum: string;
 }
 
-class PokerBoardFooter extends React.Component<Props, any> {
+class PokerBoardFooter extends React.PureComponent<Props, State> {
   constructor(props) {
     super(props);
     this.onClickPockerNumber = this.onClickPockerNumber.bind(this);
+    this.state = {
+      clickedNum: '?',
+    }
   }
 
-  onClickPockerNumber(num:string, index:number) {
+  onClickPockerNumber(num: string, index: number) {
     let flag;
-    if(num=='?') {
+    if (num == '?') {
       flag = false;
     } else {
       flag = true;
     }
-    console.log(this.props);
     var values = {
       fibonacciNum: num,
       palyerName: this.props.curUser,
@@ -43,22 +47,37 @@ class PokerBoardFooter extends React.Component<Props, any> {
       type: 'pockerBoard/onClickPocker',
       payload: values
     });
+    this.setState({
+      clickedNum: num
+    });
   }
 
-  render() {    
+  render() {
+    console.log("Footer rerender()");
+    if (this.props.resetFlag && this.state.clickedNum !== '?') {
+      this.setState({
+        clickedNum: '?'
+      })
+    }
     return (
-      <div className={styles.playerCardsContainer}>
-        {this.props.cards.map((card, index) => (<PalyerScoreCard card={card} index={index} key={index} okHanlder={this.onClickPockerNumber} clickedNum={this.props.clickedNum} />))}
+      <div style={{display:"inline-block"}}>
+        {this.props.cards.map((card, index) => (<PalyerScoreCard card={card} index={index} key={index} okHanlder={this.onClickPockerNumber} />))}
       </div>
     );
   }
 
 }
 
-class PalyerScoreCard extends React.Component<Props2> {
+interface State2 {
+  turnOn: boolean 
+}
+class PalyerScoreCard extends React.PureComponent<Props2, State2> {
   constructor(props) {
     super(props);
     this.onClickHandler = this.onClickHandler.bind(this);
+    this.state  = {
+      turnOn: false,
+    }
   }
   onClickHandler() {
     if (this.props.clickedNum != this.props.card) {
@@ -66,35 +85,30 @@ class PalyerScoreCard extends React.Component<Props2> {
     } else {
       this.props.okHanlder('?', -1);
     }
+    this.setState({
+      turnOn: !this.state.turnOn
+    });
   }
+
   render() {
-    let leftStyle = { left: `${20 + this.props.index * 70}px` };
+    console.log("card rerender" + this.props.card);
     const containStyle = {
       width: 100,
       height: 140,
-      transform: this.props.clickedNum === this.props.card ? 
-      "matrix3d(0.968846, -0.247665, 0, 0, 0.246399, 0.963893, 0.100983, 0, -0.0250101, -0.0978374, 0.994888, 0, 0, -126.512, 0, 1)":
-      "matrix(1, 0, 0, 1, 0, 0)" 
-    };
-    let cardStyle = {
+      transform: this.state.turnOn ?
+        "matrix3d(0.968846, -0.247665, 0, 0, 0.246399, 0.963893, 0.100983, 0, -0.0250101, -0.0978374, 0.994888, 0, 0, -126.512, 0, 1)" :
+        "matrix(1, 0, 0, 1, 0, 0)",
       background: this.props.index < 5 ? "#0466d2" : "#149c37",
-    }
+    };
     return (
-      <div className={`${styles.cardRig} ${styles.cardInHand}`} style={leftStyle}>
-        <div className={`${styles.cardWrapper} ${styles.perspectiveWrapper}`}>
-          <div className={styles.animationWrapper}>
-            <div className={`${styles.cardContainer}`} onClick={this.onClickHandler} style={containStyle}>
-              <div className={`${styles.card}`} style={cardStyle} />
-              <div className={` ${styles.cardFace}`}>
-                <div className={styles.smallCardId}>
-                  <span>{this.props.card}</span>
-                </div>
-                <div className={styles.playerVote}>
-                  <span>{this.props.card}</span>
-                </div>
-              </div>
+      <div className={styles.cardInHand} style={{ left: `${20 + this.props.index * 70}px`,}}>
+        <div className={`${styles.cardContainer}`} onClick={this.onClickHandler} style={containStyle}>
+            <div className={styles.smallCardId}>
+              <span>{this.props.card}</span>
             </div>
-          </div>
+            <div className={styles.playerVote}>
+              <span>{this.props.card}</span>
+            </div>
         </div>
       </div>);
 

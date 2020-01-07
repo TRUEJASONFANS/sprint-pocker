@@ -6,6 +6,7 @@ const { TextArea } = Input;
 
 interface Props {
   featureName: String,
+  onOK:Function,
 }
 class AddStoryDlg extends Component<Props, any> {
   constructor(props) {

@@ -2,23 +2,21 @@ import * as userService from '@/services/userService';
 export default {
   namespace: 'global', // 全局
   state: {
-    hasLogin: true,
     userName: "",
   },
   reducers: { //同步action
-    login(state, { data: user, hasLogin }) {
+    login(state, { payload: {userName}}) {
       return {
         ...state,
-        hasLogin: hasLogin,
-        userName: user
+        userName: userName
       };
     },
   },
   effects: { //异步action
     *queryUserStatus({},{ call, put, select }) {
-      // let user = yield call(userService.fetch);
-      // console.log('username', user);
-      // yield put({ type: "login", payload: { data: user, hasLogin: true } })
+      let requestBody = yield call(userService.whoAmI);
+      console.log('username', requestBody);
+      yield put({ type: "login", payload: { userName: requestBody.data.userName} })
     },
     *throwError() {
       throw new Error('hi error');

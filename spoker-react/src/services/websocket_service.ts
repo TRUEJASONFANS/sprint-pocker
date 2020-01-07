@@ -2,16 +2,17 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import {hostUrl} from '../constans';
 
-let stompClient;
-let socket;
 
-// export function onLoginServer(userName) {
-//   console.log('onLoginServer', userName);
-//   stompClient.send("/app/login", {}, userName);
-  
-// }
+var stompClient;
+var socket;
 
-export function openSocket(subscribeUrl, subs_action:Function, instant_call:Function) {
+/**
+ * Sockjs with Stomp is a polyfill for moden browser for websocket protocal implementation
+ * @param subscribeUrl 
+ * @param subs_action 
+ * @param instant_call 
+ */
+export function openSocket(subscribeUrl, subs_action: Function, instant_call: Function) {
   // 连接 Websocket 服务端 
   // 生成cookie
   if (socket === undefined) {
@@ -25,9 +26,7 @@ export function openSocket(subscribeUrl, subs_action:Function, instant_call:Func
     subscribe(subscribeUrl, subs_action);
     instant_call();
   }
-
 }
-
 export function subscribe(subscribeUrl, action) {
   console.log('request url', subscribeUrl);
   stompClient.subscribe(subscribeUrl, action);
@@ -38,3 +37,12 @@ export function request(sendUrl, header, body) {
   console.log('body:', body);
   stompClient.send(sendUrl, header, body);
 }
+
+
+// export function connect() {
+//   client = new WebSocket('ws://{hostUrl}/pocker-websocket');
+// }
+
+// export function on(subscribeUrl, action) {
+//   client.on(`${subscribeUrl}`, action);
+// }

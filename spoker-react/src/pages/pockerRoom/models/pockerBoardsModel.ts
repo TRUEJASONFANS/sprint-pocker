@@ -9,10 +9,11 @@ export default {
     resetFlag: false,
     curPage: 1,
     totalPage: 1,
-    clickedNum: -1,
     playerName: '',
     featureName: '',
-    internalTaskName: ''
+    internalTaskName: '',
+    roomOwner: '',
+    finalScores: []
   },
   reducers: {
 
@@ -20,8 +21,12 @@ export default {
       return {...state, roomName }
     },
     
-    syncPage(state, {payload: {curPage, totalPage, resetFlag, scoreList, playerName, clickedNum, featureName, internalTaskName}}) {
-      return {...state, curPage, totalPage, resetFlag , scoreList, playerName, clickedNum, featureName, internalTaskName}
+    syncPage(state, { payload: { curPage, totalPage, resetFlag, scoreList, playerName,
+      featureName, internalTaskName, roomOwner, finalScores } }) {
+      return {
+        ...state, curPage, totalPage, resetFlag, scoreList, playerName,
+        featureName, internalTaskName, roomOwner, finalScores
+      }
     },
     // syncTotalPage(state, {payload: {totalPage}}) {
     //   return {...state, totalPage}
@@ -46,6 +51,9 @@ export default {
     *onNavigateToPage({ payload: values }, { call }) {
       yield call(pockerService.onNavigateToPage(values));
     },
+    *OnSelectCandidate({ payload: values}, {call}) {
+      yield call(pockerService.OnSelectCandidate(values));
+    }
   },
 
   subscriptions: {
@@ -72,11 +80,12 @@ export default {
                 curPage: parseJson.curNum,
                 totalPage: parseJson.totalNum,
                 resetFlag: parseJson.reset,
-                clickedNum: parseJson.clickedNum,
                 scoreList: parseJson.playerScoreList,
                 playerName: parseJson.playerName,
                 featureName: parseJson.featureName,
-                internalTaskName: parseJson.internalTaskName
+                internalTaskName: parseJson.internalTaskName,
+                roomOwner: parseJson.owner,
+                finalScores: parseJson.finalScores,
               }
             });
           }, roomId, 1);
