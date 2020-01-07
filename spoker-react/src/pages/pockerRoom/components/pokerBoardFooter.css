@@ -1,29 +1,24 @@
-* {
-  background-repeat: no-repeat;
-  padding: 0;
-  margin: 0;
+.cardInHand:hover {
+  transform: scale(1.1);
+  transition: transform 100ms ease-in-out;
 }
-.playerCardsContainer {
-  height: 120px;
-  min-height: 120px;
-  padding: 15px 0 0;
-  border-top: 1px solid #e6ebef;
-  z-index: 2;
-}
-.card {
-  border-radius: 10px;
-  margin: 0 auto;
-  width: 100px;
-  height: 140px;
+
+.cardInHand {
   position: absolute;
-  top: 0;
-  left: 0;
+}
+
+.cardContainer {
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  will-change: transform;
+  cursor: pointer;
+  text-align: center;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   font-weight: bold;
   color: white;
-  transform: scale(1);
-  transition: transform 100ms ease-in-out;
   /**禁止用户选择文本**/
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -32,62 +27,29 @@
   font: 100px/220px Georgia, serif;
 }
 
-.cardInHand {
-  position: absolute;
-  left: 0;
-  cursor: pointer;
-  z-index: 1;
-}
-.cardInHand:hover {
-  transform: scale(1.1);
-  transition: transform 100ms ease-in-out;
-}
-
-.cardRig {
-  width: 100px;
-  text-align: center;
-}
-
-.cardWrapper {
-  position: relative;
-  width: 100px;
-  height: 140px;
-  z-index: 1;
-}
-
-.cardRig .perspectiveWrapper {
-  perspective: 700px;
-  perspective-origin: 50% 50%;
-}
-
-.cardRig .animationWrapper {
-  will-change: transform;
-}
-
-.cardInHand .cardContainer {
-  transition: transform 0.3s ease;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.cardContainer {
-  width: 100px;
-  height: 140px;
-  border-radius: 10px;
-  transform: matrix(1, 0, 0, 1, 0, 0);
-}
-
 .smallCardId {
   position: absolute;
-  bottom: 20;
-  left: 6px;
+  margin-left: 3px;
+  line-height: 20px;
+  width: 100px;
   font-size: 20px;
   font: Georgia, serif;
   color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  text-align: left;
 }
 
-.cardFace .playerVote {
-  position: relative;
-  padding-top: 40px;
+.playerVote {
+  position: absolute;
   font-size: 45px;
+  line-height: 140px;
+  width: 100px;
   color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  text-align: center;
+  vertical-align: middle;
 }
