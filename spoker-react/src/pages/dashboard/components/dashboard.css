@@ -1,5 +1,6 @@
 .search {
-    float:right;
+    float: right;
+    margin: 5px;
 }
 .createTicketBtn {
     margin: 5px;
