@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    session:
+      timeout: 86400s
+spring:
+  application:
+    name: sprint-poker #指定服务名
+  profiles:
+    active: bc
+---
+spring:
+  profiles: bc
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:h2test
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+---
+spring:
+  profiles: dev
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sprint_poker?characterEncoding=utf-8
+    username: root
+    password: Google123!
+  jpa:
+    database: MySQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect

@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[10],{"43eD":function(e,t,a){"use strict";var l=a("g09b");Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=l(a("q1tI")),n=l(a("1Taj")),d=()=>{return u.default.createElement("div",null,u.default.createElement(n.default,null))};t.default=d}}]);

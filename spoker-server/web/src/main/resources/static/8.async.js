@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[8],{QeBL:function(e,t,a){"use strict";var o=a("g09b");Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=o(a("q1tI")),n=o(a("lRau"));function r(){return u.default.createElement(n.default,{to:"/rooms"})}var d=r;t.default=d}}]);
