@@ -1,0 +1,7 @@
+# How to build
+mvn install -DskipTests
+
+
+# How to run the service
+1. lauch_mysql.sh
+2. start ide from application or by mv

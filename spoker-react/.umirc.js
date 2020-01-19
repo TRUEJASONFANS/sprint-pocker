@@ -1,9 +1,12 @@
 
 // ref: https://umijs.org/config/
 
-const hostUrl = 'http://bbs-bc.asml.com:8080';
+// const hostUrl = 'http://bbs-bc.asml.com:8080';
+const hostUrl = 'http://localhost:8080';
 
 export default {
+  outputPath: '../spoker-server/web/src/main/resources/static',
+  treeShaking: true,
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     ['umi-plugin-react', {
