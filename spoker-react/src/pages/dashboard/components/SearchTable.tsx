@@ -23,12 +23,16 @@ class SearchTable extends Component {
     }
 
     filterDatasource(searchText, dataSource:[]) {
-        var filteredData = dataSource.filter(({ feature, description }) => {
+        var filteredData = dataSource.filter(({ feature, title, description }) => {
             var flag = false;
             searchText = searchText.toLowerCase();
             if (feature != null) {
                 feature = feature.toLowerCase();
                 flag = flag || feature.includes(searchText);
+            }
+            if (title != null) {
+                title = title.toLowerCase();
+                flag = flag || title.includes(searchText);
             }
             if (description != null) {
                 description = description.toLowerCase();
