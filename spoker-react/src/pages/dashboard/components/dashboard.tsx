@@ -84,6 +84,7 @@ function Dashboard({ dispatch, itemList, curPage }) {
         if (element.visited === true) {
             return;
         }
+        // Group by item list by feature 
         var filterList = itemList.filter(item => {
             if (element !== item && element.feature === item.feature) {
                 item.visited = true;
