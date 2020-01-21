@@ -19,6 +19,7 @@ function Dashboard({ dispatch, itemList, curPage }) {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
+            width: '30%',
             render: text => text,
         },
         {
@@ -79,6 +80,24 @@ function Dashboard({ dispatch, itemList, curPage }) {
         });
       }
     
+    itemList.forEach(element => {
+        if (element.visited === true) {
+            return;
+        }
+        var filterList = itemList.filter(item => {
+            if (element !== item && element.feature === item.feature) {
+                item.visited = true;
+                item.feature = ""
+                return true;
+            } else {
+                return false;
+            }
+        })
+        if (filterList.length > 0) {
+            element.children = filterList
+        }
+    });
+    itemList = itemList.filter(item => item.visited !== true)
     return (
         <div>
             <span>
