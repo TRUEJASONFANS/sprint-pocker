@@ -1,5 +1,5 @@
-# sprint-pocker-front
-the front repo of sprint pocker
+# sprint-pocker
+sprint pocker
 ## How to buid
 yarn install
 ## How to run
