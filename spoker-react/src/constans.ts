@@ -1,2 +1,2 @@
-// export const hostUrl="http://bbs-bc.asml.com:8080";
-export const hostUrl="http://localhost:8080";
+const IS_PRODUCTION_ENV: boolean = process.env.NODE_ENV === 'production';
+export const hostUrl = IS_PRODUCTION_ENV ? '' : 'https://localhost:8111';
