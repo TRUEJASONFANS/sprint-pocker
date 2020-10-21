@@ -29,12 +29,12 @@ spring:
         format_sql: true
 ---
 spring:
-  profiles: dev
+  profiles: product
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/sprint_poker?characterEncoding=utf-8
-    username: root
-    password: Google123!
+    username: sprinter
+    password: sprint_987
   jpa:
     database: MySQL
     show-sql: true
