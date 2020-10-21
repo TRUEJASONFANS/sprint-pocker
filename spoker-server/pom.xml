@@ -50,51 +50,6 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>update-frontend-dependencies</id>
-            <activation>
-                <property>
-                    <name>yarn</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>exec-yarn</id>
-                                <phase>generate-resources</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>exec-yarn-build</id>
-                                <phase>generate-resources</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <configuration>
-                                    <arguments>
-                                        <argument>build</argument>
-                                    </arguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <executable>yarn</executable>
-                            <workingDirectory>${frontend.dir}</workingDirectory>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
-
     <repositories>
         <!-- ... possibly other repository elements ... -->
         <repository>

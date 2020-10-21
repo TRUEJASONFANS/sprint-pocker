@@ -9,6 +9,11 @@
         <version>0.1.0</version>
     </parent>
 
+    <properties>
+        <java.version>8</java.version>
+        <frontend.dir>${basedir}/../../spoker-react</frontend.dir>
+    </properties>
+
     <artifactId>web</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0</version>
@@ -98,5 +103,49 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <profiles>
+        <profile>
+            <id>update-frontend-dependencies</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>exec-yarn</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>exec-yarn-build</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>
+                                        <argument>build</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>yarn</executable>
+                            <workingDirectory>${frontend.dir}</workingDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
