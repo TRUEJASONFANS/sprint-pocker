@@ -89,3 +89,5 @@ target/
 
 # End of https://www.gitignore.io/api/intellij,java-web
 sprint.poker.iml
+
+web/src/main/resources/static/*.*

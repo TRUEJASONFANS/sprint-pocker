@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development && umi dev",
-    "build": "cross-env NODE_ENV=production && umi build",
+    "build": "cross-env NODE_ENV=production && umi build && copyfiles --flat build/*.*  ../spoker-server/web/src/main/resources/static",
     "test": "umi test",
     "lint:es": "eslint --ext .js src mock tests",
     "lint:ts": "tslint \"src/**/*.ts\" \"src/**/*.tsx\"",
@@ -17,6 +17,7 @@
     "@types/react-dom": "^16.0.11",
     "@types/react-test-renderer": "^16.0.3",
     "babel-eslint": "^9.0.0",
+    "copyfiles": "^2.4.0",
     "eslint": "^5.4.0",
     "eslint-config-umi": "^0.1.5",
     "eslint-plugin-flowtype": "^2.50.0",

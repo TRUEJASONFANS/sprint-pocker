@@ -5,7 +5,7 @@
 const hostUrl = 'http://localhost:8080';
 
 export default {
-  outputPath: '../spoker-server/web/src/main/resources/static',
+  outputPath: 'build',
   treeShaking: true,
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html

@@ -1,2 +1,2 @@
 # How to build all
-mvn package -DskipTests -Dyarn
+mvn package -DskipTests

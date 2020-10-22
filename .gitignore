@@ -60,3 +60,10 @@ typings/
 # next.js build output
 .next
 .DS_Store
+.idea/*.xml
+.idea/libraries/*
+spoker-server/*.iml
+spoker-server/*/*.iml
+spoker-server/*/*/*/*.iml
+.idea/*.iml
+.idea/.name
