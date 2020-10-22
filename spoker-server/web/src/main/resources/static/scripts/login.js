@@ -30,7 +30,7 @@ function signin() {
     var submit = function (callback) {
         console.log("提交注册表单!")
         let request = new XMLHttpRequest()
-        let url = "http://localhost:8080/user/regist";
+        let url = "/user/regist";
         request.open("POST", url, true)
         request.setRequestHeader('Content-type','application/json; charset=utf-8');
         let formData = {};
