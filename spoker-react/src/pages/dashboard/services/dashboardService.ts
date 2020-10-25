@@ -3,12 +3,12 @@ import { DASHBOARD_PAGE_SIZE } from '@/pages/constants';
 import Item from 'antd-mobile/lib/popover/Item';
 
 export function fetch({ page = 1 }) {
-  return request(`/api/dashboard?pageOffset=${page}&limit=${DASHBOARD_PAGE_SIZE}`);
+  return request(`/dashboard?pageOffset=${page}&limit=${DASHBOARD_PAGE_SIZE}`);
 }
 
 
 export function create(newItem) {
-  return request(`/api/dashboard`, {
+  return request(`/dashboard`, {
     method: 'POST',
     body: JSON.stringify(newItem),
     headers: {
@@ -18,14 +18,14 @@ export function create(newItem) {
 }
 
 export function deleteOne(ticketNum) {
-  return request(`/api/dashboard/${ticketNum}`, {
+  return request(`/dashboard/${ticketNum}`, {
     method: 'delete',
   });
 }
 
 export function update(values) {
   const id = values.id;
-  return request(`/api/dashboard/${id}`, {
+  return request(`/dashboard/${id}`, {
     method: 'PUT',
     body: JSON.stringify(values),
     headers: {
