@@ -65,15 +65,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     //include /login?msg=Bad Credentials
     http.authorizeRequests()
-            .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**", "/login*")
+            .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**", "/sprint/login*")
             .permitAll()
-            .anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll().successHandler
+            .anyRequest().authenticated().and().formLogin()
+            .loginPage("/sprint/login").loginProcessingUrl("/sprint/login")
+            .permitAll().successHandler
             (loginSuccessHandler()).failureHandler
             (authFailureHandler);
 
+
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 
-    http.logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/")
+    http.logout().logoutUrl("/sprint/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/")
             .and().rememberMe().userDetailsService(customUserDetailsService)
             .tokenValiditySeconds(86400).tokenRepository(tokenRepository());
 
@@ -94,7 +97,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/user/regist");
+        web.ignoring().antMatchers("/sprint/api/user/regist");
   }
 
     @Override

@@ -1,19 +1,17 @@
-import { subscribe, request, openSocket} from '@/services/websocket_service';
+import { subscribe, request as websocketRequest, openSocket} from '@/services/websocket_service';
 import * as restAPI from '@/utils/request';
 
 export function fetch(action: Function, roomId:string, curPage:number) {
-  // subscribe('/pocker/pockerBoard/' + roomId, action);
-  // request('/app/joinPockerBoard/' + roomId, {}, {});
-  openSocket('/pocker/pockerBoard/' + roomId , action, () => request('/app/joinPockerBoard/' + roomId + '/' + curPage, {},{}));
+  openSocket('/sprint/websocket/listener/pockerBoard/' + roomId , action, () => websocketRequest('/app/joinPockerBoard/' + roomId + '/' + curPage, {},{}));
 }
 
 export function onClickPocker(values) {
-  request('/app/onClickPocker/'+ values.roomName + '/' + values.curPage, {}, JSON.stringify(values));
+  websocketRequest('/app/onClickPocker/'+ values.roomName + '/' + values.curPage, {}, JSON.stringify(values));
 }
 
 export function addTikcetRecord(ticketRecord) {
   console.log('tag', JSON.stringify(ticketRecord));
-  restAPI.request('/api/dashboard', {
+  restAPI.request('/dashboard', {
     method: 'POST',
     body:JSON.stringify(ticketRecord),
     headers: {
@@ -23,7 +21,7 @@ export function addTikcetRecord(ticketRecord) {
 }
 
 export function generateInviteLink(roomName) {
-  return restAPI.request('/api/room/token/' + roomName, {
+  return restAPI.request('/room/token/' + roomName, {
     method: 'POST',
     body:JSON.stringify({name: roomName}),
     headers: {
@@ -33,7 +31,7 @@ export function generateInviteLink(roomName) {
 }
 
 export function onNextGame(values: Pageable) {
-  request('/app/onNextGame/'+ values.roomName + '/' + values.curPage, {}, {});
+  websocketRequest('/onNextGame/'+ values.roomName + '/' + values.curPage, {}, {});
 }
 
 export interface Pageable {
@@ -44,11 +42,11 @@ export interface Pageable {
 }
 
 export function addStory(values: Pageable) {
-  request('/app/onAddStory/'+ values.roomName , {}, JSON.stringify(values));
+  websocketRequest('/onAddStory/'+ values.roomName , {}, JSON.stringify(values));
 } 
 
 export function onNavigateToPage(values: Pageable) {
-  request('/app/onNavigateToPage/'+ values.roomName , {}, JSON.stringify(values));
+  websocketRequest('/onNavigateToPage/'+ values.roomName , {}, JSON.stringify(values));
 }
 
 export interface FinalCandidate {
@@ -57,5 +55,5 @@ export interface FinalCandidate {
   score : string,
 }
 export function OnSelectCandidate(values: FinalCandidate) {
-  request('/app/OnSelectCandidate/'+ values.roomName, {}, JSON.stringify(values));
+  websocketRequest('/OnSelectCandidate/'+ values.roomName, {}, JSON.stringify(values));
 }

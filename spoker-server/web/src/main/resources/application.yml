@@ -9,7 +9,7 @@ spring:
   application:
     name: sprint-poker #指定服务名
   profiles:
-    active: bc
+    active: product
 ---
 spring:
   profiles: bc

@@ -17,6 +17,11 @@ import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+
+    public static final String WEBSOCKET_SERVER_LISTNER = "/sprint/ws/listener";
+
+    public static final String WEBSOCKET_SERVER_SUBSCRIBER = "/sprint/ws/subscriber";
+
     /**
      * Configure message broker options.
      * <p>
@@ -35,10 +40,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         te.setPoolSize(1);
         te.setThreadNamePrefix("wss-heartbeat-thread-");
         te.initialize();
-        config.enableSimpleBroker("/pocker").setHeartbeatValue(new long[]{20000, 20000}).setTaskScheduler(te);
+
+        //simple broker,  the url where websocket clinet to send the meesg
+        //destination prefix is where the url to client to subscribe/
+        config.enableSimpleBroker(WEBSOCKET_SERVER_LISTNER).setHeartbeatValue(new long[]{20000, 20000}).setTaskScheduler(te);
 
         // designate the "/app" prefix for messages bound for @MessageMapping
-        config.setApplicationDestinationPrefixes("/app");
+        config.setApplicationDestinationPrefixes(WEBSOCKET_SERVER_SUBSCRIBER);
     }
 
     /**
@@ -49,7 +57,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
      */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry config) {
-        config.addEndpoint("/pocker-websocket").setAllowedOrigins("*")
+        config.addEndpoint("/sprint/websocket").setAllowedOrigins("*")
                 .withSockJS();
     }
 

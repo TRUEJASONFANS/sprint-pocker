@@ -27,7 +27,7 @@ public class UserController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/user/regist", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/sprint/api/user/regist", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody ResponseResult regist(@RequestBody UserDTO user) {
         User findUser = userService.findByUserName(user.getUserName());
         if (findUser != null) {
@@ -37,7 +37,7 @@ public class UserController {
         return new ResponseResult(ResponseResult.SUCCESS, "注册成功");
     }
 
-    @RequestMapping("/login*")
+    @RequestMapping("/sprint/login*")
     public String login(@RequestParam Map<String, String> allParams, ModelMap map) {
         if (allParams.containsKey("msg")) {
             map.addAttribute("msg", "密码错误或用户名不存在");
@@ -45,7 +45,7 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = "/api/users/whoAmI", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/sprint/api/user/whoAmI", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map whoAmI(Principal user) {
         Map<String, String> nameMap = new HashMap<>();
