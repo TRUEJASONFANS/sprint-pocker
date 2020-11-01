@@ -43,10 +43,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
         //simple broker,  the url where websocket clinet to send the meesg
         //destination prefix is where the url to client to subscribe/
-        config.enableSimpleBroker(WEBSOCKET_SERVER_LISTNER).setHeartbeatValue(new long[]{20000, 20000}).setTaskScheduler(te);
+        config.enableSimpleBroker(WEBSOCKET_SERVER_SUBSCRIBER).setHeartbeatValue(new long[]{20000, 20000}).setTaskScheduler(te);
 
-        // designate the "/app" prefix for messages bound for @MessageMapping
-        config.setApplicationDestinationPrefixes(WEBSOCKET_SERVER_SUBSCRIBER);
+        // designate the "/Listener" prefix for messages bound for @MessageMapping
+        config.setApplicationDestinationPrefixes(WEBSOCKET_SERVER_LISTNER);
     }
 
     /**
@@ -57,14 +57,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
      */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry config) {
-        config.addEndpoint("/sprint/websocket").setAllowedOrigins("*")
+        config.addEndpoint("/sprint/ws").setAllowedOrigins("*")
                 .withSockJS();
     }
 
-//    @Bean
-//    public HandshakeInterceptor httpSessionIdHandshakeInterceptor() {
-//        return new HttpHandshakeInterceptor();
-//    }
 
     @Bean
     public SocketSessionRegistry SocketSessionRegistry() {

@@ -40,14 +40,13 @@ import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
-@EnableConfigurationProperties(SecuritySettings.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private CustomUserDetailsService customUserDetailsService;
 
   @Autowired
-  private SecuritySettings settings;
+  private  BCryptPasswordEncoder bcryptPasswordEncoder;
 
   @Autowired @Qualifier("dataSource")
   private DataSource dataSource;
@@ -102,15 +101,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(customUserDetailsService).passwordEncoder(bcryptPasswordEncoder());
+    auth.userDetailsService(customUserDetailsService).passwordEncoder(bcryptPasswordEncoder);
     //remember me
     auth.eraseCredentials(false);
   }
 
-  @Bean
-  public BCryptPasswordEncoder bcryptPasswordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
 
   @Bean
   public LoginSuccessHandler loginSuccessHandler(){
@@ -120,18 +115,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public AuthFailureHandler authFailureHandler() {return new AuthFailureHandler();}
 
-  @Bean
-  public CustomSecurityMetadataSource securityMetadataSource() {
-    return new CustomSecurityMetadataSource(settings.getUrlroles());
-  }
+//  @Bean
+//  public CustomSecurityMetadataSource securityMetadataSource() {
+//    return new CustomSecurityMetadataSource(settings.getUrlroles());
+//  }
 
-  @Bean
-  public CustomFilterSecurityInterceptor customFilter() throws Exception{
-    CustomFilterSecurityInterceptor customFilter = new CustomFilterSecurityInterceptor();
-    customFilter.setSecurityMetadataSource(securityMetadataSource());
-    customFilter.setAccessDecisionManager(accessDecisionManager());
-    return customFilter;
-  }
+//  @Bean
+//  public CustomFilterSecurityInterceptor customFilter() throws Exception{
+//    CustomFilterSecurityInterceptor customFilter = new CustomFilterSecurityInterceptor();
+//    customFilter.setSecurityMetadataSource(securityMetadataSource());
+//    customFilter.setAccessDecisionManager(accessDecisionManager());
+//    return customFilter;
+//  }
 
   @Bean
   public AccessDecisionManager accessDecisionManager() {

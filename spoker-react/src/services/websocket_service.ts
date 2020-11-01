@@ -28,14 +28,16 @@ export function openSocket(subscribeUrl, subs_action: Function, instant_call: Fu
   }
 }
 export function subscribe(subscribeUrl, action) {
-  console.log('request url', subscribeUrl);
+  subscribeUrl = '/sprint/ws/subscriber/' + subscribeUrl;
+  console.log('subscribe url ', subscribeUrl);
+  
   stompClient.subscribe(subscribeUrl, action);
 }
 
 export function request(sendUrl, header, body) {
-  console.log('request url:', sendUrl);
   console.log('body:', body);
   sendUrl = '/sprint/ws/listener' + sendUrl;
+  console.log('request url:', sendUrl);
   stompClient.send(sendUrl, header, body);
 }
 
