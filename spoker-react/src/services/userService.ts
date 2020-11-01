@@ -4,5 +4,5 @@ export function fetch(url) {
 }
 
 export function whoAmI() {
-    return request('/users/whoAmI', {});
+    return request('/user/whoAmI', {});
 }

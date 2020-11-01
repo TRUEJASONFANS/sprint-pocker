@@ -39,13 +39,13 @@ public class RoomController {
   @Autowired
   private BCryptPasswordEncoder encoder;
 
-  @MessageMapping(WebSocketConfig.WEBSOCKET_SERVER_LISTNER + "/room")
+  @MessageMapping("/room")
   @SendTo(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER + "/room")
   public List<Room> getRoomList(Principal user) {
     return webAgentSessionRegistry.getRooms();
   }
 
-  @MessageMapping(WebSocketConfig.WEBSOCKET_SERVER_LISTNER + "/room/add")
+  @MessageMapping("/room/add")
   @SendTo(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER + "/room")
   public List<Room> addRoom(Room room, Principal user) {
     room.setOwner(user.getName());
@@ -54,7 +54,7 @@ public class RoomController {
   }
 
   @ResponseBody
-  @PostMapping("/api/rooms/{roomName}")
+  @PostMapping("/sprint/api/rooms/{roomName}")
   public ResponseResult checkRoomPassword(@RequestBody Room room,@PathVariable String roomName, HttpServletRequest request, HttpServletResponse response) {
     String roomPassword = CookieUtil.extractCookie(request, "roomPassword_".concat(roomName));
     Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (roomName.equals(roomItem.getName()) && (room.getRoomPassword().equals(roomItem.getRoomPassword()) || roomItem.getRoomPassword().equals(roomPassword)))).findAny();
@@ -71,7 +71,7 @@ public class RoomController {
   }
 
   @ResponseBody
-  @PostMapping("/api/room/token/{roomName}")
+  @PostMapping("/sprint/api/room/token/{roomName}")
   public ResponseResult generateRoomPasswordToken(@RequestBody Room room, HttpServletRequest request) {
     Optional<Room> findRoom = webAgentSessionRegistry.getRooms().stream().filter(roomItem -> (room.getName().equals(roomItem.getName()))).findAny();
     if(findRoom.isPresent()) {
@@ -85,7 +85,7 @@ public class RoomController {
     }
   }
 
-  @MessageMapping(WebSocketConfig.WEBSOCKET_SERVER_LISTNER + "/pokerBoard/{roomName}/joinPokerBoard//{curPage}")
+  @MessageMapping("/pokerBoard/{roomName}/joinPokerBoard//{curPage}")
   @SendTo(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER + "/pokerBoard/{roomName}")
   public GameDTO joinPockerBoardByRoomId(Principal user, @DestinationVariable String roomName, @DestinationVariable Integer curPage) throws
           CommandException {
@@ -97,7 +97,7 @@ public class RoomController {
     return webAgentSessionRegistry.getSingleGameRecord(roomName, curPage, user.getName());
   }
 
-  @MessageMapping(WebSocketConfig.WEBSOCKET_SERVER_LISTNER + "/pokerBoard/{roomName}/clickPoker/{curPage}")
+  @MessageMapping("/pokerBoard/{roomName}/clickPoker/{curPage}")
   @SendTo(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER  + "/pokerBoard/{roomName}")
   public GameDTO onClickPocker(Principal user, SingleGameRecord.SingelPlayerScore singelPlayerScore, @DestinationVariable String
           roomName, @DestinationVariable Integer curPage) {
@@ -107,7 +107,7 @@ public class RoomController {
     return webAgentSessionRegistry.getSingleGameRecord(roomName, curPage, user.getName());
   }
 
-  @MessageMapping(WebSocketConfig.WEBSOCKET_SERVER_LISTNER + "/onNextGame/{roomName}/{curPage}")
+  @MessageMapping("/onNextGame/{roomName}/{curPage}")
   @SendTo(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER + "/pokerBoard/{roomName}")
   public GameDTO onNextGame(Principal user, @DestinationVariable String roomName, @DestinationVariable Integer curPage) {
     webAgentSessionRegistry.onNextGame(user.getName(), roomName, curPage);
@@ -116,20 +116,20 @@ public class RoomController {
     return singleGameRecord;
   }
 
-  @MessageMapping(WebSocketConfig.WEBSOCKET_SERVER_LISTNER  + "/pokerBoard/onAddStory/{roomName}")
+  @MessageMapping("/pokerBoard/onAddStory/{roomName}")
   @SendTo(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER +  "/pokerBoard/{roomName}")
   public GameDTO onAddStory(Principal user, @RequestBody PageableDTO pagebleDTO) {
     webAgentSessionRegistry.onAddStory(pagebleDTO);
     return webAgentSessionRegistry.getSingleGameRecord(pagebleDTO.getRoomName(), pagebleDTO.getCurPage(), user.getName());
   }
 
-  @MessageMapping(WebSocketConfig.WEBSOCKET_SERVER_LISTNER + "/onNavigateToPage/{roomName}")
+  @MessageMapping("/onNavigateToPage/{roomName}")
   @SendTo(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER + "/pokerBoard/{roomName}")
   public GameDTO onNavigateToPage(Principal user, @RequestBody PageableDTO pagebleDTO) {
     return webAgentSessionRegistry.getSingleGameRecord(pagebleDTO.getRoomName(), pagebleDTO.getCurPage(), user.getName());
   }
 
-  @MessageMapping(WebSocketConfig.WEBSOCKET_SERVER_LISTNER + "/pokerBoard/OnSelectCandidate/{roomName}")
+  @MessageMapping("/pokerBoard/OnSelectCandidate/{roomName}")
   @SendTo(WebSocketConfig.WEBSOCKET_SERVER_LISTNER + "/pokerBoard/{roomName}")
     public GameDTO onSelectCandidate(Principal user, @RequestBody CandidateDTO candidateDTO) {
     webAgentSessionRegistry.updateRoomFinalScore(candidateDTO, user.getName());

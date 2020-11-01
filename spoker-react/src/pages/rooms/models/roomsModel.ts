@@ -48,7 +48,8 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, query }) => {
         if (pathname === '/rooms') {
-          roomService.w_connect((data) => {
+          roomService.fetchRooms((data) => {
+            console.log("data:" , data);
             dispatch({
               type: 'save',
               payload: {	          
