@@ -39,9 +39,9 @@ public class UserServiceTest {
         Assert.assertTrue(encoder.matches("123",user.getPassword()));
     }
 
-    @Test
-    public void testFindByUserNameAndPassword() {
-        User user = userService.findByUserNameAndPassword("jianyang", "123");
-        Assert.assertTrue(encoder.matches("123", user.getPassword()));
-    }
+//    @Test
+//    public void testFindByUserNameAndPassword() {
+//        User user = userService.findByUserNameAndPassword("jianyang", "123");
+//        Assert.assertTrue(encoder.matches("123", user.getPassword()));
+//    }
 }

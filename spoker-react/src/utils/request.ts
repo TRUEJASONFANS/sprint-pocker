@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch';
+import { API_ROOT } from '@/constans';
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -17,10 +18,12 @@ function checkStatus(response) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export async function request(url, options) {
+export async function request(url, options?:{}) {
 
   console.log('url:', url);
   console.log('options:', options);
+
+  url = API_ROOT + url
 
   try {
     const response = await fetch(url, options);

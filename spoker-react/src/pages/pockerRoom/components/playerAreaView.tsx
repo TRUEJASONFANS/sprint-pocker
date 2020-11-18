@@ -58,7 +58,7 @@ export default class PlayerAreaView extends React.PureComponent<Props, any> {
   render() {
     const {global} = this.props;
     const {userName} = global;
-    console.log("playerAreaView: rerender");
+    console.log("playerAreaView: rerender " + userName);
     return (
       <>
         {this.props.usersList.map((card, index) => <PlayerSelectedCard key={index} index={index} card={card} userName={userName}/>)}

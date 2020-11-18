@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.zhxie.sprintpoker.config.WebSocketConfig;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,6 +63,8 @@ public class RoomControllerTest {
   @Test
   public void testJoinPockerBoardByRoomId() throws InterruptedException {
 
+    System.out.println(port);
+
     final CountDownLatch latch = new CountDownLatch(1);
     final AtomicReference<Throwable> failure = new AtomicReference<>();
 
@@ -69,7 +72,7 @@ public class RoomControllerTest {
 
       @Override
       public void afterConnected(final StompSession session, StompHeaders connectedHeaders) {
-        session.subscribe("/pocker/pockerBoard/room1", new StompFrameHandler() {
+        session.subscribe(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER + "/room/add", new StompFrameHandler() {
           @Override
           public Type getPayloadType(StompHeaders headers) {
             return List.class;
@@ -114,14 +117,14 @@ public class RoomControllerTest {
         socketSessionRegistry.getAllSessionIds().put("jason", Sets.newHashSet(sockjsSessionId));
 
         try {
-          session.send("/app/joinPockerBoard/room1", null);
+          session.send(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER + "/room", null);
         } catch (Throwable t) {
           failure.set(t);
           latch.countDown();
         }
       }
     };
-    this.stompClient.connect("ws://localhost:{port}/pocker-websocket", this.headers, handler, this.port);
+    this.stompClient.connect("ws://localhost:{port}/sprint/websocket", this.headers, handler, this.port);
 
     if (latch.await(10, TimeUnit.SECONDS)) {
       if (failure.get() != null) {

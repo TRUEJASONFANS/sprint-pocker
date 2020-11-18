@@ -1,8 +1,8 @@
 import {request} from '@/utils/request';
 export function fetch(url) {
-    return request('api/user', {});
+    return request('/user', {});
 }
 
 export function whoAmI() {
-    return request('/api/users/whoAmI', {});
+    return request('/user/whoAmI', {});
 }
