@@ -2,11 +2,11 @@ import { subscribe, request as websocketRequest, openSocket} from '@/services/we
 import * as restAPI from '@/utils/request';
 
 export function fetch(action: Function, roomId:string, curPage:number) {
-  openSocket('/sprint/websocket/listener/pockerBoard/' + roomId , action, () => websocketRequest('/app/joinPockerBoard/' + roomId + '/' + curPage, {},{}));
+  openSocket('/pokerBoard/' + roomId , action, () => websocketRequest('/joinPockerBoard/' + roomId + '/' + curPage, {},{}));
 }
 
 export function onClickPocker(values) {
-  websocketRequest('/app/onClickPocker/'+ values.roomName + '/' + values.curPage, {}, JSON.stringify(values));
+  websocketRequest('/onClickPocker/'+ values.roomName + '/' + values.curPage, {}, JSON.stringify(values));
 }
 
 export function addTikcetRecord(ticketRecord) {
@@ -55,5 +55,5 @@ export interface FinalCandidate {
   score : string,
 }
 export function OnSelectCandidate(values: FinalCandidate) {
-  websocketRequest('/OnSelectCandidate/'+ values.roomName, {}, JSON.stringify(values));
+  websocketRequest('/onSelectCandidate/'+ values.roomName, {}, JSON.stringify(values));
 }

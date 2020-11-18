@@ -91,7 +91,6 @@ class PalyerScoreCard extends React.PureComponent<Props2, State2> {
   }
 
   render() {
-    console.log("card rerender" + this.props.card);
     const containStyle = {
       width: 100,
       height: 140,
