@@ -40,14 +40,13 @@ import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
-@EnableConfigurationProperties(SecuritySettings.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private CustomUserDetailsService customUserDetailsService;
 
   @Autowired
-  private SecuritySettings settings;
+  private  BCryptPasswordEncoder bcryptPasswordEncoder;
 
   @Autowired @Qualifier("dataSource")
   private DataSource dataSource;
@@ -65,15 +64,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     //include /login?msg=Bad Credentials
     http.authorizeRequests()
-            .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**", "/login*")
+            .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**", "/sprint/login*")
             .permitAll()
-            .anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll().successHandler
+            .anyRequest().authenticated().and().formLogin()
+            .loginPage("/sprint/login").loginProcessingUrl("/sprint/login")
+            .permitAll().successHandler
             (loginSuccessHandler()).failureHandler
             (authFailureHandler);
 
+
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 
-    http.logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/")
+    http.logout().logoutUrl("/sprint/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/")
             .and().rememberMe().userDetailsService(customUserDetailsService)
             .tokenValiditySeconds(86400).tokenRepository(tokenRepository());
 
@@ -94,20 +96,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/user/regist");
+        web.ignoring().antMatchers("/sprint/api/user/regist");
   }
 
     @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(customUserDetailsService).passwordEncoder(bcryptPasswordEncoder());
+    auth.userDetailsService(customUserDetailsService).passwordEncoder(bcryptPasswordEncoder);
     //remember me
     auth.eraseCredentials(false);
   }
 
-  @Bean
-  public BCryptPasswordEncoder bcryptPasswordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
 
   @Bean
   public LoginSuccessHandler loginSuccessHandler(){
@@ -117,18 +115,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public AuthFailureHandler authFailureHandler() {return new AuthFailureHandler();}
 
-  @Bean
-  public CustomSecurityMetadataSource securityMetadataSource() {
-    return new CustomSecurityMetadataSource(settings.getUrlroles());
-  }
+//  @Bean
+//  public CustomSecurityMetadataSource securityMetadataSource() {
+//    return new CustomSecurityMetadataSource(settings.getUrlroles());
+//  }
 
-  @Bean
-  public CustomFilterSecurityInterceptor customFilter() throws Exception{
-    CustomFilterSecurityInterceptor customFilter = new CustomFilterSecurityInterceptor();
-    customFilter.setSecurityMetadataSource(securityMetadataSource());
-    customFilter.setAccessDecisionManager(accessDecisionManager());
-    return customFilter;
-  }
+//  @Bean
+//  public CustomFilterSecurityInterceptor customFilter() throws Exception{
+//    CustomFilterSecurityInterceptor customFilter = new CustomFilterSecurityInterceptor();
+//    customFilter.setSecurityMetadataSource(securityMetadataSource());
+//    customFilter.setAccessDecisionManager(accessDecisionManager());
+//    return customFilter;
+//  }
 
   @Bean
   public AccessDecisionManager accessDecisionManager() {

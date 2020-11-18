@@ -2,7 +2,7 @@
 // ref: https://umijs.org/config/
 
 // const hostUrl = 'http://bbs-bc.asml.com:8080';
-const hostUrl = 'http://localhost:8080';
+const hostUrl = 'http://localhost:8111';
 
 export default {
   outputPath: 'build',
@@ -22,15 +22,10 @@ export default {
     }],
   ],
   "proxy": {// 配置fetch 路由转发至后台API服务地址.
-    "/poker": {
+    "/sprint": {
       "target": `${hostUrl}`,
       "changeOrigin": true,
       secure: false, // 不进行证书验证
     },
-    "/api": {
-      "target": `${hostUrl}`,
-      "changeOrigin": true,
-      secure: false, // 不进行证书验证
-    }
   },
 }

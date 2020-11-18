@@ -7,10 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
-<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/sockjs-client/0.3.2/sockjs-min.js"></script>
 <script type="application/javascript" src="http://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
 <script>
-  var ws = new SockJS("ws://localhost:8080/pocker-websocket");
+  var ws = new SockJS("ws://localhost:8111/sprint/websocket");
   var stompClient = Stomp.over(ws);
   var headers = {
     mode: 'cors',
@@ -24,7 +24,7 @@
       // 连接成功时（服务器响应 CONNECTED 帧）的回调方法
       document.getElementById("state-info").innerHTML = "连接成功";
       console.log('已连接【' + frame + '】');
-      stompClient.subscribe('/topic/getResponse', function (response) {
+      stompClient.subscribe('/sprint/ws/subscriber/room', function (response) {
         showResponse(response.body);
       });
     },

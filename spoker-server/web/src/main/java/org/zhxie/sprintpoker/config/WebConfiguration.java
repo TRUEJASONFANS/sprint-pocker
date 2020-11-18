@@ -16,7 +16,7 @@ import java.io.IOException;
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
-    private String baseApiPath = "/api/";
+    private String baseApiPath = "/sprint/api/";
 
     @Autowired
     private CheckRoomPasswordIntercepter checkRoomPasswordIntercepter;

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/dashboard")
+@RequestMapping("/sprint/api/dashboard")
 public class DashboardController {
 
   @Autowired

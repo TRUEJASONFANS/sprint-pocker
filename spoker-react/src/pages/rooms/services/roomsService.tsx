@@ -16,7 +16,7 @@ import { request as requestUtil } from '@/utils/request';// Note: use the {} if 
 
 export function create(values) {
   console.log("Room create ", values);
-  request('/app/addRoom', {},	 
+  request('/room/add', {},	 
     JSON.stringify(values)
   );
 }
@@ -24,7 +24,7 @@ export function create(values) {
 export function checkRoomPassword(values) {
   const id = values.name;
   console.log("Check room password ", values);
-  const url = `/api/rooms/${id}`;
+  const url = `/rooms/${id}`;
   return requestUtil(url, {
     method: 'POST',
     body: JSON.stringify(values),
@@ -35,10 +35,6 @@ export function checkRoomPassword(values) {
 
 }
 
-export function w_connect(action) {
-  openSocket('/pocker/rooms', action, w_request);
-}
-
-export function w_request() {
-  request('/app/rooms', {}, {});
+export function fetchRooms(action) {
+  openSocket('room', action,  ()=> request('/room', {}, {}));
 }
