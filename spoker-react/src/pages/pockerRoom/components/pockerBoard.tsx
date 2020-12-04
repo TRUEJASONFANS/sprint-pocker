@@ -193,7 +193,7 @@ class PockerBoard extends PureComponent<Props, State> {
         </Content>
         <Footer className={styles.footer}>
           <div className={styles.playCandidateCardContainers}>
-            <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={playerName} resetFlag={resetFlag} curPage={curPage}/>
+            <PokerBoardFooter cards={cards} dispatch={dispatch} roomName={roomName} curUser={playerName} curPage={curPage} scoreList={this.props.scoreList}/>
           </div>
           <div className={styles.pathMenu}>
             <ReactPathManu />
