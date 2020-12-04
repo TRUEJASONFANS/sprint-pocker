@@ -16,6 +16,7 @@ import org.zhxie.sprintpoker.entity.dto.CandidateDTO;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 import org.zhxie.sprintpoker.entity.dto.ResponseResult;
+import org.zhxie.sprintpoker.entity.game.SingelPlayerScore;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.exception.CommandException;
 import org.zhxie.sprintpoker.repository.SocketSessionRegistry;
@@ -99,7 +100,7 @@ public class RoomController {
 
   @MessageMapping("/onClickPocker/{roomName}/{curPage}")
   @SendTo(WebSocketConfig.WEBSOCKET_SERVER_SUBSCRIBER  + "/pokerBoard/{roomName}")
-  public GameDTO onClickPocker(Principal user, SingleGameRecord.SingelPlayerScore singelPlayerScore, @DestinationVariable String
+  public GameDTO onClickPocker(Principal user, SingelPlayerScore singelPlayerScore, @DestinationVariable String
           roomName, @DestinationVariable Integer curPage) {
     System.out.println(user.getName());
     singelPlayerScore.setPlayerName(user.getName());
@@ -112,7 +113,6 @@ public class RoomController {
   public GameDTO onNextGame(Principal user, @DestinationVariable String roomName, @DestinationVariable Integer curPage) {
     webAgentSessionRegistry.onNextGame(user.getName(), roomName, curPage);
     final GameDTO singleGameRecord = webAgentSessionRegistry.getSingleGameRecord(roomName, curPage, user.getName());
-    singleGameRecord.setReset(true);
     return singleGameRecord;
   }
 
