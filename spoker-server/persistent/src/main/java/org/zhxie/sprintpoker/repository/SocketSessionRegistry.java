@@ -8,6 +8,7 @@ import org.zhxie.sprintpoker.entity.Room;
 import org.zhxie.sprintpoker.entity.dto.CandidateDTO;
 import org.zhxie.sprintpoker.entity.dto.PageableDTO;
 import org.zhxie.sprintpoker.entity.game.RoomGameRecord;
+import org.zhxie.sprintpoker.entity.game.SingelPlayerScore;
 import org.zhxie.sprintpoker.entity.game.SingleGameRecord;
 import org.zhxie.sprintpoker.entity.dto.GameDTO;
 import org.zhxie.sprintpoker.exception.CommandException;
@@ -140,7 +141,7 @@ public class SocketSessionRegistry {
     roomId2Room.put(room.getName(), room);
   }
 
-  public void updateRoomScoreByPlayer(SingleGameRecord.SingelPlayerScore singlePlayerScore, String roomName, int curPage) {
+  public void updateRoomScoreByPlayer(SingelPlayerScore singlePlayerScore, String roomName, int curPage) {
     Room room = roomId2Room.get(roomName);
     List<Player> players = room.getPlayer();
     for (Player p : players) {
