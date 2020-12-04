@@ -1,6 +1,7 @@
 import pathToRegexp from 'path-to-regexp';
 import * as pockerService from '@/pages/pockerRoom/services/pockerService';
-import { number, string } from 'prop-types';
+import Axios from 'axios';
+
 export default {
   namespace: 'pockerBoard',
   state: {
@@ -28,9 +29,6 @@ export default {
         featureName, internalTaskName, roomOwner, finalScores
       }
     },
-    // syncTotalPage(state, {payload: {totalPage}}) {
-    //   return {...state, totalPage}
-    // }
   },
   effects: {
     *queryStoryPoints({ payload: roomName }, { call }) {
@@ -74,21 +72,25 @@ export default {
           });
           pockerService.fetch((data) => {
             let parseJson = JSON.parse(data.body);
-            dispatch({
-              type: 'syncPage',
-              payload: {
-                curPage: parseJson.curNum,
-                totalPage: parseJson.totalNum,
-                resetFlag: parseJson.reset,
-                scoreList: parseJson.playerScoreList,
-                playerName: parseJson.playerName,
-                featureName: parseJson.featureName,
-                internalTaskName: parseJson.internalTaskName,
-                roomOwner: parseJson.owner,
-                finalScores: parseJson.finalScores,
-              }
-            });
+            console.log(parseJson)
+            Axios.get("/sprint/api/user/whoAmI").then(response =>  {
+              dispatch({
+                type: 'syncPage',
+                payload: {
+                  curPage: parseJson.curNum,
+                  totalPage: parseJson.totalNum,
+                  scoreList: parseJson.playerScoreList,
+                  featureName: parseJson.featureName,
+                  internalTaskName: parseJson.internalTaskName,
+                  playerName: response.data.userName,
+                  roomOwner: parseJson.owner,
+                  finalScores: parseJson.finalScores,
+                }
+              });
+            })
+
           }, roomId, 1);
+          
         }
       });
     },

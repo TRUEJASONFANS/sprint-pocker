@@ -2,12 +2,18 @@ import * as React from 'react';
 import styles from './pokerBoardFooter.css';
 
 export interface Props {
-  cards: string[];
-  dispatch: Function;
-  roomName: string;
-  curUser: string;
-  resetFlag: boolean;
-  curPage: number;
+  cards: string[],
+  dispatch: Function,
+  roomName: string,
+  curUser: string,
+  curPage: number,
+  scoreList: {
+    clicked: boolean,
+    fibonacciNum: string,
+    playerName: string,
+    roomName: string,
+    shown: boolean
+  }[],
 }
 
 interface State {
@@ -18,17 +24,15 @@ interface Props2 {
   index: number,
   card: string,
   okHanlder: Function,
-  reset: boolean,
   clickedNum: string,
 }
 
 class PokerBoardFooter extends React.PureComponent<Props, State> {
+
   constructor(props) {
     super(props);
     this.onClickPockerNumber = this.onClickPockerNumber.bind(this);
-    this.state = {
-      clickedNum: '?',
-    }
+
   }
 
   onClickPockerNumber(num: string, index: number) {
@@ -49,28 +53,25 @@ class PokerBoardFooter extends React.PureComponent<Props, State> {
       type: 'pockerBoard/onClickPocker',
       payload: values
     });
-    this.setState({
-      clickedNum: num
-    });
+
   }
 
   render() {
     console.log("Footer rerender()");
+    let findUser = this.props.scoreList.find(s => s.playerName === this.props.curUser);
+    console.log(findUser)
+    let clickedNum = findUser !== undefined ? findUser.fibonacciNum : '?'
     return (
       <div style={{display:"inline-block"}}>
-        {this.props.cards.map((card, index) => (<PalyerScoreCardFC card={card} index={index} key={index} okHanlder={this.onClickPockerNumber} reset={this.props.resetFlag} clickedNum={this.state.clickedNum}/>))}
+        {this.props.cards.map((card, index) => (<PalyerScoreCardFC card={card} index={index} key={index} okHanlder={this.onClickPockerNumber}  clickedNum={clickedNum}/>))}
       </div>
     );
   }
 
 }
 
-interface State2 {
-  turnOn: boolean 
-}
 
 function PalyerScoreCardFC(props:Props2) {
-
 
   const onClickHandler = () => {
     if (props.clickedNum != props.card) {

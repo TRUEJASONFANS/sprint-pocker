@@ -24,15 +24,6 @@ public class SingleGameRecord {
         }
     }
 
-    @Data
-    public static class SingelPlayerScore {
-        private String fibonacciNum = "?";
-        private boolean clicked = false;
-        private String playerName;
-        private String roomName;
-        private boolean shown;
-    }
-
     public void removeScoreRecord(String exitUserId) {
         player2Score.remove(exitUserId);
     }
