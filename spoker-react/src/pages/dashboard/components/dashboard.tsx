@@ -1,4 +1,4 @@
-import { DASHBOARD_PAGE_SIZE } from '@/pages/constants';
+import { DASHBOARD_PAGE_SIZE } from '@/constans';
 import { connect } from 'dva';
 import { Table, Divider, Pagination, Button, Popconfirm } from 'antd';
 import { routerRedux } from 'dva';
