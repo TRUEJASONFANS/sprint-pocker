@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import styles from './Rooms.css';
 import { routerRedux } from 'dva/router';
 import { Table, Pagination, Button } from 'antd';
-import { ROOM_PAGE_SIZE } from '@/pages/constants';
+import { ROOM_PAGE_SIZE } from '@/constans';
 import SearchTable from './SearchTable';
 
 function Rooms({ dispatch, list: dataSource, loading, total, page: current, userName }) {
