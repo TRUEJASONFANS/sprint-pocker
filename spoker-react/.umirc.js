@@ -7,6 +7,7 @@ const hostUrl = 'http://localhost:8111';
 export default {
   outputPath: 'build',
   treeShaking: true,
+  base:"/sprint",
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     ['umi-plugin-react', {
